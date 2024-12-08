@@ -93,6 +93,30 @@ func (s *UserService) GetByAccountID(accountID string) (*User, *Response, error)
 	return s.GetByAccountIDWithContext(context.Background(), accountID)
 }
 
+// GetByUsernameWithContext gets user info from Jira
+// Searching by another parameter that is not username is deprecated,
+// but this method is kept for backwards compatibility
+// Jira API docs: https://docs.atlassian.com/jira/REST/cloud/#api/2/user-getUser
+func (s *UserService) GetByUsernameWithContext(ctx context.Context, username string) (*User, *Response, error) {
+	apiEndpoint := fmt.Sprintf("/rest/api/2/user?username=%s", username)
+	req, err := s.client.NewRequestWithContext(ctx, "GET", apiEndpoint, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	user := new(User)
+	resp, err := s.client.Do(req, user)
+	if err != nil {
+		return nil, resp, NewJiraError(resp, err)
+	}
+	return user, resp, nil
+}
+
+// GetByUsername wraps GetByUsernameWithContext using the background context.
+func (s *UserService) GetByUsername(username string) (*User, *Response, error) {
+	return s.GetByUsernameWithContext(context.Background(), username)
+}
+
 // CreateWithContext creates an user in Jira.
 //
 // Jira API docs: https://docs.atlassian.com/jira/REST/cloud/#api/2/user-createUser
@@ -269,7 +293,7 @@ func (s *UserService) FindWithContext(ctx context.Context, property string, twea
 		search = f(search)
 	}
 
-	var queryString = ""
+	queryString := ""
 	for _, param := range search {
 		queryString += param.name + "=" + param.value + "&"
 	}
