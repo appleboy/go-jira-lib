@@ -27,7 +27,6 @@ type User struct {
 	DisplayName     string     `json:"displayName,omitempty" structs:"displayName,omitempty"`
 	Active          bool       `json:"active,omitempty" structs:"active,omitempty"`
 	TimeZone        string     `json:"timeZone,omitempty" structs:"timeZone,omitempty"`
-	Locale          string     `json:"locale,omitempty" structs:"locale,omitempty"`
 	ApplicationKeys []string   `json:"applicationKeys,omitempty" structs:"applicationKeys,omitempty"`
 }
 
