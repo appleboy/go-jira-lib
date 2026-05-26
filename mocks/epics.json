@@ -1,0 +1,23 @@
+{
+    "isLast": true,
+    "maxResults": 50,
+    "startAt": 0,
+    "values": [
+        {
+            "id": 37,
+            "key": "KEY-1",
+            "self": "https://jira.com/rest/agile/1.0/epic/37",
+            "name": "Add the resolve transition",
+            "summary": "Resolve transition",
+            "done": false
+        },
+        {
+            "id": 38,
+            "key": "KEY-2",
+            "self": "https://jira.com/rest/agile/1.0/epic/38",
+            "name": "Refactor the search service",
+            "summary": "Search refactor",
+            "done": false
+        }
+    ]
+}

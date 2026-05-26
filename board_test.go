@@ -218,6 +218,79 @@ func TestBoardService_GetAllSprintsWithOptions(t *testing.T) {
 	}
 }
 
+func TestBoardService_GetEpics(t *testing.T) {
+	setup()
+	defer teardown()
+
+	testAPIEndpoint := "/rest/agile/1.0/board/123/epic"
+
+	raw, err := ioutil.ReadFile("./mocks/epics.json")
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	testMux.HandleFunc(testAPIEndpoint, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		testRequestURL(t, r, testAPIEndpoint)
+		fmt.Fprint(w, string(raw))
+	})
+
+	epics, _, err := testClient.Board.GetEpics(123, nil)
+	if err != nil {
+		t.Errorf("Got error: %v", err)
+	}
+
+	if epics == nil {
+		t.Error("Expected epics list. Got nil.")
+		return
+	}
+
+	if len(epics.Values) != 2 {
+		t.Errorf("Expected 2 epics. Got %d", len(epics.Values))
+	}
+
+	if epics.Values[0].Key != "KEY-1" {
+		t.Errorf("Expected first epic key KEY-1. Got %s", epics.Values[0].Key)
+	}
+}
+
+func TestBoardService_GetEpics_WithOptions(t *testing.T) {
+	setup()
+	defer teardown()
+
+	testAPIEndpoint := "/rest/agile/1.0/board/123/epic"
+
+	raw, err := ioutil.ReadFile("./mocks/epics.json")
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	testMux.HandleFunc(testAPIEndpoint, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		testRequestURL(t, r, testAPIEndpoint)
+		testRequestParams(t, r, map[string]string{"done": "false", "maxResults": "50"})
+		fmt.Fprint(w, string(raw))
+	})
+
+	done := false
+	options := &GetEpicsOptions{Done: &done}
+	options.MaxResults = 50
+
+	epics, _, err := testClient.Board.GetEpics(123, options)
+	if err != nil {
+		t.Errorf("Got error: %v", err)
+	}
+
+	if epics == nil {
+		t.Error("Expected epics list. Got nil.")
+		return
+	}
+
+	if len(epics.Values) != 2 {
+		t.Errorf("Expected 2 epics. Got %d", len(epics.Values))
+	}
+}
+
 func TestBoardService_GetBoardConfigoration(t *testing.T) {
 	setup()
 	defer teardown()

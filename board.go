@@ -54,6 +54,26 @@ type GetAllSprintsOptions struct {
 	SearchOptions
 }
 
+// GetEpicsOptions specifies the optional parameters to the BoardService epic-listing methods.
+type GetEpicsOptions struct {
+	// Done filters results to epics that are either done or not done.
+	// Use a pointer so an explicit false is sent (the Agile API treats the
+	// absence of the parameter as "all epics").
+	Done *bool `url:"done,omitempty"`
+
+	SearchOptions
+}
+
+// EpicsList reflects a paginated list of agile epics returned by
+// GET /rest/agile/1.0/board/{boardID}/epic. The Epic element is shared with
+// the issue package (see issue.go).
+type EpicsList struct {
+	MaxResults int    `json:"maxResults" structs:"maxResults"`
+	StartAt    int    `json:"startAt" structs:"startAt"`
+	IsLast     bool   `json:"isLast" structs:"isLast"`
+	Values     []Epic `json:"values" structs:"values"`
+}
+
 // SprintsList reflects a list of agile sprints
 type SprintsList struct {
 	MaxResults int      `json:"maxResults" structs:"maxResults"`
@@ -312,4 +332,33 @@ func (s *BoardService) GetBoardConfigurationWithContext(ctx context.Context, boa
 // GetBoardConfiguration wraps GetBoardConfigurationWithContext using the background context.
 func (s *BoardService) GetBoardConfiguration(boardID int) (*BoardConfiguration, *Response, error) {
 	return s.GetBoardConfigurationWithContext(context.Background(), boardID)
+}
+
+// GetEpicsWithContext will return all epics from a board, for a given board Id and filtering options.
+// This only includes epics that the user has permission to view.
+//
+// Jira API docs: https://developer.atlassian.com/cloud/jira/software/rest/#api-rest-agile-1-0-board-boardId-epic-get
+func (s *BoardService) GetEpicsWithContext(ctx context.Context, boardID int, options *GetEpicsOptions) (*EpicsList, *Response, error) {
+	apiEndpoint := fmt.Sprintf("rest/agile/1.0/board/%d/epic", boardID)
+	url, err := addOptions(apiEndpoint, options)
+	if err != nil {
+		return nil, nil, err
+	}
+	req, err := s.client.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	result := new(EpicsList)
+	resp, err := s.client.Do(req, result)
+	if err != nil {
+		err = NewJiraError(resp, err)
+	}
+
+	return result, resp, err
+}
+
+// GetEpics wraps GetEpicsWithContext using the background context.
+func (s *BoardService) GetEpics(boardID int, options *GetEpicsOptions) (*EpicsList, *Response, error) {
+	return s.GetEpicsWithContext(context.Background(), boardID, options)
 }
