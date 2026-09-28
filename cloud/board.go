@@ -15,18 +15,18 @@ type BoardService service
 // BoardsList reflects a list of agile boards
 type BoardsList struct {
 	MaxResults int     `json:"maxResults" structs:"maxResults"`
-	StartAt    int     `json:"startAt" structs:"startAt"`
-	Total      int     `json:"total" structs:"total"`
-	IsLast     bool    `json:"isLast" structs:"isLast"`
-	Values     []Board `json:"values" structs:"values"`
+	StartAt    int     `json:"startAt"    structs:"startAt"`
+	Total      int     `json:"total"      structs:"total"`
+	IsLast     bool    `json:"isLast"     structs:"isLast"`
+	Values     []Board `json:"values"     structs:"values"`
 }
 
 // Board represents a Jira agile board
 type Board struct {
-	ID       int           `json:"id,omitempty" structs:"id,omitempty"`
-	Self     string        `json:"self,omitempty" structs:"self,omitempty"`
-	Name     string        `json:"name,omitempty" structs:"name,omitemtpy"`
-	Type     string        `json:"type,omitempty" structs:"type,omitempty"`
+	ID       int           `json:"id,omitempty"       structs:"id,omitempty"`
+	Self     string        `json:"self,omitempty"     structs:"self,omitempty"`
+	Name     string        `json:"name,omitempty"     structs:"name,omitemtpy"`
+	Type     string        `json:"type,omitempty"     structs:"type,omitempty"`
 	Location BoardLocation `json:"location,omitempty" structs:"location,omitempty"`
 	FilterID int           `json:"filterId,omitempty" structs:"filterId,omitempty"`
 }
@@ -68,22 +68,22 @@ type GetAllSprintsOptions struct {
 // SprintsList reflects a list of agile sprints
 type SprintsList struct {
 	MaxResults int      `json:"maxResults" structs:"maxResults"`
-	StartAt    int      `json:"startAt" structs:"startAt"`
-	Total      int      `json:"total" structs:"total"`
-	IsLast     bool     `json:"isLast" structs:"isLast"`
-	Values     []Sprint `json:"values" structs:"values"`
+	StartAt    int      `json:"startAt"    structs:"startAt"`
+	Total      int      `json:"total"      structs:"total"`
+	IsLast     bool     `json:"isLast"     structs:"isLast"`
+	Values     []Sprint `json:"values"     structs:"values"`
 }
 
 // Sprint represents a sprint on Jira agile board
 type Sprint struct {
-	ID            int        `json:"id" structs:"id"`
-	Name          string     `json:"name" structs:"name"`
-	CompleteDate  *time.Time `json:"completeDate" structs:"completeDate"`
-	EndDate       *time.Time `json:"endDate" structs:"endDate"`
-	StartDate     *time.Time `json:"startDate" structs:"startDate"`
-	OriginBoardID int        `json:"originBoardId" structs:"originBoardId"`
-	Self          string     `json:"self" structs:"self"`
-	State         string     `json:"state" structs:"state"`
+	ID            int        `json:"id"             structs:"id"`
+	Name          string     `json:"name"           structs:"name"`
+	CompleteDate  *time.Time `json:"completeDate"   structs:"completeDate"`
+	EndDate       *time.Time `json:"endDate"        structs:"endDate"`
+	StartDate     *time.Time `json:"startDate"      structs:"startDate"`
+	OriginBoardID int        `json:"originBoardId"  structs:"originBoardId"`
+	Self          string     `json:"self"           structs:"self"`
+	State         string     `json:"state"          structs:"state"`
 	Goal          string     `json:"goal,omitempty" structs:"goal"`
 }
 
@@ -145,7 +145,10 @@ type BoardConfigurationColumnStatus struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *BoardService) GetAllBoards(ctx context.Context, opt *BoardListOptions) (*BoardsList, *Response, error) {
+func (s *BoardService) GetAllBoards(
+	ctx context.Context,
+	opt *BoardListOptions,
+) (*BoardsList, *Response, error) {
 	apiEndpoint := "rest/agile/1.0/board"
 	url, err := addOptions(apiEndpoint, opt)
 	if err != nil {
@@ -241,7 +244,11 @@ func (s *BoardService) DeleteBoard(ctx context.Context, boardID int) (*Board, *R
 // This only includes sprints that the user has permission to view.
 //
 // Jira API docs: https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get
-func (s *BoardService) GetAllSprints(ctx context.Context, boardID int64, options *GetAllSprintsOptions) (*SprintsList, *Response, error) {
+func (s *BoardService) GetAllSprints(
+	ctx context.Context,
+	boardID int64,
+	options *GetAllSprintsOptions,
+) (*SprintsList, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/agile/1.0/board/%d/sprint", boardID)
 	url, err := addOptions(apiEndpoint, options)
 	if err != nil {
@@ -266,11 +273,13 @@ func (s *BoardService) GetAllSprints(ctx context.Context, boardID int64, options
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *BoardService) GetBoardConfiguration(ctx context.Context, boardID int) (*BoardConfiguration, *Response, error) {
+func (s *BoardService) GetBoardConfiguration(
+	ctx context.Context,
+	boardID int,
+) (*BoardConfiguration, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/agile/1.0/board/%d/configuration", boardID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
-
 	if err != nil {
 		return nil, nil, err
 	}
@@ -282,5 +291,4 @@ func (s *BoardService) GetBoardConfiguration(ctx context.Context, boardID int) (
 	}
 
 	return result, resp, err
-
 }

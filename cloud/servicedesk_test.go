@@ -14,12 +14,14 @@ import (
 func TestServiceDeskService_GetOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/10001/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/10001/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(w, `{
 			"_expands": [],
 			"size": 3,
 			"start": 3,
@@ -55,7 +57,8 @@ func TestServiceDeskService_GetOrganizations(t *testing.T) {
 			  }
 			]
 		  }`)
-	})
+		},
+	)
 
 	orgs, _, err := testClient.ServiceDesk.GetOrganizations(context.Background(), 10001, 3, 3, "")
 
@@ -73,15 +76,17 @@ func TestServiceDeskService_GetOrganizations(t *testing.T) {
 func TestServiceDeskService_AddOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/10001/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/10001/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	_, err := testClient.ServiceDesk.AddOrganization(context.Background(), 10001, 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -90,15 +95,17 @@ func TestServiceDeskService_AddOrganizations(t *testing.T) {
 func TestServiceDeskService_RemoveOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/10001/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/10001/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/10001/organization")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	_, err := testClient.ServiceDesk.RemoveOrganization(context.Background(), 10001, 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -107,12 +114,14 @@ func TestServiceDeskService_RemoveOrganizations(t *testing.T) {
 func TestServiceDeskServiceStringServiceDeskID_GetOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/TEST/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/TEST/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(w, `{
 			"_expands": [],
 			"size": 3,
 			"start": 3,
@@ -148,7 +157,8 @@ func TestServiceDeskServiceStringServiceDeskID_GetOrganizations(t *testing.T) {
 			  }
 			]
 		  }`)
-	})
+		},
+	)
 
 	orgs, _, err := testClient.ServiceDesk.GetOrganizations(context.Background(), "TEST", 3, 3, "")
 
@@ -166,15 +176,17 @@ func TestServiceDeskServiceStringServiceDeskID_GetOrganizations(t *testing.T) {
 func TestServiceDeskServiceStringServiceDeskID_AddOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/TEST/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/TEST/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	_, err := testClient.ServiceDesk.AddOrganization(context.Background(), "TEST", 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -183,15 +195,17 @@ func TestServiceDeskServiceStringServiceDeskID_AddOrganizations(t *testing.T) {
 func TestServiceDeskServiceStringServiceDeskID_RemoveOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/servicedesk/TEST/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/servicedesk/TEST/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/servicedeskapi/servicedesk/TEST/organization")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	_, err := testClient.ServiceDesk.RemoveOrganization(context.Background(), "TEST", 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -200,7 +214,7 @@ func TestServiceDeskServiceStringServiceDeskID_RemoveOrganizations(t *testing.T)
 func TestServiceDeskService_AddCustomers(t *testing.T) {
 	tests := []struct {
 		name          string
-		serviceDeskID interface{}
+		serviceDeskID any
 	}{
 		{
 			name:          "string service desk id",
@@ -226,25 +240,38 @@ func TestServiceDeskService_AddCustomers(t *testing.T) {
 				gotAccountIDs []string
 			)
 
-			testMux.HandleFunc(fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID), func(w http.ResponseWriter, r *http.Request) {
-				testMethod(t, r, http.MethodPost)
-				testRequestURL(t, r, fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID))
+			testMux.HandleFunc(
+				fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID),
+				func(w http.ResponseWriter, r *http.Request) {
+					testMethod(t, r, http.MethodPost)
+					testRequestURL(
+						t,
+						r,
+						fmt.Sprintf(
+							"/rest/servicedeskapi/servicedesk/%v/customer",
+							test.serviceDeskID,
+						),
+					)
 
-				var payload struct {
-					AccountIDs []string `json:"accountIds"`
-				}
+					var payload struct {
+						AccountIDs []string `json:"accountIds"`
+					}
 
-				if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-					t.Fatal(err)
-				}
+					if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+						t.Fatal(err)
+					}
 
-				gotAccountIDs = append(gotAccountIDs, payload.AccountIDs...)
+					gotAccountIDs = append(gotAccountIDs, payload.AccountIDs...)
 
-				w.WriteHeader(http.StatusNoContent)
-			})
+					w.WriteHeader(http.StatusNoContent)
+				},
+			)
 
-			_, err := testClient.ServiceDesk.AddCustomers(context.Background(), test.serviceDeskID, wantAccountIDs...)
-
+			_, err := testClient.ServiceDesk.AddCustomers(
+				context.Background(),
+				test.serviceDeskID,
+				wantAccountIDs...,
+			)
 			if err != nil {
 				t.Errorf("Error given: %s", err)
 			}
@@ -266,7 +293,7 @@ func TestServiceDeskService_AddCustomers(t *testing.T) {
 func TestServiceDeskService_RemoveCustomers(t *testing.T) {
 	tests := []struct {
 		name          string
-		serviceDeskID interface{}
+		serviceDeskID any
 	}{
 		{
 			name:          "string service desk id",
@@ -292,25 +319,38 @@ func TestServiceDeskService_RemoveCustomers(t *testing.T) {
 				gotAccountIDs []string
 			)
 
-			testMux.HandleFunc(fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID), func(w http.ResponseWriter, r *http.Request) {
-				testMethod(t, r, http.MethodDelete)
-				testRequestURL(t, r, fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID))
+			testMux.HandleFunc(
+				fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID),
+				func(w http.ResponseWriter, r *http.Request) {
+					testMethod(t, r, http.MethodDelete)
+					testRequestURL(
+						t,
+						r,
+						fmt.Sprintf(
+							"/rest/servicedeskapi/servicedesk/%v/customer",
+							test.serviceDeskID,
+						),
+					)
 
-				var payload struct {
-					AccountIDs []string `json:"accountIds"`
-				}
+					var payload struct {
+						AccountIDs []string `json:"accountIds"`
+					}
 
-				if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-					t.Fatal(err)
-				}
+					if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+						t.Fatal(err)
+					}
 
-				gotAccountIDs = append(gotAccountIDs, payload.AccountIDs...)
+					gotAccountIDs = append(gotAccountIDs, payload.AccountIDs...)
 
-				w.WriteHeader(http.StatusNoContent)
-			})
+					w.WriteHeader(http.StatusNoContent)
+				},
+			)
 
-			_, err := testClient.ServiceDesk.RemoveCustomers(context.Background(), test.serviceDeskID, wantAccountIDs...)
-
+			_, err := testClient.ServiceDesk.RemoveCustomers(
+				context.Background(),
+				test.serviceDeskID,
+				wantAccountIDs...,
+			)
 			if err != nil {
 				t.Errorf("Error given: %s", err)
 			}
@@ -332,7 +372,7 @@ func TestServiceDeskService_RemoveCustomers(t *testing.T) {
 func TestServiceDeskService_ListCustomers(t *testing.T) {
 	tests := []struct {
 		name          string
-		serviceDeskID interface{}
+		serviceDeskID any
 	}{
 		{
 			name:          "string service desk id",
@@ -361,20 +401,29 @@ func TestServiceDeskService_ListCustomers(t *testing.T) {
 				gotOptions = new(CustomerListOptions)
 			)
 
-			testMux.HandleFunc(fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID), func(w http.ResponseWriter, r *http.Request) {
-				testMethod(t, r, http.MethodGet)
-				testRequestURL(t, r, fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID))
+			testMux.HandleFunc(
+				fmt.Sprintf("/rest/servicedeskapi/servicedesk/%v/customer", test.serviceDeskID),
+				func(w http.ResponseWriter, r *http.Request) {
+					testMethod(t, r, http.MethodGet)
+					testRequestURL(
+						t,
+						r,
+						fmt.Sprintf(
+							"/rest/servicedeskapi/servicedesk/%v/customer",
+							test.serviceDeskID,
+						),
+					)
 
-				qs := r.URL.Query()
-				gotOptions.Query = qs.Get("query")
-				if start := qs.Get("start"); start != "" {
-					gotOptions.Start, _ = strconv.Atoi(start)
-				}
-				if limit := qs.Get("limit"); limit != "" {
-					gotOptions.Limit, _ = strconv.Atoi(limit)
-				}
+					qs := r.URL.Query()
+					gotOptions.Query = qs.Get("query")
+					if start := qs.Get("start"); start != "" {
+						gotOptions.Start, _ = strconv.Atoi(start)
+					}
+					if limit := qs.Get("limit"); limit != "" {
+						gotOptions.Limit, _ = strconv.Atoi(limit)
+					}
 
-				w.Write([]byte(`{
+					w.Write([]byte(`{
 				  "_expands": [],
 				  "size": 1,
 				  "start": 1,
@@ -408,9 +457,14 @@ func TestServiceDeskService_ListCustomers(t *testing.T) {
 					}
 				  ]
 				}`))
-			})
+				},
+			)
 
-			customerList, _, err := testClient.ServiceDesk.ListCustomers(context.Background(), test.serviceDeskID, wantOptions)
+			customerList, _, err := testClient.ServiceDesk.ListCustomers(
+				context.Background(),
+				test.serviceDeskID,
+				wantOptions,
+			)
 			if err != nil {
 				t.Fatal(err)
 			}

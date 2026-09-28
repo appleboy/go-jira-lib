@@ -3,8 +3,9 @@ package cloud
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 // UserService handles users for the Jira instance / API.
@@ -14,19 +15,19 @@ type UserService service
 
 // User represents a Jira user.
 type User struct {
-	Self             string           `json:"self,omitempty" structs:"self,omitempty"`
-	AccountID        string           `json:"accountId,omitempty" structs:"accountId,omitempty"`
-	AccountType      string           `json:"accountType,omitempty" structs:"accountType,omitempty"`
-	Name             string           `json:"name,omitempty" structs:"name,omitempty"`
-	Key              string           `json:"key,omitempty" structs:"key,omitempty"`
+	Self             string           `json:"self,omitempty"             structs:"self,omitempty"`
+	AccountID        string           `json:"accountId,omitempty"        structs:"accountId,omitempty"`
+	AccountType      string           `json:"accountType,omitempty"      structs:"accountType,omitempty"`
+	Name             string           `json:"name,omitempty"             structs:"name,omitempty"`
+	Key              string           `json:"key,omitempty"              structs:"key,omitempty"`
 	Password         string           `json:"-"`
-	EmailAddress     string           `json:"emailAddress,omitempty" structs:"emailAddress,omitempty"`
-	AvatarUrls       AvatarUrls       `json:"avatarUrls,omitempty" structs:"avatarUrls,omitempty"`
-	DisplayName      string           `json:"displayName,omitempty" structs:"displayName,omitempty"`
-	Active           bool             `json:"active,omitempty" structs:"active,omitempty"`
-	TimeZone         string           `json:"timeZone,omitempty" structs:"timeZone,omitempty"`
-	Locale           string           `json:"locale,omitempty" structs:"locale,omitempty"`
-	Groups           UserGroups       `json:"groups,omitempty" structs:"groups,omitempty"`
+	EmailAddress     string           `json:"emailAddress,omitempty"     structs:"emailAddress,omitempty"`
+	AvatarUrls       AvatarUrls       `json:"avatarUrls,omitempty"       structs:"avatarUrls,omitempty"`
+	DisplayName      string           `json:"displayName,omitempty"      structs:"displayName,omitempty"`
+	Active           bool             `json:"active,omitempty"           structs:"active,omitempty"`
+	TimeZone         string           `json:"timeZone,omitempty"         structs:"timeZone,omitempty"`
+	Locale           string           `json:"locale,omitempty"           structs:"locale,omitempty"`
+	Groups           UserGroups       `json:"groups,omitempty"           structs:"groups,omitempty"`
 	ApplicationRoles ApplicationRoles `json:"applicationRoles,omitempty" structs:"applicationRoles,omitempty"`
 }
 
@@ -38,13 +39,13 @@ type UserGroup struct {
 
 // Groups is a wrapper for UserGroup
 type UserGroups struct {
-	Size  int         `json:"size,omitempty" structs:"size,omitempty"`
+	Size  int         `json:"size,omitempty"  structs:"size,omitempty"`
 	Items []UserGroup `json:"items,omitempty" structs:"items,omitempty"`
 }
 
 // ApplicationRoles is a wrapper for ApplicationRole
 type ApplicationRoles struct {
-	Size  int               `json:"size,omitempty" structs:"size,omitempty"`
+	Size  int               `json:"size,omitempty"  structs:"size,omitempty"`
 	Items []ApplicationRole `json:"items,omitempty" structs:"items,omitempty"`
 }
 
@@ -82,8 +83,8 @@ type UserSearchF func(UserSearch) UserSearch
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *UserService) Get(ctx context.Context, accountId string) (*User, *Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/user?accountId=%s", accountId)
+func (s *UserService) Get(ctx context.Context, accountID string) (*User, *Response, error) {
+	apiEndpoint := "/rest/api/2/user?accountId=" + accountID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
@@ -104,8 +105,11 @@ func (s *UserService) Get(ctx context.Context, accountId string) (*User, *Respon
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *UserService) GetByAccountID(ctx context.Context, accountID string) (*User, *Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/user?accountId=%s", accountID)
+func (s *UserService) GetByAccountID(
+	ctx context.Context,
+	accountID string,
+) (*User, *Response, error) {
+	apiEndpoint := "/rest/api/2/user?accountId=" + accountID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
@@ -155,8 +159,8 @@ func (s *UserService) Create(ctx context.Context, user *User) (*User, *Response,
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *UserService) Delete(ctx context.Context, accountId string) (*Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/user?accountId=%s", accountId)
+func (s *UserService) Delete(ctx context.Context, accountID string) (*Response, error) {
+	apiEndpoint := "/rest/api/2/user?accountId=" + accountID
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndpoint, nil)
 	if err != nil {
 		return nil, err
@@ -175,8 +179,11 @@ func (s *UserService) Delete(ctx context.Context, accountId string) (*Response, 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *UserService) GetGroups(ctx context.Context, accountId string) (*[]UserGroup, *Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/user/groups?accountId=%s", accountId)
+func (s *UserService) GetGroups(
+	ctx context.Context,
+	accountID string,
+) (*[]UserGroup, *Response, error) {
+	apiEndpoint := "/rest/api/2/user/groups?accountId=" + accountID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
@@ -212,7 +219,7 @@ func (s *UserService) GetCurrentUser(ctx context.Context) (*User, *Response, err
 // WithMaxResults sets the max results to return
 func WithMaxResults(maxResults int) UserSearchF {
 	return func(s UserSearch) UserSearch {
-		s = append(s, UserSearchParam{name: "maxResults", value: fmt.Sprintf("%d", maxResults)})
+		s = append(s, UserSearchParam{name: "maxResults", value: strconv.Itoa(maxResults)})
 		return s
 	}
 }
@@ -220,7 +227,7 @@ func WithMaxResults(maxResults int) UserSearchF {
 // WithStartAt set the start pager
 func WithStartAt(startAt int) UserSearchF {
 	return func(s UserSearch) UserSearch {
-		s = append(s, UserSearchParam{name: "startAt", value: fmt.Sprintf("%d", startAt)})
+		s = append(s, UserSearchParam{name: "startAt", value: strconv.Itoa(startAt)})
 		return s
 	}
 }
@@ -228,7 +235,7 @@ func WithStartAt(startAt int) UserSearchF {
 // WithActive sets the active users lookup
 func WithActive(active bool) UserSearchF {
 	return func(s UserSearch) UserSearch {
-		s = append(s, UserSearchParam{name: "includeActive", value: fmt.Sprintf("%t", active)})
+		s = append(s, UserSearchParam{name: "includeActive", value: strconv.FormatBool(active)})
 		return s
 	}
 }
@@ -236,7 +243,7 @@ func WithActive(active bool) UserSearchF {
 // WithInactive sets the inactive users lookup
 func WithInactive(inactive bool) UserSearchF {
 	return func(s UserSearch) UserSearch {
-		s = append(s, UserSearchParam{name: "includeInactive", value: fmt.Sprintf("%t", inactive)})
+		s = append(s, UserSearchParam{name: "includeInactive", value: strconv.FormatBool(inactive)})
 		return s
 	}
 }
@@ -250,9 +257,11 @@ func WithUsername(username string) UserSearchF {
 }
 
 // WithAccountId sets the account id to search
-func WithAccountId(accountId string) UserSearchF {
+//
+//nolint:staticcheck // Preserve the exported function name for compatibility.
+func WithAccountId(accountID string) UserSearchF {
 	return func(s UserSearch) UserSearch {
-		s = append(s, UserSearchParam{name: "accountId", value: accountId})
+		s = append(s, UserSearchParam{name: "accountId", value: accountID})
 		return s
 	}
 }
@@ -272,7 +281,11 @@ func WithProperty(property string) UserSearchF {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *UserService) Find(ctx context.Context, property string, tweaks ...UserSearchF) ([]User, *Response, error) {
+func (s *UserService) Find(
+	ctx context.Context,
+	property string,
+	tweaks ...UserSearchF,
+) ([]User, *Response, error) {
 	search := []UserSearchParam{
 		{
 			name:  "query",
@@ -283,12 +296,16 @@ func (s *UserService) Find(ctx context.Context, property string, tweaks ...UserS
 		search = f(search)
 	}
 
-	var queryString = ""
+	var query strings.Builder
 	for _, param := range search {
-		queryString += param.name + "=" + param.value + "&"
+		query.WriteString(param.name)
+		query.WriteByte('=')
+		query.WriteString(param.value)
+		query.WriteByte('&')
 	}
+	queryString := query.String()
 
-	apiEndpoint := fmt.Sprintf("/rest/api/2/user/search?%s", queryString[:len(queryString)-1])
+	apiEndpoint := "/rest/api/2/user/search?" + queryString[:len(queryString)-1]
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err

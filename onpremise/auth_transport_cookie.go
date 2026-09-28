@@ -63,7 +63,7 @@ func (t *CookieAuthTransport) setSessionObject() error {
 		return err
 	}
 
-	var authClient = &http.Client{
+	authClient := &http.Client{
 		Timeout: time.Second * 60,
 	}
 	resp, err := authClient.Do(req)
@@ -87,7 +87,9 @@ func (t *CookieAuthTransport) buildAuthRequest() (*http.Request, error) {
 	}
 
 	b := new(bytes.Buffer)
-	json.NewEncoder(b).Encode(body)
+	if err := json.NewEncoder(b).Encode(body); err != nil {
+		return nil, err
+	}
 
 	// TODO Use a context here
 	req, err := http.NewRequest(http.MethodPost, t.AuthURL, b)

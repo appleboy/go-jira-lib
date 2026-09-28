@@ -15,23 +15,23 @@ type FilterService service
 
 // Filter represents a Filter in Jira
 type Filter struct {
-	Self             string        `json:"self"`
-	ID               string        `json:"id"`
-	Name             string        `json:"name"`
-	Description      string        `json:"description"`
-	Owner            User          `json:"owner"`
-	Jql              string        `json:"jql"`
-	ViewURL          string        `json:"viewUrl"`
-	SearchURL        string        `json:"searchUrl"`
-	Favourite        bool          `json:"favourite"`
-	FavouritedCount  int           `json:"favouritedCount"`
-	SharePermissions []interface{} `json:"sharePermissions"`
+	Self             string `json:"self"`
+	ID               string `json:"id"`
+	Name             string `json:"name"`
+	Description      string `json:"description"`
+	Owner            User   `json:"owner"`
+	Jql              string `json:"jql"`
+	ViewURL          string `json:"viewUrl"`
+	SearchURL        string `json:"searchUrl"`
+	Favourite        bool   `json:"favourite"`
+	FavouritedCount  int    `json:"favouritedCount"`
+	SharePermissions []any  `json:"sharePermissions"`
 	Subscriptions    struct {
-		Size       int           `json:"size"`
-		Items      []interface{} `json:"items"`
-		MaxResults int           `json:"max-results"`
-		StartIndex int           `json:"start-index"`
-		EndIndex   int           `json:"end-index"`
+		Size       int   `json:"size"`
+		Items      []any `json:"items"`
+		MaxResults int   `json:"max-results"`
+		StartIndex int   `json:"start-index"`
+		EndIndex   int   `json:"end-index"`
 	} `json:"subscriptions"`
 }
 
@@ -44,25 +44,25 @@ type GetMyFiltersQueryOptions struct {
 // FiltersList reflects a list of filters
 type FiltersList struct {
 	MaxResults int               `json:"maxResults" structs:"maxResults"`
-	StartAt    int               `json:"startAt" structs:"startAt"`
-	Total      int               `json:"total" structs:"total"`
-	IsLast     bool              `json:"isLast" structs:"isLast"`
-	Values     []FiltersListItem `json:"values" structs:"values"`
+	StartAt    int               `json:"startAt"    structs:"startAt"`
+	Total      int               `json:"total"      structs:"total"`
+	IsLast     bool              `json:"isLast"     structs:"isLast"`
+	Values     []FiltersListItem `json:"values"     structs:"values"`
 }
 
 // FiltersListItem represents a Filter of FiltersList in Jira
 type FiltersListItem struct {
-	Self             string        `json:"self"`
-	ID               string        `json:"id"`
-	Name             string        `json:"name"`
-	Description      string        `json:"description"`
-	Owner            User          `json:"owner"`
-	Jql              string        `json:"jql"`
-	ViewURL          string        `json:"viewUrl"`
-	SearchURL        string        `json:"searchUrl"`
-	Favourite        bool          `json:"favourite"`
-	FavouritedCount  int           `json:"favouritedCount"`
-	SharePermissions []interface{} `json:"sharePermissions"`
+	Self             string `json:"self"`
+	ID               string `json:"id"`
+	Name             string `json:"name"`
+	Description      string `json:"description"`
+	Owner            User   `json:"owner"`
+	Jql              string `json:"jql"`
+	ViewURL          string `json:"viewUrl"`
+	SearchURL        string `json:"searchUrl"`
+	Favourite        bool   `json:"favourite"`
+	FavouritedCount  int    `json:"favouritedCount"`
+	SharePermissions []any  `json:"sharePermissions"`
 	Subscriptions    []struct {
 		ID   int  `json:"id"`
 		User User `json:"user"`
@@ -124,7 +124,6 @@ type FilterSearchOptions struct {
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
 func (fs *FilterService) GetList(ctx context.Context) ([]*Filter, *Response, error) {
-
 	options := &GetQueryOptions{}
 	apiEndpoint := "rest/api/2/filter"
 	req, err := fs.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
@@ -192,7 +191,10 @@ func (fs *FilterService) Get(ctx context.Context, filterID int) (*Filter, *Respo
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (fs *FilterService) GetMyFilters(ctx context.Context, opts *GetMyFiltersQueryOptions) ([]*Filter, *Response, error) {
+func (fs *FilterService) GetMyFilters(
+	ctx context.Context,
+	opts *GetMyFiltersQueryOptions,
+) ([]*Filter, *Response, error) {
 	apiEndpoint := "rest/api/3/filter/my"
 	url, err := addOptions(apiEndpoint, opts)
 	if err != nil {
@@ -218,7 +220,10 @@ func (fs *FilterService) GetMyFilters(ctx context.Context, opts *GetMyFiltersQue
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (fs *FilterService) Search(ctx context.Context, opt *FilterSearchOptions) (*FiltersList, *Response, error) {
+func (fs *FilterService) Search(
+	ctx context.Context,
+	opt *FilterSearchOptions,
+) (*FiltersList, *Response, error) {
 	apiEndpoint := "rest/api/3/filter/search"
 	url, err := addOptions(apiEndpoint, opt)
 	if err != nil {

@@ -7,6 +7,7 @@ import (
 	jira "github.com/andygrunwald/go-jira/v2/onpremise"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	jiraURL := "<your-jira-instance>"
 

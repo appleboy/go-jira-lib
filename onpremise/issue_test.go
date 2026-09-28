@@ -23,7 +23,10 @@ func TestIssueService_Get_Success(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.Get(context.Background(), "10002", nil)
@@ -42,7 +45,10 @@ func TestIssueService_Get_WithQuerySuccess(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002?expand=foo")
 
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	opt := &GetQueryOptions{
@@ -65,7 +71,10 @@ func TestIssueService_Create(t *testing.T) {
 		testRequestURL(t, r, "/rest/api/2/issue")
 
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	i := &Issue{
@@ -165,8 +174,8 @@ func TestIssueService_UpdateIssue(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 	jID := "PROJ-9001"
-	i := make(map[string]interface{})
-	fields := make(map[string]interface{})
+	i := make(map[string]any)
+	fields := make(map[string]any)
 	i["fields"] = fields
 	resp, err := testClient.Issue.UpdateIssue(context.Background(), jID, i)
 	if resp == nil {
@@ -175,19 +184,24 @@ func TestIssueService_UpdateIssue(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
-
 }
 
 func TestIssueService_AddComment(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/comment", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/comment")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/comment",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/comment")
 
-		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}`)
-	})
+			w.WriteHeader(http.StatusCreated)
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}`,
+			)
+		},
+	)
 
 	c := &Comment{
 		Body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
@@ -208,13 +222,19 @@ func TestIssueService_AddComment(t *testing.T) {
 func TestIssueService_UpdateComment(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/comment/10001", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/comment/10001")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/comment/10001",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/comment/10001")
 
-		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10001","id":"10001","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}`)
-	})
+			w.WriteHeader(http.StatusCreated)
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10001","id":"10001","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}`,
+			)
+		},
+	)
 
 	c := &Comment{
 		ID:   "10001",
@@ -236,13 +256,16 @@ func TestIssueService_UpdateComment(t *testing.T) {
 func TestIssueService_DeleteComment(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/comment/10001", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/comment/10001")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/comment/10001",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/comment/10001")
 
-		w.WriteHeader(http.StatusNoContent)
-		fmt.Fprint(w, `{}`)
-	})
+			w.WriteHeader(http.StatusNoContent)
+			fmt.Fprint(w, `{}`)
+		},
+	)
 
 	err := testClient.Issue.DeleteComment(context.Background(), "10000", "10001")
 	if err != nil {
@@ -253,13 +276,19 @@ func TestIssueService_DeleteComment(t *testing.T) {
 func TestIssueService_AddWorklogRecord(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/worklog", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/worklog")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/worklog",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/worklog")
 
-		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2018-02-14T22:14:46.003+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2018-02-14T22:14:46.003+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}`)
-	})
+			w.WriteHeader(http.StatusCreated)
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2018-02-14T22:14:46.003+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2018-02-14T22:14:46.003+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}`,
+			)
+		},
+	)
 	r := &WorklogRecord{
 		TimeSpent: "1h",
 	}
@@ -275,13 +304,19 @@ func TestIssueService_AddWorklogRecord(t *testing.T) {
 func TestIssueService_UpdateWorklogRecord(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/worklog/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/worklog/1")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/worklog/1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/worklog/1")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/10000/worklog/1","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2018-02-14T22:14:46.003+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2018-02-14T22:14:46.003+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}`)
-	})
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/10000/worklog/1","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2018-02-14T22:14:46.003+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2018-02-14T22:14:46.003+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}`,
+			)
+		},
+	)
 	r := &WorklogRecord{
 		TimeSpent: "1h",
 	}
@@ -330,7 +365,7 @@ func TestIssueService_AddLink(t *testing.T) {
 		t.Error("Expected response. Response is nil")
 		return
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected Status code 200. Given %d", resp.StatusCode)
 	}
 }
@@ -342,7 +377,10 @@ func TestIssueService_Get_Fields(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"labels":["test"],"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"epic": {"id": 19415,"key": "EPIC-77","self": "https://example.atlassian.net/rest/agile/1.0/epic/19415","name": "Epic Name","summary": "Do it","color": {"key": "color_11"},"done": false},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"labels":["test"],"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"epic": {"id": 19415,"key": "EPIC-77","self": "https://example.atlassian.net/rest/agile/1.0/epic/19415","name": "Epic Name","summary": "Do it","color": {"key": "color_11"},"done": false},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.Get(context.Background(), "10002", nil)
@@ -372,7 +410,10 @@ func TestIssueService_Get_RenderedFields(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"labels":["test"],"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"epic": {"id": 19415,"key": "EPIC-77","self": "https://example.atlassian.net/rest/agile/1.0/epic/19415","name": "Epic Name","summary": "Do it","color": {"key": "color_11"},"done": false},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{},"renderedFields":{"resolutiondate":"In 1 week","updated":"2 hours ago","comment":{"comments":[{"body":"This <strong>is</strong> HTML"}]}}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"labels":["test"],"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"epic": {"id": 19415,"key": "EPIC-77","self": "https://example.atlassian.net/rest/agile/1.0/epic/19415","name": "Epic Name","summary": "Do it","color": {"key": "color_11"},"done": false},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{},"renderedFields":{"resolutiondate":"In 1 week","updated":"2 hours ago","comment":{"comments":[{"body":"This <strong>is</strong> HTML"}]}}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.Get(context.Background(), "10002", nil)
@@ -397,7 +438,7 @@ func TestIssueService_Get_RenderedFields(t *testing.T) {
 }
 
 func TestIssueService_DownloadAttachment(t *testing.T) {
-	var testAttachment = "Here is an attachment"
+	testAttachment := "Here is an attachment"
 
 	setup()
 	defer teardown()
@@ -427,13 +468,12 @@ func TestIssueService_DownloadAttachment(t *testing.T) {
 		t.Errorf("Expecting an attachment: %s", string(attachment))
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected Status code 200. Given %d", resp.StatusCode)
 	}
 }
 
 func TestIssueService_DownloadAttachment_BadStatus(t *testing.T) {
-
 	setup()
 	defer teardown()
 	testMux.HandleFunc("/secure/attachment/", func(w http.ResponseWriter, r *http.Request) {
@@ -459,46 +499,57 @@ func TestIssueService_DownloadAttachment_BadStatus(t *testing.T) {
 }
 
 func TestIssueService_PostAttachment(t *testing.T) {
-	var testAttachment = "Here is an attachment"
+	testAttachment := "Here is an attachment"
 
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/attachments", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
-		status := http.StatusOK
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/attachments",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
+			status := http.StatusOK
 
-		file, _, err := r.FormFile("file")
-		if err != nil {
-			status = http.StatusNotAcceptable
-		}
-		defer file.Close()
-
-		if file == nil {
-			status = http.StatusNoContent
-		} else {
-			// Read the file into memory
-			data, err := io.ReadAll(file)
+			file, _, err := r.FormFile("file")
 			if err != nil {
-				status = http.StatusInternalServerError
-			}
-			if string(data) != testAttachment {
 				status = http.StatusNotAcceptable
 			}
-		}
-		w.WriteHeader(status)
-		fmt.Fprint(w, `[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`)
-	})
+			defer file.Close()
+
+			if file == nil {
+				status = http.StatusNoContent
+			} else {
+				// Read the file into memory
+				data, err := io.ReadAll(file)
+				if err != nil {
+					status = http.StatusInternalServerError
+				}
+				if string(data) != testAttachment {
+					status = http.StatusNotAcceptable
+				}
+			}
+			w.WriteHeader(status)
+			fmt.Fprint(
+				w,
+				`[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`,
+			)
+		},
+	)
 
 	reader := strings.NewReader(testAttachment)
 
-	issue, resp, err := testClient.Issue.PostAttachment(context.Background(), "10000", reader, "attachment")
+	issue, resp, err := testClient.Issue.PostAttachment(
+		context.Background(),
+		"10000",
+		reader,
+		"attachment",
+	)
 
 	if issue == nil {
 		t.Error("Expected response. Response is nil")
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected Status code 200. Given %d", resp.StatusCode)
 	}
 
@@ -508,18 +559,26 @@ func TestIssueService_PostAttachment(t *testing.T) {
 }
 
 func TestIssueService_PostAttachment_NoResponse(t *testing.T) {
-	var testAttachment = "Here is an attachment"
+	testAttachment := "Here is an attachment"
 
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/attachments", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
-		w.WriteHeader(http.StatusOK)
-	})
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/attachments",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
+			w.WriteHeader(http.StatusOK)
+		},
+	)
 	reader := strings.NewReader(testAttachment)
 
-	_, _, err := testClient.Issue.PostAttachment(context.Background(), "10000", reader, "attachment")
+	_, _, err := testClient.Issue.PostAttachment(
+		context.Background(),
+		"10000",
+		reader,
+		"attachment",
+	)
 
 	if err == nil {
 		t.Errorf("Error expected: %s", err)
@@ -527,20 +586,25 @@ func TestIssueService_PostAttachment_NoResponse(t *testing.T) {
 }
 
 func TestIssueService_PostAttachment_NoFilename(t *testing.T) {
-	var testAttachment = "Here is an attachment"
+	testAttachment := "Here is an attachment"
 
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/attachments", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`)
-	})
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/attachments",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(
+				w,
+				`[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`,
+			)
+		},
+	)
 	reader := strings.NewReader(testAttachment)
 
 	_, _, err := testClient.Issue.PostAttachment(context.Background(), "10000", reader, "")
-
 	if err != nil {
 		t.Errorf("Error expected: %s", err)
 	}
@@ -549,15 +613,20 @@ func TestIssueService_PostAttachment_NoFilename(t *testing.T) {
 func TestIssueService_PostAttachment_NoAttachment(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/attachments", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`)
-	})
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/attachments",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/attachments")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(
+				w,
+				`[{"self":"http://jira/jira/rest/api/2/attachment/228924","id":"228924","filename":"example.jpg","author":{"self":"http://jira/jira/rest/api/2/user?username=test","name":"test","emailAddress":"test@test.com","avatarUrls":{"16x16":"http://jira/jira/secure/useravatar?size=small&avatarId=10082","48x48":"http://jira/jira/secure/useravatar?avatarId=10082"},"displayName":"Tester","active":true},"created":"2016-05-24T00:25:17.000-0700","size":32280,"mimeType":"image/jpeg","content":"http://jira/jira/secure/attachment/228924/example.jpg","thumbnail":"http://jira/jira/secure/thumbnail/228924/_thumb_228924.png"}]`,
+			)
+		},
+	)
 
 	_, _, err := testClient.Issue.PostAttachment(context.Background(), "10000", nil, "attachment")
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -566,21 +635,24 @@ func TestIssueService_PostAttachment_NoAttachment(t *testing.T) {
 func TestIssueService_DeleteAttachment(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/attachment/10054", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/api/2/attachment/10054")
+	testMux.HandleFunc(
+		"/rest/api/2/attachment/10054",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/api/2/attachment/10054")
 
-		w.WriteHeader(http.StatusNoContent)
-		fmt.Fprint(w, `{}`)
-	})
+			w.WriteHeader(http.StatusNoContent)
+			fmt.Fprint(w, `{}`)
+		},
+	)
 
 	resp, err := testClient.Issue.DeleteAttachment(context.Background(), "10054")
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Error("Expected attachment not deleted.")
-		if resp.StatusCode == 403 {
+		if resp.StatusCode == http.StatusForbidden {
 			t.Error("User not permitted to delete attachment")
 		}
-		if resp.StatusCode == 404 {
+		if resp.StatusCode == http.StatusNotFound {
 			t.Error("Attachment not found")
 		}
 	}
@@ -602,12 +674,12 @@ func TestIssueService_DeleteLink(t *testing.T) {
 	})
 
 	resp, err := testClient.Issue.DeleteLink(context.Background(), "10054")
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Error("Expected link not deleted.")
-		if resp.StatusCode == 403 {
+		if resp.StatusCode == http.StatusForbidden {
 			t.Error("User not permitted to delete link")
 		}
-		if resp.StatusCode == 404 {
+		if resp.StatusCode == http.StatusNotFound {
 			t.Error("Link not found")
 		}
 	}
@@ -622,13 +694,24 @@ func TestIssueService_Search(t *testing.T) {
 	defer teardown()
 	testMux.HandleFunc("/rest/api/2/search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/api/2/search?expand=foo&jql=type+%3D+Bug+and+Status+NOT+IN+%28Resolved%29&maxResults=40&startAt=1")
+		testRequestURL(
+			t,
+			r,
+			"/rest/api/2/search?expand=foo&jql=type+%3D+Bug+and+Status+NOT+IN+%28Resolved%29&maxResults=40&startAt=1",
+		)
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"expand": "schema,names","startAt": 1,"maxResults": 40,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`)
+		fmt.Fprint(
+			w,
+			`{"expand": "schema,names","startAt": 1,"maxResults": 40,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`,
+		)
 	})
 
 	opt := &SearchOptions{StartAt: 1, MaxResults: 40, Expand: "foo"}
-	_, resp, err := testClient.Issue.Search(context.Background(), "type = Bug and Status NOT IN (Resolved)", opt)
+	_, resp, err := testClient.Issue.Search(
+		context.Background(),
+		"type = Bug and Status NOT IN (Resolved)",
+		opt,
+	)
 
 	if resp == nil {
 		t.Errorf("Response given: %+v", resp)
@@ -655,7 +738,10 @@ func TestIssueService_SearchEmptyJQL(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/search?expand=foo&maxResults=40&startAt=1")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"expand": "schema,names","startAt": 1,"maxResults": 40,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`)
+		fmt.Fprint(
+			w,
+			`{"expand": "schema,names","startAt": 1,"maxResults": 40,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`,
+		)
 	})
 
 	opt := &SearchOptions{StartAt: 1, MaxResults: 40, Expand: "foo"}
@@ -686,7 +772,10 @@ func TestIssueService_Search_WithoutPaging(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/search?jql=something")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{"expand": "schema,names","startAt": 0,"maxResults": 50,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`)
+		fmt.Fprint(
+			w,
+			`{"expand": "schema,names","startAt": 0,"maxResults": 50,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`,
+		)
 	})
 	_, resp, err := testClient.Issue.Search(context.Background(), "something", nil)
 
@@ -713,17 +802,27 @@ func TestIssueService_SearchPages(t *testing.T) {
 	defer teardown()
 	testMux.HandleFunc("/rest/api/2/search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
-		if r.URL.String() == "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=1&validateQuery=warn" {
+		switch r.URL.String() {
+		case "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=1&validateQuery=warn":
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprint(w, `{"expand": "schema,names","startAt": 1,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`)
+			fmt.Fprint(
+				w,
+				`{"expand": "schema,names","startAt": 1,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`,
+			)
 			return
-		} else if r.URL.String() == "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=3&validateQuery=warn" {
+		case "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=3&validateQuery=warn":
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprint(w, `{"expand": "schema,names","startAt": 3,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`)
+			fmt.Fprint(
+				w,
+				`{"expand": "schema,names","startAt": 3,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}},{"expand": "html","id": "10004","self": "http://kelpie9:8081/rest/api/2/issue/BULK-47","key": "BULK-47","fields": {"summary": "Cheese v1 2.0 issue","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/3","id": "3","description": "A task that needs to be done.","iconUrl": "http://kelpie9:8081/images/icons/task.gif","name": "Task","subtask": false}}}]}`,
+			)
 			return
-		} else if r.URL.String() == "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=5&validateQuery=warn" {
+		case "/rest/api/2/search?expand=foo&jql=something&maxResults=2&startAt=5&validateQuery=warn":
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprint(w, `{"expand": "schema,names","startAt": 5,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}}]}`)
+			fmt.Fprint(
+				w,
+				`{"expand": "schema,names","startAt": 5,"maxResults": 2,"total": 6,"issues": [{"expand": "html","id": "10230","self": "http://kelpie9:8081/rest/api/2/issue/BULK-62","key": "BULK-62","fields": {"summary": "testing","timetracking": null,"issuetype": {"self": "http://kelpie9:8081/rest/api/2/issuetype/5","id": "5","description": "The sub-task of the issue","iconUrl": "http://kelpie9:8081/images/icons/issue_subtask.gif","name": "Sub-task","subtask": true},"customfield_10071": null}}]}`,
+			)
 			return
 		}
 
@@ -732,11 +831,15 @@ func TestIssueService_SearchPages(t *testing.T) {
 
 	opt := &SearchOptions{StartAt: 1, MaxResults: 2, Expand: "foo", ValidateQuery: "warn"}
 	issues := make([]Issue, 0)
-	err := testClient.Issue.SearchPages(context.Background(), "something", opt, func(issue Issue) error {
-		issues = append(issues, issue)
-		return nil
-	})
-
+	err := testClient.Issue.SearchPages(
+		context.Background(),
+		"something",
+		opt,
+		func(issue Issue) error {
+			issues = append(issues, issue)
+			return nil
+		},
+	)
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -754,7 +857,10 @@ func TestIssueService_SearchPages_EmptyResult(t *testing.T) {
 		if r.URL.String() == "/rest/api/2/search?expand=foo&jql=something&maxResults=50&startAt=1&validateQuery=warn" {
 			w.WriteHeader(http.StatusOK)
 			// This is what Jira outputs when the &maxResult= issue occurs. It used to cause SearchPages to go into an endless loop.
-			fmt.Fprint(w, `{"expand": "schema,names","startAt": 0,"maxResults": 0,"total": 6,"issues": []}`)
+			fmt.Fprint(
+				w,
+				`{"expand": "schema,names","startAt": 0,"maxResults": 0,"total": 6,"issues": []}`,
+			)
 			return
 		}
 
@@ -763,15 +869,18 @@ func TestIssueService_SearchPages_EmptyResult(t *testing.T) {
 
 	opt := &SearchOptions{StartAt: 1, MaxResults: 50, Expand: "foo", ValidateQuery: "warn"}
 	issues := make([]Issue, 0)
-	err := testClient.Issue.SearchPages(context.Background(), "something", opt, func(issue Issue) error {
-		issues = append(issues, issue)
-		return nil
-	})
-
+	err := testClient.Issue.SearchPages(
+		context.Background(),
+		"something",
+		opt,
+		func(issue Issue) error {
+			issues = append(issues, issue)
+			return nil
+		},
+	)
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
-
 }
 
 func TestIssueService_GetCustomFields(t *testing.T) {
@@ -780,7 +889,10 @@ func TestIssueService_GetCustomFields(t *testing.T) {
 	testMux.HandleFunc("/rest/api/2/issue/10002", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"customfield_123":"test","watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"customfield_123":"test","watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.GetCustomFields(context.Background(), "10002")
@@ -802,7 +914,10 @@ func TestIssueService_GetComplexCustomFields(t *testing.T) {
 	testMux.HandleFunc("/rest/api/2/issue/10002", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"customfield_123":{"self":"http://www.example.com/jira/rest/api/2/customFieldOption/123","value":"test","id":"123"},"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","fields":{"customfield_123":{"self":"http://www.example.com/jira/rest/api/2/customFieldOption/123","value":"test","id":"123"},"watcher":{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false}]},"attachment":[{"self":"http://www.example.com/jira/rest/api/2.0/attachments/10000","filename":"picture.jpg","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred","24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred","32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.461+0000","size":23123,"mimeType":"image/jpeg","content":"http://www.example.com/jira/attachments/10000","thumbnail":"http://www.example.com/jira/secure/thumbnail/10000"}],"sub-tasks":[{"id":"10000","type":{"id":"10000","name":"","inward":"Parent","outward":"Sub-task"},"outwardIssue":{"id":"10003","key":"EX-2","self":"http://www.example.com/jira/rest/api/2/issue/EX-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"description":"example bug report","project":{"self":"http://www.example.com/jira/rest/api/2/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"http://www.example.com/jira/secure/projectavatar?size=large&pid=10000","24x24":"http://www.example.com/jira/secure/projectavatar?size=small&pid=10000","16x16":"http://www.example.com/jira/secure/projectavatar?size=xsmall&pid=10000","32x32":"http://www.example.com/jira/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"http://www.example.com/jira/rest/api/2/projectCategory/10000","id":"10000","name":"FIRST","description":"First Project Category"}},"comment":{"comments":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/comment/10000","id":"10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"body":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.","updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","visibility":{"type":"role","value":"Administrators"}}]},"issuelinks":[{"id":"10001","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"outwardIssue":{"id":"10004L","key":"PRJ-2","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-2","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}},{"id":"10002","type":{"id":"10000","name":"Dependent","inward":"depends on","outward":"is depended by"},"inwardIssue":{"id":"10004","key":"PRJ-3","self":"http://www.example.com/jira/rest/api/2/issue/PRJ-3","fields":{"status":{"iconUrl":"http://www.example.com/jira//images/icons/statuses/open.png","name":"Open"}}}}],"worklog":{"worklogs":[{"self":"http://www.example.com/jira/rest/api/2/issue/10010/worklog/10000","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"comment":"I did some work here.","updated":"2016-03-16T04:22:37.471+0000","visibility":{"type":"group","value":"jira-developers"},"started":"2016-03-16T04:22:37.471+0000","timeSpent":"3h 20m","timeSpentSeconds":12000,"id":"100028","issueId":"10002"}]},"updated":"2016-04-06T02:36:53.594-0700","duedate":"2018-01-19","timetracking":{"originalEstimate":"10m","remainingEstimate":"3m","timeSpent":"6m","originalEstimateSeconds":600,"remainingEstimateSeconds":200,"timeSpentSeconds":400}},"names":{"watcher":"watcher","attachment":"attachment","sub-tasks":"sub-tasks","description":"description","project":"project","comment":"comment","issuelinks":"issuelinks","worklog":"worklog","updated":"updated","timetracking":"timetracking"},"schema":{}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.GetCustomFields(context.Background(), "10002")
@@ -836,7 +951,6 @@ func TestIssueService_GetTransitions(t *testing.T) {
 	})
 
 	transitions, _, err := testClient.Issue.GetTransitions(context.Background(), "123")
-
 	if err != nil {
 		t.Errorf("Got error: %v", err)
 	}
@@ -874,11 +988,14 @@ func TestIssueService_DoTransition(t *testing.T) {
 		}
 
 		if payload.Transition.ID != transitionID {
-			t.Errorf("Expected %s to be in payload, got %s instead", transitionID, payload.Transition.ID)
+			t.Errorf(
+				"Expected %s to be in payload, got %s instead",
+				transitionID,
+				payload.Transition.ID,
+			)
 		}
 	})
 	_, err := testClient.Issue.DoTransition(context.Background(), "123", transitionID)
-
 	if err != nil {
 		t.Errorf("Got error: %v", err)
 	}
@@ -892,9 +1009,9 @@ func TestIssueService_DoTransitionWithPayload(t *testing.T) {
 
 	transitionID := "22"
 
-	customPayload := map[string]interface{}{
-		"update": map[string]interface{}{
-			"comment": []map[string]interface{}{
+	customPayload := map[string]any{
+		"update": map[string]any{
+			"comment": []map[string]any{
 				{
 					"add": map[string]string{
 						"body": "Hello World",
@@ -912,7 +1029,7 @@ func TestIssueService_DoTransitionWithPayload(t *testing.T) {
 		testRequestURL(t, r, testAPIEndpoint)
 
 		decoder := json.NewDecoder(r.Body)
-		payload := map[string]interface{}{}
+		payload := map[string]any{}
 		err := decoder.Decode(&payload)
 		if err != nil {
 			t.Errorf("Got error: %v", err)
@@ -927,7 +1044,7 @@ func TestIssueService_DoTransitionWithPayload(t *testing.T) {
 			t.Fatalf("Excpected update, transition to be in payload, got %s instead", payload)
 		}
 
-		transition, ok := payload["transition"].(map[string]interface{})
+		transition, ok := payload["transition"].(map[string]any)
 		if !ok {
 			t.Fatalf("Excpected transition to be in payload, got %s instead", payload["transition"])
 		}
@@ -937,7 +1054,6 @@ func TestIssueService_DoTransitionWithPayload(t *testing.T) {
 		}
 	})
 	_, err := testClient.Issue.DoTransitionWithPayload(context.Background(), "123", customPayload)
-
 	if err != nil {
 		t.Errorf("Got error: %v", err)
 	}
@@ -1019,9 +1135,12 @@ func TestIssueFields_TestMarshalJSON_PopulateUnknownsSuccess(t *testing.T) {
 		t.Errorf("Expected 1 unknown field to be present, received %d", len(i.Unknowns))
 	}
 	if i.Description != "example bug report" {
-		t.Errorf("Expected description to be \"%s\", received \"%s\"", "example bug report", i.Description)
+		t.Errorf(
+			"Expected description to be \"%s\", received \"%s\"",
+			"example bug report",
+			i.Description,
+		)
 	}
-
 }
 
 func TestIssueFields_MarshalJSON_OmitsEmptyFields(t *testing.T) {
@@ -1113,9 +1232,9 @@ func TestInitIssueWithMetaAndFields_Success(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["summary"] = map[string]interface{}{
+	fields["summary"] = map[string]any{
 		"name": "Summary",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "string",
 		},
 	}
@@ -1150,9 +1269,9 @@ func TestInitIssueWithMetaAndFields_ArrayValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["component"] = map[string]interface{}{
+	fields["component"] = map[string]any{
 		"name": "Component/s",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type":  "array",
 			"items": "component",
 		},
@@ -1199,9 +1318,9 @@ func TestInitIssueWithMetaAndFields_DateValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["created"] = map[string]interface{}{
+	fields["created"] = map[string]any{
 		"name": "Created",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "date",
 		},
 	}
@@ -1237,9 +1356,9 @@ func TestInitIssueWithMetaAndFields_UserValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["assignee"] = map[string]interface{}{
+	fields["assignee"] = map[string]any{
 		"name": "Assignee",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "user",
 		},
 	}
@@ -1273,9 +1392,9 @@ func TestInitIssueWithMetaAndFields_ProjectValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["project"] = map[string]interface{}{
+	fields["project"] = map[string]any{
 		"name": "Project",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "project",
 		},
 	}
@@ -1309,9 +1428,9 @@ func TestInitIssueWithMetaAndFields_PriorityValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["priority"] = map[string]interface{}{
+	fields["priority"] = map[string]any{
 		"name": "Priority",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "priority",
 		},
 	}
@@ -1345,9 +1464,9 @@ func TestInitIssueWithMetaAndFields_SelectList(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["someitem"] = map[string]interface{}{
+	fields["someitem"] = map[string]any{
 		"name": "A Select Item",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "option",
 		},
 	}
@@ -1381,9 +1500,9 @@ func TestInitIssueWithMetaAndFields_IssuetypeValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["issuetype"] = map[string]interface{}{
+	fields["issuetype"] = map[string]any{
 		"name": "Issue type",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "issuetype",
 		},
 	}
@@ -1417,9 +1536,9 @@ func TestInitIssueWithmetaAndFields_FailureWithUnknownValueType(t *testing.T) {
 	}
 
 	fields := tcontainer.NewMarshalMap()
-	fields["issuetype"] = map[string]interface{}{
+	fields["issuetype"] = map[string]any{
 		"name": "Issue type",
-		"schema": map[string]interface{}{
+		"schema": map[string]any{
 			"type": "randomType",
 		},
 	}
@@ -1435,7 +1554,6 @@ func TestInitIssueWithmetaAndFields_FailureWithUnknownValueType(t *testing.T) {
 	if err == nil {
 		t.Error("Expected non nil error, received nil")
 	}
-
 }
 
 func TestIssueService_Delete(t *testing.T) {
@@ -1450,7 +1568,7 @@ func TestIssueService_Delete(t *testing.T) {
 	})
 
 	resp, err := testClient.Issue.Delete(context.Background(), "10002")
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Error("Expected issue not deleted.")
 	}
 	if err != nil {
@@ -1471,7 +1589,7 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 	tt := []struct {
 		name     string
 		response string
-		issueId  string
+		issueID  string
 		uri      string
 		worklog  *Worklog
 		err      error
@@ -1480,7 +1598,7 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 		{
 			name:     "simple worklog",
 			response: `{"startAt": 1,"maxResults": 40,"total": 1,"worklogs": [{"id": "3","self": "http://kelpie9:8081/rest/api/2/issue/10002/worklog/3","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","comment":"","started":"2016-03-16T04:22:37.356+0000","timeSpent": "1h","timeSpentSeconds": 3600,"issueId":"10002"}]}`,
-			issueId:  "10002",
+			issueID:  "10002",
 			uri:      "/rest/api/2/issue/%s/worklog",
 			worklog: &Worklog{
 				StartAt:    1,
@@ -1499,9 +1617,15 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 							Name:        "fred",
 							DisplayName: "Fred F. User",
 						},
-						Created:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
-						Started:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
-						Updated:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
+						Created: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
+						Started: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
+						Updated: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
 						TimeSpent:        "1h",
 						TimeSpentSeconds: 3600,
 						ID:               "3",
@@ -1513,7 +1637,7 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 		{
 			name:     "expanded worklog",
 			response: `{"startAt":1,"maxResults":40,"total":1,"worklogs":[{"id":"3","self":"http://kelpie9:8081/rest/api/2/issue/10002/worklog/3","author":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"updateAuthor":{"self":"http://www.example.com/jira/rest/api/2/user?username=fred","name":"fred","displayName":"Fred F. User","active":false},"created":"2016-03-16T04:22:37.356+0000","updated":"2016-03-16T04:22:37.356+0000","comment":"","started":"2016-03-16T04:22:37.356+0000","timeSpent":"1h","timeSpentSeconds":3600,"issueId":"10002","properties":[{"key":"foo","value":{"bar":"baz"}}]}]}`,
-			issueId:  "10002",
+			issueID:  "10002",
 			uri:      "/rest/api/2/issue/%s/worklog?expand=properties",
 			worklog: &Worklog{
 				StartAt:    1,
@@ -1532,9 +1656,15 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 							Name:        "fred",
 							DisplayName: "Fred F. User",
 						},
-						Created:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
-						Started:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
-						Updated:          getTime(time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC)),
+						Created: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
+						Started: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
+						Updated: getTime(
+							time.Date(2016, time.March, 16, 4, 22, 37, 356000000, time.UTC),
+						),
 						TimeSpent:        "1h",
 						TimeSpentSeconds: 3600,
 						ID:               "3",
@@ -1542,7 +1672,7 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 						Properties: []EntityProperty{
 							{
 								Key: "foo",
-								Value: map[string]interface{}{
+								Value: map[string]any{
 									"bar": "baz",
 								},
 							},
@@ -1556,7 +1686,7 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			uri := fmt.Sprintf(tc.uri, tc.issueId)
+			uri := fmt.Sprintf(tc.uri, tc.issueID)
 			testMux.HandleFunc(uri, func(w http.ResponseWriter, r *http.Request) {
 				testMethod(t, r, http.MethodGet)
 				testRequestURL(t, r, uri)
@@ -1567,9 +1697,13 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 			var err error
 
 			if tc.option != nil {
-				worklog, _, err = testClient.Issue.GetWorklogs(context.Background(), tc.issueId, WithQueryOptions(tc.option))
+				worklog, _, err = testClient.Issue.GetWorklogs(
+					context.Background(),
+					tc.issueID,
+					WithQueryOptions(tc.option),
+				)
 			} else {
-				worklog, _, err = testClient.Issue.GetWorklogs(context.Background(), tc.issueId)
+				worklog, _, err = testClient.Issue.GetWorklogs(context.Background(), tc.issueID)
 			}
 
 			if err != nil && !cmp.Equal(err, tc.err) {
@@ -1586,24 +1720,33 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 func TestIssueService_GetWatchers(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10002/watchers", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/api/2/issue/10002/watchers")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10002/watchers",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/api/2/issue/10002/watchers")
 
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000","accountId": "000000000000000000000000","displayName":"Fred F. User","active":false}]}`)
-	})
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000","accountId": "000000000000000000000000","displayName":"Fred F. User","active":false}]}`,
+			)
+		},
+	)
 
 	testMux.HandleFunc("/rest/api/2/user", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/user?accountId=000000000000000000000000")
 
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000","key":"fred","accountId": "000000000000000000000000",
+		fmt.Fprint(
+			w,
+			`{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000","key":"fred","accountId": "000000000000000000000000",
         "emailAddress":"fred@example.com","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred",
         "24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred",
         "32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":true,"timeZone":"Australia/Sydney","groups":{"size":3,"items":[
         {"name":"jira-user","self":"http://www.example.com/jira/rest/api/2/group?groupname=jira-user"},{"name":"jira-admin",
         "self":"http://www.example.com/jira/rest/api/2/group?groupname=jira-admin"},{"name":"important","self":"http://www.example.com/jira/rest/api/2/group?groupname=important"
-        }]},"applicationRoles":{"size":1,"items":[]},"expand":"groups,applicationRoles"}`)
+        }]},"applicationRoles":{"size":1,"items":[]},"expand":"groups,applicationRoles"}`,
+		)
 	})
 
 	watchers, _, err := testClient.Issue.GetWatchers(context.Background(), "10002")
@@ -1627,23 +1770,32 @@ func TestIssueService_GetWatchers(t *testing.T) {
 func TestIssueService_DeprecatedGetWatchers(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10002/watchers", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/api/2/issue/10002/watchers")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10002/watchers",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/api/2/issue/10002/watchers")
 
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000", "accountId": "000000000000000000000000", "displayName":"Fred F. User","active":false}]}`)
-	})
+			fmt.Fprint(
+				w,
+				`{"self":"http://www.example.com/jira/rest/api/2/issue/EX-1/watchers","isWatching":false,"watchCount":1,"watchers":[{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000", "accountId": "000000000000000000000000", "displayName":"Fred F. User","active":false}]}`,
+			)
+		},
+	)
 
 	testMux.HandleFunc("/rest/api/2/user", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/user?accountId=000000000000000000000000")
 
-		fmt.Fprint(w, `{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000", "accountId": "000000000000000000000000", "key": "", "name": "", "emailAddress":"fred@example.com","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred",
+		fmt.Fprint(
+			w,
+			`{"self":"http://www.example.com/jira/rest/api/2/user?accountId=000000000000000000000000", "accountId": "000000000000000000000000", "key": "", "name": "", "emailAddress":"fred@example.com","avatarUrls":{"48x48":"http://www.example.com/jira/secure/useravatar?size=large&ownerId=fred",
         "24x24":"http://www.example.com/jira/secure/useravatar?size=small&ownerId=fred","16x16":"http://www.example.com/jira/secure/useravatar?size=xsmall&ownerId=fred",
         "32x32":"http://www.example.com/jira/secure/useravatar?size=medium&ownerId=fred"},"displayName":"Fred F. User","active":true,"timeZone":"Australia/Sydney","groups":{"size":3,"items":[
         {"name":"jira-user","self":"http://www.example.com/jira/rest/api/2/group?groupname=jira-user"},{"name":"jira-admin",
         "self":"http://www.example.com/jira/rest/api/2/group?groupname=jira-admin"},{"name":"important","self":"http://www.example.com/jira/rest/api/2/group?groupname=important"
-        }]},"applicationRoles":{"size":1,"items":[]},"expand":"groups,applicationRoles"}`)
+        }]},"applicationRoles":{"size":1,"items":[]},"expand":"groups,applicationRoles"}`,
+		)
 	})
 
 	watchers, _, err := testClient.Issue.GetWatchers(context.Background(), "10002")
@@ -1667,18 +1819,21 @@ func TestIssueService_DeprecatedGetWatchers(t *testing.T) {
 func TestIssueService_UpdateAssignee(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10002/assignee", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/api/2/issue/10002/assignee")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10002/assignee",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(t, r, "/rest/api/2/issue/10002/assignee")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	resp, err := testClient.Issue.UpdateAssignee(context.Background(), "10002", &User{
 		Name: "test-username",
 	})
 
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Error("Expected issue not re-assigned.")
 	}
 	if err != nil {
@@ -1693,10 +1848,17 @@ func TestIssueService_Get_Fields_Changelog(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"expand":"changelog","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","changelog":{"startAt": 0,"maxResults": 1, "total": 1, "histories": [{"id": "10002", "author": {"self": "http://www.example.com/jira/rest/api/2/user?username=fred", "name": "fred", "key": "fred", "emailAddress": "fred@example.com", "avatarUrls": {"48x48": "http://www.example.com/secure/useravatar?ownerId=fred&avatarId=33072", "24x24": "http://www.example.com/secure/useravatar?size=small&ownerId=fred&avatarId=33072", "16x16": "http://www.example.com/secure/useravatar?size=xsmall&ownerId=fred&avatarId=33072", "32x32": "http://www.example.com/secure/useravatar?size=medium&ownerId=fred&avatarId=33072"},"displayName":"Fred","active": true,"timeZone":"Australia/Sydney"},"created":"2018-06-20T16:50:35.000+0300","items":[{"field":"Rank","fieldtype":"custom","from":"","fromString":"","to":"","toString":"Ranked higher"}]}]}}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"changelog","id":"10002","self":"http://www.example.com/jira/rest/api/2/issue/10002","key":"EX-1","changelog":{"startAt": 0,"maxResults": 1, "total": 1, "histories": [{"id": "10002", "author": {"self": "http://www.example.com/jira/rest/api/2/user?username=fred", "name": "fred", "key": "fred", "emailAddress": "fred@example.com", "avatarUrls": {"48x48": "http://www.example.com/secure/useravatar?ownerId=fred&avatarId=33072", "24x24": "http://www.example.com/secure/useravatar?size=small&ownerId=fred&avatarId=33072", "16x16": "http://www.example.com/secure/useravatar?size=xsmall&ownerId=fred&avatarId=33072", "32x32": "http://www.example.com/secure/useravatar?size=medium&ownerId=fred&avatarId=33072"},"displayName":"Fred","active": true,"timeZone":"Australia/Sydney"},"created":"2018-06-20T16:50:35.000+0300","items":[{"field":"Rank","fieldtype":"custom","from":"","fromString":"","to":"","toString":"Ranked higher"}]}]}}`,
+		)
 	})
 
-	issue, _, _ := testClient.Issue.Get(context.Background(), "10002", &GetQueryOptions{Expand: "changelog"})
+	issue, _, _ := testClient.Issue.Get(
+		context.Background(),
+		"10002",
+		&GetQueryOptions{Expand: "changelog"},
+	)
 	if issue == nil {
 		t.Error("Expected issue. Issue is nil")
 		return
@@ -1707,7 +1869,10 @@ func TestIssueService_Get_Fields_Changelog(t *testing.T) {
 	}
 
 	if issue.Changelog.Histories[0].Created != "2018-06-20T16:50:35.000+0300" {
-		t.Errorf("Expected created time of history item 2018-06-20T16:50:35.000+0300, %v got", issue.Changelog.Histories[0].Created)
+		t.Errorf(
+			"Expected created time of history item 2018-06-20T16:50:35.000+0300, %v got",
+			issue.Changelog.Histories[0].Created,
+		)
 	}
 
 	tm, _ := time.Parse("2006-01-02T15:04:05.999-0700", "2018-06-20T16:50:35.000+0300")
@@ -1724,10 +1889,17 @@ func TestIssueService_Get_Transitions(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/api/latest/issue/10002","key":"EX-1","transitions":[{"id":"121","name":"Start","to":{"self":"http://www.example.com/rest/api/2/status/10444","description":"","iconUrl":"http://www.example.com/images/icons/statuses/inprogress.png","name":"In progress","id":"10444","statusCategory":{"self":"http://www.example.com/rest/api/2/statuscategory/4","id":4,"key":"indeterminate","colorName":"yellow","name":"In Progress"}}}]}`)
+		fmt.Fprint(
+			w,
+			`{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations","id":"10002","self":"http://www.example.com/jira/api/latest/issue/10002","key":"EX-1","transitions":[{"id":"121","name":"Start","to":{"self":"http://www.example.com/rest/api/2/status/10444","description":"","iconUrl":"http://www.example.com/images/icons/statuses/inprogress.png","name":"In progress","id":"10444","statusCategory":{"self":"http://www.example.com/rest/api/2/statuscategory/4","id":4,"key":"indeterminate","colorName":"yellow","name":"In Progress"}}}]}`,
+		)
 	})
 
-	issue, _, _ := testClient.Issue.Get(context.Background(), "10002", &GetQueryOptions{Expand: "transitions"})
+	issue, _, _ := testClient.Issue.Get(
+		context.Background(),
+		"10002",
+		&GetQueryOptions{Expand: "transitions"},
+	)
 	if issue == nil {
 		t.Error("Expected issue. Issue is nil")
 		return
@@ -1755,7 +1927,10 @@ func TestIssueService_Get_Fields_AffectsVersions(t *testing.T) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, "/rest/api/2/issue/10002")
 
-		fmt.Fprint(w, `{"fields":{"versions":[{"self":"http://www.example.com/jira/rest/api/2/version/10705","id":"10705","description":"test description","name":"2.1.0-rc3","archived":false,"released":false,"releaseDate":"2018-09-30"}]}}`)
+		fmt.Fprint(
+			w,
+			`{"fields":{"versions":[{"self":"http://www.example.com/jira/rest/api/2/version/10705","id":"10705","description":"test description","name":"2.1.0-rc3","archived":false,"released":false,"releaseDate":"2018-09-30"}]}}`,
+		)
 	})
 
 	issue, _, err := testClient.Issue.Get(context.Background(), "10002", nil)
@@ -1820,13 +1995,19 @@ func TestIssueService_GetRemoteLinks(t *testing.T) {
 func TestIssueService_AddRemoteLink(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/10000/remotelink", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/api/2/issue/10000/remotelink")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/10000/remotelink",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/api/2/issue/10000/remotelink")
 
-		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"id": 10000, "self": "https://your-domain.atlassian.net/rest/api/issue/MKY-1/remotelink/10000"}`)
-	})
+			w.WriteHeader(http.StatusCreated)
+			fmt.Fprint(
+				w,
+				`{"id": 10000, "self": "https://your-domain.atlassian.net/rest/api/issue/MKY-1/remotelink/10000"}`,
+			)
+		},
+	)
 	r := &RemoteLink{
 		Application: &RemoteLinkApplication{
 			Name: "My Acme Tracker",
@@ -1864,12 +2045,15 @@ func TestIssueService_AddRemoteLink(t *testing.T) {
 func TestIssueService_UpdateRemoteLink(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issue/100/remotelink/200", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/api/2/issue/100/remotelink/200")
+	testMux.HandleFunc(
+		"/rest/api/2/issue/100/remotelink/200",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(t, r, "/rest/api/2/issue/100/remotelink/200")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 	r := &RemoteLink{
 		Application: &RemoteLinkApplication{
 			Name: "My Acme Tracker",

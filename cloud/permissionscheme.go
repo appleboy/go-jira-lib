@@ -16,16 +16,16 @@ type PermissionSchemes struct {
 }
 
 type Permission struct {
-	ID     int    `json:"id" structs:"id"`
-	Self   string `json:"expand" structs:"expand"`
-	Holder Holder `json:"holder" structs:"holder"`
+	ID     int    `json:"id"         structs:"id"`
+	Self   string `json:"expand"     structs:"expand"`
+	Holder Holder `json:"holder"     structs:"holder"`
 	Name   string `json:"permission" structs:"permission"`
 }
 
 type Holder struct {
-	Type      string `json:"type" structs:"type"`
+	Type      string `json:"type"      structs:"type"`
 	Parameter string `json:"parameter" structs:"parameter"`
-	Expand    string `json:"expand" structs:"expand"`
+	Expand    string `json:"expand"    structs:"expand"`
 }
 
 // GetList returns a list of all permission schemes
@@ -34,7 +34,9 @@ type Holder struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *PermissionSchemeService) GetList(ctx context.Context) (*PermissionSchemes, *Response, error) {
+func (s *PermissionSchemeService) GetList(
+	ctx context.Context,
+) (*PermissionSchemes, *Response, error) {
 	apiEndpoint := "/rest/api/3/permissionscheme"
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -57,7 +59,10 @@ func (s *PermissionSchemeService) GetList(ctx context.Context) (*PermissionSchem
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *PermissionSchemeService) Get(ctx context.Context, schemeID int) (*PermissionScheme, *Response, error) {
+func (s *PermissionSchemeService) Get(
+	ctx context.Context,
+	schemeID int,
+) (*PermissionScheme, *Response, error) {
 	apiEndpoint := fmt.Sprintf("/rest/api/3/permissionscheme/%d", schemeID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {

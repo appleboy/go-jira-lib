@@ -22,23 +22,25 @@ func TestRequestService_Create(t *testing.T) {
 		gotParticipants []string
 	)
 
-	testMux.HandleFunc("/rest/servicedeskapi/request", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/request")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/request",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/request")
 
-		var payload struct {
-			Requester    string   `json:"raiseOnBehalfOf,omitempty"`
-			Participants []string `json:"requestParticipants,omitempty"`
-		}
+			var payload struct {
+				Requester    string   `json:"raiseOnBehalfOf,omitempty"`
+				Participants []string `json:"requestParticipants,omitempty"`
+			}
 
-		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-			t.Fatal(err)
-		}
+			if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+				t.Fatal(err)
+			}
 
-		gotRequester = payload.Requester
-		gotParticipants = payload.Participants
+			gotRequester = payload.Requester
+			gotParticipants = payload.Participants
 
-		w.Write([]byte(`{
+			w.Write([]byte(`{
 		  "_expands": [
 			"participant",
 			"status",
@@ -110,7 +112,8 @@ func TestRequestService_Create(t *testing.T) {
 			"agent": "https://your-domain.atlassian.net/browse/HELPDESK-1"
 		  }
 		}`))
-	})
+		},
+	)
 
 	request := &Request{
 		ServiceDeskID: "10",
@@ -127,7 +130,12 @@ func TestRequestService_Create(t *testing.T) {
 		},
 	}
 
-	_, _, err := testClient.Request.Create(context.Background(), wantRequester, wantParticipants, request)
+	_, _, err := testClient.Request.Create(
+		context.Background(),
+		wantRequester,
+		wantParticipants,
+		request,
+	)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -145,11 +153,13 @@ func TestRequestService_CreateComment(t *testing.T) {
 	setup()
 	defer teardown()
 
-	testMux.HandleFunc("/rest/servicedeskapi/request/HELPDESK-1/comment", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/request/HELPDESK-1/comment")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/request/HELPDESK-1/comment",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/request/HELPDESK-1/comment")
 
-		w.Write([]byte(`{
+			w.Write([]byte(`{
 		  "_expands": [
 			"attachment",
 			"renderedBody"
@@ -186,7 +196,8 @@ func TestRequestService_CreateComment(t *testing.T) {
 			"self": "https://your-domain.atlassian.net/rest/servicedeskapi/request/2000/comment/1000"
 		  }
 		}`))
-	})
+		},
+	)
 
 	comment := &RequestComment{
 		Body:   "Hello there",

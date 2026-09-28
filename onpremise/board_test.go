@@ -45,7 +45,17 @@ func TestBoardService_GetAllBoards_WithFilter(t *testing.T) {
 	testMux.HandleFunc(testapiEndpoint, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, testapiEndpoint)
-		testRequestParams(t, r, map[string]string{"type": "scrum", "name": "Test", "startAt": "1", "maxResults": "10", "projectKeyOrId": "TE"})
+		testRequestParams(
+			t,
+			r,
+			map[string]string{
+				"type":           "scrum",
+				"name":           "Test",
+				"startAt":        "1",
+				"maxResults":     "10",
+				"projectKeyOrId": "TE",
+			},
+		)
 		fmt.Fprint(w, string(raw))
 	})
 
@@ -74,7 +84,10 @@ func TestBoardService_GetBoard(t *testing.T) {
 	testMux.HandleFunc(testapiEndpoint, func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, http.MethodGet)
 		testRequestURL(t, r, testapiEndpoint)
-		fmt.Fprint(w, `{"id":4,"self":"https://test.jira.org/rest/agile/1.0/board/1","name":"Test Weekly","type":"scrum"}`)
+		fmt.Fprint(
+			w,
+			`{"id":4,"self":"https://test.jira.org/rest/agile/1.0/board/1","name":"Test Weekly","type":"scrum"}`,
+		)
 	})
 
 	board, _, err := testClient.Board.GetBoard(context.Background(), 1)
@@ -118,7 +131,10 @@ func TestBoardService_CreateBoard(t *testing.T) {
 		testRequestURL(t, r, "/rest/agile/1.0/board")
 
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, `{"id":17,"self":"https://test.jira.org/rest/agile/1.0/board/17","name":"Test","type":"kanban"}`)
+		fmt.Fprint(
+			w,
+			`{"id":17,"self":"https://test.jira.org/rest/agile/1.0/board/17","name":"Test","type":"kanban"}`,
+		)
 	})
 
 	b := &Board{
@@ -147,7 +163,7 @@ func TestBoardService_DeleteBoard(t *testing.T) {
 	})
 
 	_, resp, err := testClient.Board.DeleteBoard(context.Background(), 1)
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Error("Expected board not deleted.")
 	}
 	if err != nil {
@@ -172,7 +188,11 @@ func TestBoardService_GetAllSprints(t *testing.T) {
 		fmt.Fprint(w, string(raw))
 	})
 
-	sprints, _, err := testClient.Board.GetAllSprints(context.Background(), 123, &GetAllSprintsOptions{State: "active,future"})
+	sprints, _, err := testClient.Board.GetAllSprints(
+		context.Background(),
+		123,
+		&GetAllSprintsOptions{State: "active,future"},
+	)
 	if err != nil {
 		t.Errorf("Got error: %v", err)
 	}

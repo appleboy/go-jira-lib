@@ -60,7 +60,7 @@ func (t *JWTAuthTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 		return nil, fmt.Errorf("jwtAuth: error signing JWT: %w", err)
 	}
 
-	req2.Header.Set("Authorization", fmt.Sprintf("JWT %s", jwtStr))
+	req2.Header.Set("Authorization", "JWT "+jwtStr)
 	return t.transport().RoundTrip(req2)
 }
 
@@ -71,7 +71,7 @@ func (t *JWTAuthTransport) createQueryStringHash(httpMethod string, jiraURL *url
 }
 
 func (t *JWTAuthTransport) canonicalizeRequest(httpMethod string, jiraURL *url.URL) string {
-	path := "/" + strings.Replace(strings.Trim(jiraURL.Path, "/"), "&", "%26", -1)
+	path := "/" + strings.ReplaceAll(strings.Trim(jiraURL.Path, "/"), "&", "%26")
 
 	var canonicalQueryString []string
 	for k, v := range jiraURL.Query() {
@@ -80,8 +80,16 @@ func (t *JWTAuthTransport) canonicalizeRequest(httpMethod string, jiraURL *url.U
 		}
 		param := url.QueryEscape(k)
 		value := url.QueryEscape(strings.Join(v, ""))
-		canonicalQueryString = append(canonicalQueryString, strings.Replace(strings.Join([]string{param, value}, "="), "+", "%20", -1))
+		canonicalQueryString = append(
+			canonicalQueryString,
+			strings.ReplaceAll(strings.Join([]string{param, value}, "="), "+", "%20"),
+		)
 	}
 	sort.Strings(canonicalQueryString)
-	return fmt.Sprintf("%s&%s&%s", strings.ToUpper(httpMethod), path, strings.Join(canonicalQueryString, "&"))
+	return fmt.Sprintf(
+		"%s&%s&%s",
+		strings.ToUpper(httpMethod),
+		path,
+		strings.Join(canonicalQueryString, "&"),
+	)
 }

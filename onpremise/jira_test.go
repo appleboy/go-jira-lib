@@ -68,9 +68,7 @@ func testRequestParams(t *testing.T, r *http.Request, want map[string]string) {
 		if got := params.Get(key); val != got {
 			t.Errorf("Request params: %s, want %s", got, val)
 		}
-
 	}
-
 }
 
 func TestNewClient_WrongUrl(t *testing.T) {
@@ -103,7 +101,6 @@ func TestNewClient_WithHttpClient(t *testing.T) {
 
 func TestNewClient_WithServices(t *testing.T) {
 	c, err := NewClient(testJiraInstanceURL, nil)
-
 	if err != nil {
 		t.Errorf("Got an error: %s", err)
 	}
@@ -189,7 +186,12 @@ func TestClient_NewRawRequest(t *testing.T) {
 
 	outBody := `{"key":"MESOS"}` + "\n"
 	inBody := outBody
-	req, _ := c.NewRawRequest(context.Background(), http.MethodGet, inURL, strings.NewReader(outBody))
+	req, _ := c.NewRawRequest(
+		context.Background(),
+		http.MethodGet,
+		inURL,
+		strings.NewReader(outBody),
+	)
 
 	// Test that relative URL was expanded
 	if got, want := req.URL.String(), outURL; got != want {
@@ -234,18 +236,25 @@ func TestClient_NewRequest_SessionCookies(t *testing.T) {
 	inURL := "rest/api/2/issue/"
 	inBody := &Issue{Key: "MESOS"}
 	req, err := c.NewRequest(context.Background(), http.MethodGet, inURL, inBody)
-
 	if err != nil {
 		t.Errorf("An error occurred. Expected nil. Got %+v.", err)
 	}
 
 	if len(req.Cookies()) != len(c.session.Cookies) {
-		t.Errorf("An error occurred. Expected %d cookie(s). Got %d.", len(c.session.Cookies), len(req.Cookies()))
+		t.Errorf(
+			"An error occurred. Expected %d cookie(s). Got %d.",
+			len(c.session.Cookies),
+			len(req.Cookies()),
+		)
 	}
 
 	for i, v := range req.Cookies() {
 		if v.String() != c.session.Cookies[i].String() {
-			t.Errorf("An error occurred. Unexpected cookie. Expected %s, actual %s.", v.String(), c.session.Cookies[i].String())
+			t.Errorf(
+				"An error occurred. Unexpected cookie. Expected %s, actual %s.",
+				v.String(),
+				c.session.Cookies[i].String(),
+			)
 		}
 	}
 }
@@ -261,14 +270,19 @@ func TestClient_NewRequest_BasicAuth(t *testing.T) {
 	inURL := "rest/api/2/issue/"
 	inBody := &Issue{Key: "MESOS"}
 	req, err := c.NewRequest(context.Background(), http.MethodGet, inURL, inBody)
-
 	if err != nil {
 		t.Errorf("An error occurred. Expected nil. Got %+v.", err)
 	}
 
 	username, password, ok := req.BasicAuth()
 	if !ok || username != "test-user" || password != "test-password" {
-		t.Errorf("An error occurred. Expected basic auth username %s and password %s. Got username %s and password %s.", "test-user", "test-password", username, password)
+		t.Errorf(
+			"An error occurred. Expected basic auth username %s and password %s. Got username %s and password %s.",
+			"test-user",
+			"test-password",
+			username,
+			password,
+		)
 	}
 }
 
@@ -303,23 +317,33 @@ func TestClient_NewMultiPartRequest(t *testing.T) {
 	inURL := "rest/api/2/issue/"
 	inBuf := bytes.NewBufferString("teststring")
 	req, err := c.NewMultiPartRequest(context.Background(), http.MethodGet, inURL, inBuf)
-
 	if err != nil {
 		t.Errorf("An error occurred. Expected nil. Got %+v.", err)
 	}
 
 	if len(req.Cookies()) != len(c.session.Cookies) {
-		t.Errorf("An error occurred. Expected %d cookie(s). Got %d.", len(c.session.Cookies), len(req.Cookies()))
+		t.Errorf(
+			"An error occurred. Expected %d cookie(s). Got %d.",
+			len(c.session.Cookies),
+			len(req.Cookies()),
+		)
 	}
 
 	for i, v := range req.Cookies() {
 		if v.String() != c.session.Cookies[i].String() {
-			t.Errorf("An error occurred. Unexpected cookie. Expected %s, actual %s.", v.String(), c.session.Cookies[i].String())
+			t.Errorf(
+				"An error occurred. Unexpected cookie. Expected %s, actual %s.",
+				v.String(),
+				c.session.Cookies[i].String(),
+			)
 		}
 	}
 
 	if req.Header.Get("X-Atlassian-Token") != "nocheck" {
-		t.Errorf("An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.", req.Header.Get("X-Atlassian-Token"))
+		t.Errorf(
+			"An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.",
+			req.Header.Get("X-Atlassian-Token"),
+		)
 	}
 }
 
@@ -334,18 +358,26 @@ func TestClient_NewMultiPartRequest_BasicAuth(t *testing.T) {
 	inURL := "rest/api/2/issue/"
 	inBuf := bytes.NewBufferString("teststring")
 	req, err := c.NewMultiPartRequest(context.Background(), http.MethodGet, inURL, inBuf)
-
 	if err != nil {
 		t.Errorf("An error occurred. Expected nil. Got %+v.", err)
 	}
 
 	username, password, ok := req.BasicAuth()
 	if !ok || username != "test-user" || password != "test-password" {
-		t.Errorf("An error occurred. Expected basic auth username %s and password %s. Got username %s and password %s.", "test-user", "test-password", username, password)
+		t.Errorf(
+			"An error occurred. Expected basic auth username %s and password %s. Got username %s and password %s.",
+			"test-user",
+			"test-password",
+			username,
+			password,
+		)
 	}
 
 	if req.Header.Get("X-Atlassian-Token") != "nocheck" {
-		t.Errorf("An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.", req.Header.Get("X-Atlassian-Token"))
+		t.Errorf(
+			"An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.",
+			req.Header.Get("X-Atlassian-Token"),
+		)
 	}
 }
 
@@ -391,7 +423,7 @@ func TestClient_Do_HTTPResponse(t *testing.T) {
 
 	if err != nil {
 		t.Errorf("Error on parsing HTTP Response = %v", err.Error())
-	} else if res.StatusCode != 200 {
+	} else if res.StatusCode != http.StatusOK {
 		t.Errorf("Response code = %v, want %v", res.StatusCode, 200)
 	}
 }
@@ -401,7 +433,7 @@ func TestClient_Do_HTTPError(t *testing.T) {
 	defer teardown()
 
 	testMux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "Bad Request", 400)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
 	})
 
 	req, _ := testClient.NewRequest(context.Background(), http.MethodGet, "/", nil)

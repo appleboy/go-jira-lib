@@ -13,21 +13,21 @@ type RoleService service
 
 // Role represents a Jira product role
 type Role struct {
-	Self        string   `json:"self" structs:"self"`
-	Name        string   `json:"name" structs:"name"`
-	ID          int      `json:"id" structs:"id"`
+	Self        string   `json:"self"        structs:"self"`
+	Name        string   `json:"name"        structs:"name"`
+	ID          int      `json:"id"          structs:"id"`
 	Description string   `json:"description" structs:"description"`
-	Actors      []*Actor `json:"actors" structs:"actors"`
+	Actors      []*Actor `json:"actors"      structs:"actors"`
 }
 
 // Actor represents a Jira actor
 type Actor struct {
-	ID          int        `json:"id" structs:"id"`
+	ID          int        `json:"id"          structs:"id"`
 	DisplayName string     `json:"displayName" structs:"displayName"`
-	Type        string     `json:"type" structs:"type"`
-	Name        string     `json:"name" structs:"name"`
-	AvatarURL   string     `json:"avatarUrl" structs:"avatarUrl"`
-	ActorUser   *ActorUser `json:"actorUser" structs:"actoruser"`
+	Type        string     `json:"type"        structs:"type"`
+	Name        string     `json:"name"        structs:"name"`
+	AvatarURL   string     `json:"avatarUrl"   structs:"avatarUrl"`
+	ActorUser   *ActorUser `json:"actorUser"   structs:"actoruser"`
 }
 
 // ActorUser contains the account id of the actor/user

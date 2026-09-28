@@ -53,14 +53,17 @@ func TestStatusCategoryService_Get(t *testing.T) {
 	})
 
 	statusCategory, _, err := testClient.StatusCategory.Get(context.Background(), "1")
-	if err != nil {
+	switch {
+	case err != nil:
 		t.Errorf("Error given: %s", err)
-
-	} else if statusCategory == nil {
+	case statusCategory == nil:
 		t.Error("Expected status category. StatusCategory is nil")
 
 		// Checking testdata
-	} else if statusCategory.ColorName != "medium-gray" {
-		t.Errorf("Expected statusCategory.ColorName to be 'medium-gray'. Got '%s'", statusCategory.ColorName)
+	case statusCategory.ColorName != "medium-gray":
+		t.Errorf(
+			"Expected statusCategory.ColorName to be 'medium-gray'. Got '%s'",
+			statusCategory.ColorName,
+		)
 	}
 }

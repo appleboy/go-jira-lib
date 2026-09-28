@@ -15,7 +15,10 @@ func TestError_NewJiraError(t *testing.T) {
 
 	testMux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"errorMessages":["Issue does not exist or you do not have permission to see it."],"errors":{}}`)
+		fmt.Fprint(
+			w,
+			`{"errorMessages":["Issue does not exist or you do not have permission to see it."],"errors":{}}`,
+		)
 	})
 
 	req, _ := testClient.NewRequest(context.Background(), http.MethodGet, "/", nil)

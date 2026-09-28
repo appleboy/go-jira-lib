@@ -2,7 +2,6 @@ package cloud
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 )
 
@@ -35,7 +34,7 @@ type ComponentCreateOptions struct {
 	// LeadAccountId: The accountId of the component's lead user.
 	// The accountId uniquely identifies the user across all Atlassian products.
 	// For example, 5b10ac8d82e05b22cc7d4ef5.
-	LeadAccountId string `json:"leadAccountId,omitempty" structs:"leadAccountId,omitempty"`
+	LeadAccountId string `json:"leadAccountId,omitempty" structs:"leadAccountId,omitempty"` //nolint:staticcheck // Preserve the exported field name for backward compatibility.
 
 	// AssigneeType: The nominal user type used to determine the assignee for issues created with this component.
 	// Can take the following values:
@@ -58,7 +57,10 @@ type ComponentCreateOptions struct {
 // Use components to provide containers for issues within a project.
 //
 // Jira API docs: https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-project-components/#api-rest-api-3-component-post
-func (s *ComponentService) Create(ctx context.Context, options *ComponentCreateOptions) (*ProjectComponent, *Response, error) {
+func (s *ComponentService) Create(
+	ctx context.Context,
+	options *ComponentCreateOptions,
+) (*ProjectComponent, *Response, error) {
 	apiEndpoint := "rest/api/3/component"
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, options)
 	if err != nil {
@@ -77,8 +79,11 @@ func (s *ComponentService) Create(ctx context.Context, options *ComponentCreateO
 // Get returns a component for the given componentID.
 //
 // Jira API docs: https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-project-components/#api-rest-api-3-component-id-get
-func (s *ComponentService) Get(ctx context.Context, componentID string) (*ProjectComponent, *Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/3/component/%s", componentID)
+func (s *ComponentService) Get(
+	ctx context.Context,
+	componentID string,
+) (*ProjectComponent, *Response, error) {
+	apiEndpoint := "rest/api/3/component/" + componentID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err

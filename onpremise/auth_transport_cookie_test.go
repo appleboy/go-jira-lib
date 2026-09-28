@@ -22,11 +22,19 @@ func TestCookieAuthTransport_SessionObject_Exists(t *testing.T) {
 		}
 
 		if cookies[0].Name != testCookie.Name {
-			t.Errorf("Cookie names don't match, expected %v, got %v", testCookie.Name, cookies[0].Name)
+			t.Errorf(
+				"Cookie names don't match, expected %v, got %v",
+				testCookie.Name,
+				cookies[0].Name,
+			)
 		}
 
 		if cookies[0].Value != testCookie.Value {
-			t.Errorf("Cookie values don't match, expected %v, got %v", testCookie.Value, cookies[0].Value)
+			t.Errorf(
+				"Cookie values don't match, expected %v, got %v",
+				testCookie.Value,
+				cookies[0].Value,
+			)
 		}
 	})
 
@@ -58,11 +66,19 @@ func TestCookieAuthTransport_SessionObject_ExistsWithEmptyCookie(t *testing.T) {
 		}
 
 		if cookies[0].Name != testCookie.Name {
-			t.Errorf("Cookie names don't match, expected %v, got %v", testCookie.Name, cookies[0].Name)
+			t.Errorf(
+				"Cookie names don't match, expected %v, got %v",
+				testCookie.Name,
+				cookies[0].Name,
+			)
 		}
 
 		if cookies[0].Value != testCookie.Value {
-			t.Errorf("Cookie values don't match, expected %v, got %v", testCookie.Value, cookies[0].Value)
+			t.Errorf(
+				"Cookie values don't match, expected %v, got %v",
+				testCookie.Value,
+				cookies[0].Value,
+			)
 		}
 	})
 
@@ -100,11 +116,19 @@ func TestCookieAuthTransport_SessionObject_DoesNotExist(t *testing.T) {
 		}
 
 		if cookies[0].Name != testCookie.Name {
-			t.Errorf("Cookie names don't match, expected %v, got %v", testCookie.Name, cookies[0].Name)
+			t.Errorf(
+				"Cookie names don't match, expected %v, got %v",
+				testCookie.Name,
+				cookies[0].Name,
+			)
 		}
 
 		if cookies[0].Value != testCookie.Value {
-			t.Errorf("Cookie values don't match, expected %v, got %v", testCookie.Value, cookies[0].Value)
+			t.Errorf(
+				"Cookie values don't match, expected %v, got %v",
+				testCookie.Value,
+				cookies[0].Value,
+			)
 		}
 	})
 

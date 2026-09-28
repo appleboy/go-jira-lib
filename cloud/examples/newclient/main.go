@@ -7,6 +7,7 @@ import (
 	jira "github.com/andygrunwald/go-jira/v2/cloud"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	jiraClient, _ := jira.NewClient("https://issues.apache.org/jira/", nil)
 	issue, _, _ := jiraClient.Issue.Get(context.Background(), "MESOS-3325", nil)

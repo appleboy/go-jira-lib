@@ -23,8 +23,8 @@ type SelfLink struct {
 
 // Organization contains Organization data
 type Organization struct {
-	ID    string    `json:"id,omitempty" structs:"id,omitempty"`
-	Name  string    `json:"name,omitempty" structs:"name,omitempty"`
+	ID    string    `json:"id,omitempty"     structs:"id,omitempty"`
+	Name  string    `json:"name,omitempty"   structs:"name,omitempty"`
 	Links *SelfLink `json:"_links,omitempty" structs:"_links,omitempty"`
 }
 
@@ -35,18 +35,18 @@ type OrganizationUsersDTO struct {
 
 // PagedDTO is response of a paged list
 type PagedDTO struct {
-	Size       int           `json:"size,omitempty" structs:"size,omitempty"`
-	Start      int           `json:"start,omitempty" structs:"start,omitempty"`
-	Limit      int           `limit:"size,omitempty" structs:"limit,omitempty"`
-	IsLastPage bool          `json:"isLastPage,omitempty" structs:"isLastPage,omitempty"`
-	Values     []interface{} `values:"isLastPage,omitempty" structs:"values,omitempty"`
-	Expands    []string      `json:"_expands,omitempty" structs:"_expands,omitempty"`
+	Size       int      `json:"size,omitempty"       structs:"size,omitempty"`
+	Start      int      `json:"start,omitempty"      structs:"start,omitempty"`
+	Limit      int      `                            structs:"limit,omitempty"      limit:"size,omitempty"`
+	IsLastPage bool     `json:"isLastPage,omitempty" structs:"isLastPage,omitempty"`
+	Values     []any    `                            structs:"values,omitempty"                            values:"isLastPage,omitempty"`
+	Expands    []string `json:"_expands,omitempty"   structs:"_expands,omitempty"`
 }
 
 // PropertyKey contains Property key details.
 type PropertyKey struct {
 	Self string `json:"self,omitempty" structs:"self,omitempty"`
-	Key  string `json:"key,omitempty" structs:"key,omitempty"`
+	Key  string `json:"key,omitempty"  structs:"key,omitempty"`
 }
 
 // PropertyKeys contains an array of PropertyKey
@@ -64,10 +64,14 @@ type PropertyKeys struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) GetAllOrganizations(ctx context.Context, start int, limit int, accountID string) (*PagedDTO, *Response, error) {
+func (s *OrganizationService) GetAllOrganizations(
+	ctx context.Context,
+	start, limit int,
+	accountID string,
+) (*PagedDTO, *Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization?start=%d&limit=%d", start, limit)
 	if accountID != "" {
-		apiEndPoint += fmt.Sprintf("&accountId=%s", accountID)
+		apiEndPoint += "&accountId=" + accountID
 	}
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
@@ -94,7 +98,10 @@ func (s *OrganizationService) GetAllOrganizations(ctx context.Context, start int
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) CreateOrganization(ctx context.Context, name string) (*Organization, *Response, error) {
+func (s *OrganizationService) CreateOrganization(
+	ctx context.Context,
+	name string,
+) (*Organization, *Response, error) {
 	apiEndPoint := "rest/servicedeskapi/organization"
 
 	organization := OrganizationCreationDTO{
@@ -128,7 +135,10 @@ func (s *OrganizationService) CreateOrganization(ctx context.Context, name strin
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) GetOrganization(ctx context.Context, organizationID int) (*Organization, *Response, error) {
+func (s *OrganizationService) GetOrganization(
+	ctx context.Context,
+	organizationID int,
+) (*Organization, *Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d", organizationID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
@@ -158,11 +168,13 @@ func (s *OrganizationService) GetOrganization(ctx context.Context, organizationI
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) DeleteOrganization(ctx context.Context, organizationID int) (*Response, error) {
+func (s *OrganizationService) DeleteOrganization(
+	ctx context.Context,
+	organizationID int,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d", organizationID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndPoint, nil)
-
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +197,10 @@ func (s *OrganizationService) DeleteOrganization(ctx context.Context, organizati
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) GetPropertiesKeys(ctx context.Context, organizationID int) (*PropertyKeys, *Response, error) {
+func (s *OrganizationService) GetPropertiesKeys(
+	ctx context.Context,
+	organizationID int,
+) (*PropertyKeys, *Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/property", organizationID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
@@ -213,8 +228,16 @@ func (s *OrganizationService) GetPropertiesKeys(ctx context.Context, organizatio
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) GetProperty(ctx context.Context, organizationID int, propertyKey string) (*EntityProperty, *Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/property/%s", organizationID, propertyKey)
+func (s *OrganizationService) GetProperty(
+	ctx context.Context,
+	organizationID int,
+	propertyKey string,
+) (*EntityProperty, *Response, error) {
+	apiEndPoint := fmt.Sprintf(
+		"rest/servicedeskapi/organization/%d/property/%s",
+		organizationID,
+		propertyKey,
+	)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
 	req.Header.Set("Accept", "application/json")
@@ -242,8 +265,16 @@ func (s *OrganizationService) GetProperty(ctx context.Context, organizationID in
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) SetProperty(ctx context.Context, organizationID int, propertyKey string) (*Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/property/%s", organizationID, propertyKey)
+func (s *OrganizationService) SetProperty(
+	ctx context.Context,
+	organizationID int,
+	propertyKey string,
+) (*Response, error) {
+	apiEndPoint := fmt.Sprintf(
+		"rest/servicedeskapi/organization/%d/property/%s",
+		organizationID,
+		propertyKey,
+	)
 
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndPoint, nil)
 	req.Header.Set("Accept", "application/json")
@@ -268,8 +299,16 @@ func (s *OrganizationService) SetProperty(ctx context.Context, organizationID in
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) DeleteProperty(ctx context.Context, organizationID int, propertyKey string) (*Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/property/%s", organizationID, propertyKey)
+func (s *OrganizationService) DeleteProperty(
+	ctx context.Context,
+	organizationID int,
+	propertyKey string,
+) (*Response, error) {
+	apiEndPoint := fmt.Sprintf(
+		"rest/servicedeskapi/organization/%d/property/%s",
+		organizationID,
+		propertyKey,
+	)
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndPoint, nil)
 	req.Header.Set("Accept", "application/json")
@@ -297,8 +336,16 @@ func (s *OrganizationService) DeleteProperty(ctx context.Context, organizationID
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) GetUsers(ctx context.Context, organizationID int, start int, limit int) (*PagedDTO, *Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/user?start=%d&limit=%d", organizationID, start, limit)
+func (s *OrganizationService) GetUsers(
+	ctx context.Context,
+	organizationID, start, limit int,
+) (*PagedDTO, *Response, error) {
+	apiEndPoint := fmt.Sprintf(
+		"rest/servicedeskapi/organization/%d/user?start=%d&limit=%d",
+		organizationID,
+		start,
+		limit,
+	)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
 	req.Header.Set("Accept", "application/json")
@@ -324,11 +371,14 @@ func (s *OrganizationService) GetUsers(ctx context.Context, organizationID int, 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) AddUsers(ctx context.Context, organizationID int, users OrganizationUsersDTO) (*Response, error) {
+func (s *OrganizationService) AddUsers(
+	ctx context.Context,
+	organizationID int,
+	users OrganizationUsersDTO,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/user", organizationID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndPoint, users)
-
 	if err != nil {
 		return nil, err
 	}
@@ -349,7 +399,11 @@ func (s *OrganizationService) AddUsers(ctx context.Context, organizationID int, 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *OrganizationService) RemoveUsers(ctx context.Context, organizationID int, users OrganizationUsersDTO) (*Response, error) {
+func (s *OrganizationService) RemoveUsers(
+	ctx context.Context,
+	organizationID int,
+	users OrganizationUsersDTO,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/organization/%d/user", organizationID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndPoint, nil)

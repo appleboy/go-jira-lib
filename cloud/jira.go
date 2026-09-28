@@ -129,7 +129,11 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 // NewRawRequest creates an API request.
 // A relative URL can be provided in urlStr, in which case it is resolved relative to the baseURL of the Client.
 // Allows using an optional native io.Reader for sourcing the request body.
-func (c *Client) NewRawRequest(ctx context.Context, method, urlStr string, body io.Reader) (*http.Request, error) {
+func (c *Client) NewRawRequest(
+	ctx context.Context,
+	method, urlStr string,
+	body io.Reader,
+) (*http.Request, error) {
 	rel, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -152,7 +156,11 @@ func (c *Client) NewRawRequest(ctx context.Context, method, urlStr string, body 
 // NewRequest creates an API request.
 // A relative URL can be provided in urlStr, in which case it is resolved relative to the BaseURL of the Client.
 // If specified, the value pointed to by body is JSON encoded and included as the request body.
-func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body interface{}) (*http.Request, error) {
+func (c *Client) NewRequest(
+	ctx context.Context,
+	method, urlStr string,
+	body any,
+) (*http.Request, error) {
 	rel, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -185,9 +193,9 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string, body int
 
 // addOptions adds the parameters in opts as URL query parameters to s. opts
 // must be a struct whose fields may contain "url" tags.
-func addOptions(s string, opts interface{}) (string, error) {
+func addOptions(s string, opts any) (string, error) {
 	v := reflect.ValueOf(opts)
-	if v.Kind() == reflect.Ptr && v.IsNil() {
+	if v.Kind() == reflect.Pointer && v.IsNil() {
 		return s, nil
 	}
 
@@ -208,7 +216,11 @@ func addOptions(s string, opts interface{}) (string, error) {
 // NewMultiPartRequest creates an API request including a multi-part file.
 // A relative URL can be provided in urlStr, in which case it is resolved relative to the baseURL of the Client.
 // If specified, the value pointed to by buf is a multipart form.
-func (c *Client) NewMultiPartRequest(ctx context.Context, method, urlStr string, buf *bytes.Buffer) (*http.Request, error) {
+func (c *Client) NewMultiPartRequest(
+	ctx context.Context,
+	method, urlStr string,
+	buf *bytes.Buffer,
+) (*http.Request, error) {
 	rel, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
@@ -231,7 +243,7 @@ func (c *Client) NewMultiPartRequest(ctx context.Context, method, urlStr string,
 
 // Do sends an API request and returns the API response.
 // The API response is JSON decoded and stored in the value pointed to by v, or returned as an error if an API error has occurred.
-func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
+func (c *Client) Do(req *http.Request, v any) (*Response, error) {
 	httpResp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -263,7 +275,10 @@ func CheckResponse(r *http.Response) error {
 		return nil
 	}
 
-	err := fmt.Errorf("request failed. Please analyze the request body for more details. Status code: %d", r.StatusCode)
+	err := fmt.Errorf(
+		"request failed. Please analyze the request body for more details. Status code: %d",
+		r.StatusCode,
+	)
 	return err
 }
 
@@ -277,7 +292,7 @@ type Response struct {
 	Total      int
 }
 
-func newResponse(r *http.Response, v interface{}) *Response {
+func newResponse(r *http.Response, v any) *Response {
 	resp := &Response{Response: r}
 	resp.populatePageValues(v)
 	return resp
@@ -285,7 +300,7 @@ func newResponse(r *http.Response, v interface{}) *Response {
 
 // Sets paging values if response json was parsed to searchResult type
 // (can be extended with other types if they also need paging info)
-func (r *Response) populatePageValues(v interface{}) {
+func (r *Response) populatePageValues(v any) {
 	switch value := v.(type) {
 	case *searchResult:
 		r.StartAt = value.StartAt

@@ -35,13 +35,16 @@ func TestIssueLinkTypeService_GetList(t *testing.T) {
 func TestIssueLinkTypeService_Get(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issueLinkType/123", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/api/2/issueLinkType/123")
+	testMux.HandleFunc(
+		"/rest/api/2/issueLinkType/123",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/api/2/issueLinkType/123")
 
-		fmt.Fprint(w, `{"id": "123","name": "Blocked","inward": "Blocked","outward": "Blocked",
+			fmt.Fprint(w, `{"id": "123","name": "Blocked","inward": "Blocked","outward": "Blocked",
 		"self": "https://www.example.com/jira/rest/api/2/issueLinkType/123"}`)
-	})
+		},
+	)
 
 	if linkType, _, err := testClient.IssueLinkType.Get(context.Background(), "123"); err != nil {
 		t.Errorf("Error given: %s", err)
@@ -78,12 +81,15 @@ func TestIssueLinkTypeService_Create(t *testing.T) {
 func TestIssueLinkTypeService_Update(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issueLinkType/100", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/api/2/issueLinkType/100")
+	testMux.HandleFunc(
+		"/rest/api/2/issueLinkType/100",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(t, r, "/rest/api/2/issueLinkType/100")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	lt := &IssueLinkType{
 		ID:      "100",
@@ -102,12 +108,15 @@ func TestIssueLinkTypeService_Update(t *testing.T) {
 func TestIssueLinkTypeService_Delete(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/api/2/issueLinkType/100", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/api/2/issueLinkType/100")
+	testMux.HandleFunc(
+		"/rest/api/2/issueLinkType/100",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/api/2/issueLinkType/100")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	resp, err := testClient.IssueLinkType.Delete(context.Background(), "100")
 	if resp.StatusCode != http.StatusNoContent {

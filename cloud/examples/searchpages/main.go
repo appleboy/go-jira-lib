@@ -11,9 +11,11 @@ import (
 	"time"
 
 	jira "github.com/andygrunwald/go-jira/v2/cloud"
+
 	"golang.org/x/term"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	r := bufio.NewReader(os.Stdin)
 
@@ -24,6 +26,7 @@ func main() {
 	username, _ := r.ReadString('\n')
 
 	fmt.Print("Jira Password: ")
+	//nolint:unconvert // Stdin is a syscall.Handle on Windows.
 	bytePassword, _ := term.ReadPassword(int(syscall.Stdin))
 	password := string(bytePassword)
 
@@ -50,7 +53,12 @@ func main() {
 
 	// SearchPages will page through results and pass each issue to appendFunc
 	// In this example, we'll search for all the issues in the target project
-	err = client.Issue.SearchPages(context.Background(), fmt.Sprintf(`project=%s`, strings.TrimSpace(jiraPK)), nil, appendFunc)
+	err = client.Issue.SearchPages(
+		context.Background(),
+		"project="+strings.TrimSpace(jiraPK),
+		nil,
+		appendFunc,
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +69,12 @@ func main() {
 		t := time.Time(i.Fields.Created) // convert go-jira.Time to time.Time for manipulation
 		date := t.Format("2006-01-02")
 		clock := t.Format("15:04")
-		fmt.Printf("Creation Date: %s\nCreation Time: %s\nIssue Key: %s\nIssue Summary: %s\n\n", date, clock, i.Key, i.Fields.Summary)
+		fmt.Printf(
+			"Creation Date: %s\nCreation Time: %s\nIssue Key: %s\nIssue Summary: %s\n\n",
+			date,
+			clock,
+			i.Key,
+			i.Fields.Summary,
+		)
 	}
-
 }

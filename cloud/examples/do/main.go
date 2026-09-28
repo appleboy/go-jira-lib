@@ -8,9 +8,15 @@ import (
 	jira "github.com/andygrunwald/go-jira/v2/cloud"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	jiraClient, _ := jira.NewClient("https://jira.atlassian.com/", nil)
-	req, _ := jiraClient.NewRequest(context.Background(), http.MethodGet, "/rest/api/2/project", nil)
+	req, _ := jiraClient.NewRequest(
+		context.Background(),
+		http.MethodGet,
+		"/rest/api/2/project",
+		nil,
+	)
 
 	projects := new([]jira.Project)
 	res, err := jiraClient.Do(req, projects)

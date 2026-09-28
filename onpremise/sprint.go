@@ -31,13 +31,16 @@ type IssuesInSprintResult struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *SprintService) MoveIssuesToSprint(ctx context.Context, sprintID int, issueIDs []string) (*Response, error) {
+func (s *SprintService) MoveIssuesToSprint(
+	ctx context.Context,
+	sprintID int,
+	issueIDs []string,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/agile/1.0/sprint/%d/issue", sprintID)
 
 	payload := IssuesWrapper{Issues: issueIDs}
 
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, payload)
-
 	if err != nil {
 		return nil, err
 	}
@@ -57,11 +60,13 @@ func (s *SprintService) MoveIssuesToSprint(ctx context.Context, sprintID int, is
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *SprintService) GetIssuesForSprint(ctx context.Context, sprintID int) ([]Issue, *Response, error) {
+func (s *SprintService) GetIssuesForSprint(
+	ctx context.Context,
+	sprintID int,
+) ([]Issue, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/agile/1.0/sprint/%d/issue", sprintID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
-
 	if err != nil {
 		return nil, nil, err
 	}
@@ -88,11 +93,14 @@ func (s *SprintService) GetIssuesForSprint(ctx context.Context, sprintID int) ([
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *SprintService) GetIssue(ctx context.Context, issueID string, options *GetQueryOptions) (*Issue, *Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/agile/1.0/issue/%s", issueID)
+func (s *SprintService) GetIssue(
+	ctx context.Context,
+	issueID string,
+	options *GetQueryOptions,
+) (*Issue, *Response, error) {
+	apiEndpoint := "rest/agile/1.0/issue/" + issueID
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
-
 	if err != nil {
 		return nil, nil, err
 	}
@@ -107,7 +115,6 @@ func (s *SprintService) GetIssue(ctx context.Context, issueID string, options *G
 
 	issue := new(Issue)
 	resp, err := s.client.Do(req, issue)
-
 	if err != nil {
 		jerr := NewJiraError(resp, err)
 		return nil, resp, jerr

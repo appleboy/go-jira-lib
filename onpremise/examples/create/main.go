@@ -9,9 +9,11 @@ import (
 	"syscall"
 
 	jira "github.com/andygrunwald/go-jira/v2/onpremise"
+
 	"golang.org/x/term"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	r := bufio.NewReader(os.Stdin)
 
@@ -22,6 +24,7 @@ func main() {
 	username, _ := r.ReadString('\n')
 
 	fmt.Print("Jira Password: ")
+	//nolint:unconvert // Stdin is a syscall.Handle on Windows.
 	bytePassword, _ := term.ReadPassword(int(syscall.Stdin))
 	password := string(bytePassword)
 

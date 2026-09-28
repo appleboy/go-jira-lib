@@ -11,13 +11,19 @@ import (
 func TestOrganizationService_GetAllOrganizations(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, `{ "_expands": [], "size": 1, "start": 1, "limit": 1, "isLastPage": false, "_links": { "base": "https://your-domain.atlassian.net/rest/servicedeskapi", "context": "context", "next": "https://your-domain.atlassian.net/rest/servicedeskapi/organization?start=2&limit=1", "prev": "https://your-domain.atlassian.net/rest/servicedeskapi/organization?start=0&limit=1" }, "values": [ { "id": "1", "name": "Charlie Cakes Franchises", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } } ] }`)
-	})
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprint(
+				w,
+				`{ "_expands": [], "size": 1, "start": 1, "limit": 1, "isLastPage": false, "_links": { "base": "https://your-domain.atlassian.net/rest/servicedeskapi", "context": "context", "next": "https://your-domain.atlassian.net/rest/servicedeskapi/organization?start=2&limit=1", "prev": "https://your-domain.atlassian.net/rest/servicedeskapi/organization?start=0&limit=1" }, "values": [ { "id": "1", "name": "Charlie Cakes Franchises", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } } ] }`,
+			)
+		},
+	)
 
 	result, _, err := testClient.Organization.GetAllOrganizations(context.Background(), 0, 50, "")
 
@@ -35,15 +41,22 @@ func TestOrganizationService_GetAllOrganizations(t *testing.T) {
 func TestOrganizationService_CreateOrganization(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization")
 
-		o := new(OrganizationCreationDTO)
-		json.NewDecoder(r.Body).Decode(&o)
-		w.WriteHeader(http.StatusCreated)
-		fmt.Fprintf(w, `{ "id": "1", "name": "%s", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } }`, o.Name)
-	})
+			o := new(OrganizationCreationDTO)
+			json.NewDecoder(r.Body).Decode(&o)
+			w.WriteHeader(http.StatusCreated)
+			fmt.Fprintf(
+				w,
+				`{ "id": "1", "name": "%s", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } }`,
+				o.Name,
+			)
+		},
+	)
 
 	name := "MyOrg"
 	o, _, err := testClient.Organization.CreateOrganization(context.Background(), name)
@@ -62,17 +75,22 @@ func TestOrganizationService_CreateOrganization(t *testing.T) {
 func TestOrganizationService_GetOrganization(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{ "id": "1", "name": "name", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } }`)
-	})
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(
+				w,
+				`{ "id": "1", "name": "name", "_links": { "self": "https://your-domain.atlassian.net/rest/servicedeskapi/organization/1" } }`,
+			)
+		},
+	)
 
 	id := 1
 	o, _, err := testClient.Organization.GetOrganization(context.Background(), id)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -87,15 +105,17 @@ func TestOrganizationService_GetOrganization(t *testing.T) {
 func TestOrganizationService_DeleteOrganization(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	_, err := testClient.Organization.DeleteOrganization(context.Background(), 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -104,12 +124,14 @@ func TestOrganizationService_DeleteOrganization(t *testing.T) {
 func TestOrganizationService_GetPropertiesKeys(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/property", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/property")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/property",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1/property")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, `{
 			"keys": [
 			  {
 				"self": "/rest/servicedeskapi/organization/1/property/propertyKey",
@@ -117,10 +139,10 @@ func TestOrganizationService_GetPropertiesKeys(t *testing.T) {
 			  }
 			]
 		  }`)
-	})
+		},
+	)
 
 	pk, _, err := testClient.Organization.GetPropertiesKeys(context.Background(), 1)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -135,23 +157,29 @@ func TestOrganizationService_GetPropertiesKeys(t *testing.T) {
 func TestOrganizationService_GetProperty(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/property/organization.attributes", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/property/organization.attributes")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/property/organization.attributes",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(
+				t,
+				r,
+				"/rest/servicedeskapi/organization/1/property/organization.attributes",
+			)
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, `{
 			"key": "organization.attributes",
 			"value": {
 			  "phone": "0800-1233456789",
 			  "mail": "charlie@example.com"
 			}
 		  }`)
-	})
+		},
+	)
 
 	key := "organization.attributes"
 	ep, _, err := testClient.Organization.GetProperty(context.Background(), 1, key)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -166,16 +194,22 @@ func TestOrganizationService_GetProperty(t *testing.T) {
 func TestOrganizationService_SetProperty(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/property/organization.attributes", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPut)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/property/organization.attributes")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/property/organization.attributes",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPut)
+			testRequestURL(
+				t,
+				r,
+				"/rest/servicedeskapi/organization/1/property/organization.attributes",
+			)
 
-		w.WriteHeader(http.StatusOK)
-	})
+			w.WriteHeader(http.StatusOK)
+		},
+	)
 
 	key := "organization.attributes"
 	_, err := testClient.Organization.SetProperty(context.Background(), 1, key)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -184,16 +218,22 @@ func TestOrganizationService_SetProperty(t *testing.T) {
 func TestOrganizationService_DeleteProperty(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/property/organization.attributes", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/property/organization.attributes")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/property/organization.attributes",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(
+				t,
+				r,
+				"/rest/servicedeskapi/organization/1/property/organization.attributes",
+			)
 
-		w.WriteHeader(http.StatusOK)
-	})
+			w.WriteHeader(http.StatusOK)
+		},
+	)
 
 	key := "organization.attributes"
 	_, err := testClient.Organization.DeleteProperty(context.Background(), 1, key)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -202,12 +242,14 @@ func TestOrganizationService_DeleteProperty(t *testing.T) {
 func TestOrganizationService_GetUsers(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/user", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodGet)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/user",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodGet)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, `{
 			"_expands": [],
 			"size": 1,
 			"start": 1,
@@ -260,10 +302,10 @@ func TestOrganizationService_GetUsers(t *testing.T) {
 			  }
 			]
 		  }`)
-	})
+		},
+	)
 
 	users, _, err := testClient.Organization.GetUsers(context.Background(), 1, 0, 50)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -282,12 +324,15 @@ func TestOrganizationService_GetUsers(t *testing.T) {
 func TestOrganizationService_AddUsers(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/user", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/user",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	users := OrganizationUsersDTO{
 		AccountIds: []string{
@@ -296,7 +341,6 @@ func TestOrganizationService_AddUsers(t *testing.T) {
 		},
 	}
 	_, err := testClient.Organization.AddUsers(context.Background(), 1, users)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
@@ -305,12 +349,15 @@ func TestOrganizationService_AddUsers(t *testing.T) {
 func TestOrganizationService_RemoveUsers(t *testing.T) {
 	setup()
 	defer teardown()
-	testMux.HandleFunc("/rest/servicedeskapi/organization/1/user", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodDelete)
-		testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/organization/1/user",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodDelete)
+			testRequestURL(t, r, "/rest/servicedeskapi/organization/1/user")
 
-		w.WriteHeader(http.StatusNoContent)
-	})
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 
 	users := OrganizationUsersDTO{
 		AccountIds: []string{
@@ -319,7 +366,6 @@ func TestOrganizationService_RemoveUsers(t *testing.T) {
 		},
 	}
 	_, err := testClient.Organization.RemoveUsers(context.Background(), 1, users)
-
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}

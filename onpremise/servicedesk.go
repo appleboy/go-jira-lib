@@ -3,6 +3,7 @@ package onpremise
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -25,10 +26,20 @@ type ServiceDeskOrganizationDTO struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) GetOrganizations(ctx context.Context, serviceDeskID interface{}, start int, limit int, accountID string) (*PagedDTO, *Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/organization?start=%d&limit=%d", serviceDeskID, start, limit)
+func (s *ServiceDeskService) GetOrganizations(
+	ctx context.Context,
+	serviceDeskID any,
+	start, limit int,
+	accountID string,
+) (*PagedDTO, *Response, error) {
+	apiEndPoint := fmt.Sprintf(
+		"rest/servicedeskapi/servicedesk/%v/organization?start=%d&limit=%d",
+		serviceDeskID,
+		start,
+		limit,
+	)
 	if accountID != "" {
-		apiEndPoint += fmt.Sprintf("&accountId=%s", accountID)
+		apiEndPoint += "&accountId=" + accountID
 	}
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndPoint, nil)
@@ -58,7 +69,11 @@ func (s *ServiceDeskService) GetOrganizations(ctx context.Context, serviceDeskID
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) AddOrganization(ctx context.Context, serviceDeskID interface{}, organizationID int) (*Response, error) {
+func (s *ServiceDeskService) AddOrganization(
+	ctx context.Context,
+	serviceDeskID any,
+	organizationID int,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/organization", serviceDeskID)
 
 	organization := ServiceDeskOrganizationDTO{
@@ -66,7 +81,6 @@ func (s *ServiceDeskService) AddOrganization(ctx context.Context, serviceDeskID 
 	}
 
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndPoint, organization)
-
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +104,11 @@ func (s *ServiceDeskService) AddOrganization(ctx context.Context, serviceDeskID 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) RemoveOrganization(ctx context.Context, serviceDeskID interface{}, organizationID int) (*Response, error) {
+func (s *ServiceDeskService) RemoveOrganization(
+	ctx context.Context,
+	serviceDeskID any,
+	organizationID int,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/organization", serviceDeskID)
 
 	organization := ServiceDeskOrganizationDTO{
@@ -98,7 +116,6 @@ func (s *ServiceDeskService) RemoveOrganization(ctx context.Context, serviceDesk
 	}
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndPoint, organization)
-
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +135,11 @@ func (s *ServiceDeskService) RemoveOrganization(ctx context.Context, serviceDesk
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) AddCustomers(ctx context.Context, serviceDeskID interface{}, acountIDs ...string) (*Response, error) {
+func (s *ServiceDeskService) AddCustomers(
+	ctx context.Context,
+	serviceDeskID any,
+	acountIDs ...string,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/customer", serviceDeskID)
 
 	payload := struct {
@@ -148,7 +169,11 @@ func (s *ServiceDeskService) AddCustomers(ctx context.Context, serviceDeskID int
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) RemoveCustomers(ctx context.Context, serviceDeskID interface{}, acountIDs ...string) (*Response, error) {
+func (s *ServiceDeskService) RemoveCustomers(
+	ctx context.Context,
+	serviceDeskID any,
+	acountIDs ...string,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/customer", serviceDeskID)
 
 	payload := struct {
@@ -178,7 +203,11 @@ func (s *ServiceDeskService) RemoveCustomers(ctx context.Context, serviceDeskID 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ServiceDeskService) ListCustomers(ctx context.Context, serviceDeskID interface{}, options *CustomerListOptions) (*CustomerList, *Response, error) {
+func (s *ServiceDeskService) ListCustomers(
+	ctx context.Context,
+	serviceDeskID any,
+	options *CustomerListOptions,
+) (*CustomerList, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/servicedeskapi/servicedesk/%v/customer", serviceDeskID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -204,7 +233,7 @@ func (s *ServiceDeskService) ListCustomers(ctx context.Context, serviceDeskID in
 
 	customerList := new(CustomerList)
 	if err := json.NewDecoder(resp.Body).Decode(customerList); err != nil {
-		return nil, resp, fmt.Errorf("could not unmarshall the data into struct")
+		return nil, resp, errors.New("could not unmarshall the data into struct")
 	}
 
 	return customerList, resp, nil

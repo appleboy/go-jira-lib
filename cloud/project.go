@@ -28,54 +28,54 @@ type ProjectList []struct {
 
 // ProjectCategory represents a single project category
 type ProjectCategory struct {
-	Self        string `json:"self" structs:"self,omitempty"`
-	ID          string `json:"id" structs:"id,omitempty"`
-	Name        string `json:"name" structs:"name,omitempty"`
+	Self        string `json:"self"        structs:"self,omitempty"`
+	ID          string `json:"id"          structs:"id,omitempty"`
+	Name        string `json:"name"        structs:"name,omitempty"`
 	Description string `json:"description" structs:"description,omitempty"`
 }
 
 // Project represents a Jira Project.
 type Project struct {
-	Expand          string             `json:"expand,omitempty" structs:"expand,omitempty"`
-	Self            string             `json:"self,omitempty" structs:"self,omitempty"`
-	ID              string             `json:"id,omitempty" structs:"id,omitempty"`
-	Key             string             `json:"key,omitempty" structs:"key,omitempty"`
-	Description     string             `json:"description,omitempty" structs:"description,omitempty"`
-	Lead            User               `json:"lead,omitempty" structs:"lead,omitempty"`
-	Components      []ProjectComponent `json:"components,omitempty" structs:"components,omitempty"`
-	IssueTypes      []IssueType        `json:"issueTypes,omitempty" structs:"issueTypes,omitempty"`
-	URL             string             `json:"url,omitempty" structs:"url,omitempty"`
-	Email           string             `json:"email,omitempty" structs:"email,omitempty"`
-	AssigneeType    string             `json:"assigneeType,omitempty" structs:"assigneeType,omitempty"`
-	Versions        []Version          `json:"versions,omitempty" structs:"versions,omitempty"`
-	Name            string             `json:"name,omitempty" structs:"name,omitempty"`
-	Roles           map[string]string  `json:"roles,omitempty" structs:"roles,omitempty"`
-	AvatarUrls      AvatarUrls         `json:"avatarUrls,omitempty" structs:"avatarUrls,omitempty"`
+	Expand          string             `json:"expand,omitempty"          structs:"expand,omitempty"`
+	Self            string             `json:"self,omitempty"            structs:"self,omitempty"`
+	ID              string             `json:"id,omitempty"              structs:"id,omitempty"`
+	Key             string             `json:"key,omitempty"             structs:"key,omitempty"`
+	Description     string             `json:"description,omitempty"     structs:"description,omitempty"`
+	Lead            User               `json:"lead,omitempty"            structs:"lead,omitempty"`
+	Components      []ProjectComponent `json:"components,omitempty"      structs:"components,omitempty"`
+	IssueTypes      []IssueType        `json:"issueTypes,omitempty"      structs:"issueTypes,omitempty"`
+	URL             string             `json:"url,omitempty"             structs:"url,omitempty"`
+	Email           string             `json:"email,omitempty"           structs:"email,omitempty"`
+	AssigneeType    string             `json:"assigneeType,omitempty"    structs:"assigneeType,omitempty"`
+	Versions        []Version          `json:"versions,omitempty"        structs:"versions,omitempty"`
+	Name            string             `json:"name,omitempty"            structs:"name,omitempty"`
+	Roles           map[string]string  `json:"roles,omitempty"           structs:"roles,omitempty"`
+	AvatarUrls      AvatarUrls         `json:"avatarUrls,omitempty"      structs:"avatarUrls,omitempty"`
 	ProjectCategory ProjectCategory    `json:"projectCategory,omitempty" structs:"projectCategory,omitempty"`
 }
 
 // ProjectComponent represents a single component of a project
 type ProjectComponent struct {
-	Self                string `json:"self" structs:"self,omitempty"`
-	ID                  string `json:"id" structs:"id,omitempty"`
-	Name                string `json:"name" structs:"name,omitempty"`
-	Description         string `json:"description" structs:"description,omitempty"`
-	Lead                User   `json:"lead,omitempty" structs:"lead,omitempty"`
-	AssigneeType        string `json:"assigneeType" structs:"assigneeType,omitempty"`
-	Assignee            User   `json:"assignee" structs:"assignee,omitempty"`
-	RealAssigneeType    string `json:"realAssigneeType" structs:"realAssigneeType,omitempty"`
-	RealAssignee        User   `json:"realAssignee" structs:"realAssignee,omitempty"`
+	Self                string `json:"self"                structs:"self,omitempty"`
+	ID                  string `json:"id"                  structs:"id,omitempty"`
+	Name                string `json:"name"                structs:"name,omitempty"`
+	Description         string `json:"description"         structs:"description,omitempty"`
+	Lead                User   `json:"lead,omitempty"      structs:"lead,omitempty"`
+	AssigneeType        string `json:"assigneeType"        structs:"assigneeType,omitempty"`
+	Assignee            User   `json:"assignee"            structs:"assignee,omitempty"`
+	RealAssigneeType    string `json:"realAssigneeType"    structs:"realAssigneeType,omitempty"`
+	RealAssignee        User   `json:"realAssignee"        structs:"realAssignee,omitempty"`
 	IsAssigneeTypeValid bool   `json:"isAssigneeTypeValid" structs:"isAssigneeTypeValid,omitempty"`
-	Project             string `json:"project" structs:"project,omitempty"`
-	ProjectID           int    `json:"projectId" structs:"projectId,omitempty"`
+	Project             string `json:"project"             structs:"project,omitempty"`
+	ProjectID           int    `json:"projectId"           structs:"projectId,omitempty"`
 }
 
 // PermissionScheme represents the permission scheme for the project
 type PermissionScheme struct {
-	Expand      string       `json:"expand" structs:"expand,omitempty"`
-	Self        string       `json:"self" structs:"self,omitempty"`
-	ID          int          `json:"id" structs:"id,omitempty"`
-	Name        string       `json:"name" structs:"name,omitempty"`
+	Expand      string       `json:"expand"      structs:"expand,omitempty"`
+	Self        string       `json:"self"        structs:"self,omitempty"`
+	ID          int          `json:"id"          structs:"id,omitempty"`
+	Name        string       `json:"name"        structs:"name,omitempty"`
 	Description string       `json:"description" structs:"description,omitempty"`
 	Permissions []Permission `json:"permissions" structs:"permissions,omitempty"`
 }
@@ -87,7 +87,10 @@ type PermissionScheme struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ProjectService) GetAll(ctx context.Context, options *GetQueryOptions) (*ProjectList, *Response, error) {
+func (s *ProjectService) GetAll(
+	ctx context.Context,
+	options *GetQueryOptions,
+) (*ProjectList, *Response, error) {
 	apiEndpoint := "rest/api/2/project"
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -121,7 +124,7 @@ func (s *ProjectService) GetAll(ctx context.Context, options *GetQueryOptions) (
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
 func (s *ProjectService) Get(ctx context.Context, projectID string) (*Project, *Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/project/%s", projectID)
+	apiEndpoint := "rest/api/2/project/" + projectID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
@@ -145,7 +148,10 @@ func (s *ProjectService) Get(ctx context.Context, projectID string) (*Project, *
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *ProjectService) GetPermissionScheme(ctx context.Context, projectID string) (*PermissionScheme, *Response, error) {
+func (s *ProjectService) GetPermissionScheme(
+	ctx context.Context,
+	projectID string,
+) (*PermissionScheme, *Response, error) {
 	apiEndpoint := fmt.Sprintf("/rest/api/2/project/%s/permissionscheme", projectID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
