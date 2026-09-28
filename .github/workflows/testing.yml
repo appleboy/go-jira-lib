@@ -10,6 +10,20 @@ on:
     - cron: "5 1 * * *"
 
 jobs:
+  lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.tools.mod
+          cache-dependency-path: |
+            go.sum
+            go.tools.sum
+      - name: Run golangci-lint
+        run: make lint
+
   unit-test:
     name: Unit tests
     strategy:

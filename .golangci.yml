@@ -1,0 +1,28 @@
+version: "2"
+
+linters:
+  # Match the existing vet/staticcheck CI checks without adding new lint policies.
+  default: none
+  enable:
+    - govet
+    - staticcheck
+  settings:
+    govet:
+      disable:
+        # The existing Go 1.19 vet job did not run the inline analyzer.
+        - inline
+    staticcheck:
+      checks:
+        - all
+        - "-ST1000"
+        - "-ST1003"
+        - "-ST1016"
+        - "-ST1020"
+        - "-ST1021"
+        - "-ST1022"
+        # Quick-fix suggestions were not part of the existing staticcheck job.
+        - "-QF*"
+
+formatters:
+  enable:
+    - gofmt
