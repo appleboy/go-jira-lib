@@ -3,6 +3,7 @@ package onpremise
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -56,7 +57,10 @@ type Session struct {
 // Jira API docs: https://docs.atlassian.com/jira/REST/latest/#auth/1/session
 //
 // Deprecated: Use CookieAuthTransport instead
-func (s *AuthenticationService) AcquireSessionCookie(ctx context.Context, username, password string) (bool, error) {
+func (s *AuthenticationService) AcquireSessionCookie(
+	ctx context.Context,
+	username, password string,
+) (bool, error) {
 	apiEndpoint := "rest/auth/1/session"
 	body := struct {
 		Username string `json:"username"`
@@ -77,8 +81,11 @@ func (s *AuthenticationService) AcquireSessionCookie(ctx context.Context, userna
 		return false, fmt.Errorf("auth at Jira instance failed (HTTP(S) request). %w", err)
 	}
 
-	if resp != nil && resp.StatusCode != 200 {
-		return false, fmt.Errorf("auth at Jira instance failed (HTTP(S) request). Status code: %d", resp.StatusCode)
+	if resp != nil && resp.StatusCode != http.StatusOK {
+		return false, fmt.Errorf(
+			"auth at Jira instance failed (HTTP(S) request). Status code: %d",
+			resp.StatusCode,
+		)
 	}
 	if resp != nil {
 		session.Cookies = resp.Cookies()
@@ -102,12 +109,12 @@ func (s *AuthenticationService) SetBasicAuth(username, password string) {
 // Authenticated reports if the current Client has authentication details for Jira
 func (s *AuthenticationService) Authenticated() bool {
 	if s != nil {
-		if s.authType == authTypeSession {
+		switch s.authType {
+		case authTypeSession:
 			return s.client.session != nil
-		} else if s.authType == authTypeBasic {
+		case authTypeBasic:
 			return s.username != ""
 		}
-
 	}
 	return false
 }
@@ -120,7 +127,7 @@ func (s *AuthenticationService) Authenticated() bool {
 // client anymore
 func (s *AuthenticationService) Logout(ctx context.Context) error {
 	if s.authType != authTypeSession || s.client.session == nil {
-		return fmt.Errorf("no user is authenticated")
+		return errors.New("no user is authenticated")
 	}
 
 	apiEndpoint := "rest/auth/1/session"
@@ -134,7 +141,7 @@ func (s *AuthenticationService) Logout(ctx context.Context) error {
 		return fmt.Errorf("error sending the logout request: %w", err)
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != 204 {
+	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("the logout was unsuccessful with status %d", resp.StatusCode)
 	}
 
@@ -142,7 +149,6 @@ func (s *AuthenticationService) Logout(ctx context.Context) error {
 	s.client.session = nil
 
 	return nil
-
 }
 
 // GetCurrentUser gets the details of the current user.
@@ -150,10 +156,10 @@ func (s *AuthenticationService) Logout(ctx context.Context) error {
 // Jira API docs: https://docs.atlassian.com/jira/REST/latest/#auth/1/session
 func (s *AuthenticationService) GetCurrentUser(ctx context.Context) (*Session, error) {
 	if s == nil {
-		return nil, fmt.Errorf("authentication Service is not instantiated")
+		return nil, errors.New("authentication Service is not instantiated")
 	}
 	if s.authType != authTypeSession || s.client.session == nil {
-		return nil, fmt.Errorf("no user is authenticated yet")
+		return nil, errors.New("no user is authenticated yet")
 	}
 
 	apiEndpoint := "rest/auth/1/session"
@@ -167,7 +173,7 @@ func (s *AuthenticationService) GetCurrentUser(ctx context.Context) (*Session, e
 		return nil, fmt.Errorf("error sending request to get user info: %w", err)
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("getting user info failed with status : %d", resp.StatusCode)
 	}
 

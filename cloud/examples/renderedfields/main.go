@@ -9,11 +9,12 @@ import (
 	"strings"
 	"syscall"
 
-	"golang.org/x/term"
-
 	jira "github.com/andygrunwald/go-jira/v2/cloud"
+
+	"golang.org/x/term"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	r := bufio.NewReader(os.Stdin)
 
@@ -28,6 +29,7 @@ func main() {
 	username, _ := r.ReadString('\n')
 
 	fmt.Print("Jira Password: ")
+	//nolint:unconvert // Stdin is a syscall.Handle on Windows.
 	bytePassword, _ := term.ReadPassword(int(syscall.Stdin))
 	password := string(bytePassword)
 
@@ -36,7 +38,6 @@ func main() {
 	if strings.TrimSpace(username) == "" {
 		tp = nil
 	} else {
-
 		ba := jira.BasicAuthTransport{
 			Username: strings.TrimSpace(username),
 			APIToken: strings.TrimSpace(password),
@@ -54,7 +55,6 @@ func main() {
 
 	options := &jira.GetQueryOptions{Expand: "renderedFields"}
 	u, _, err := client.Issue.Get(context.Background(), key, options)
-
 	if err != nil {
 		fmt.Printf("\n==> error: %v\n", err)
 		return

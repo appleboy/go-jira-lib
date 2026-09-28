@@ -68,10 +68,14 @@ type GroupSearchOptions struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *GroupService) Get(ctx context.Context, name string, options *GroupSearchOptions) ([]GroupMember, *Response, error) {
+func (s *GroupService) Get(
+	ctx context.Context,
+	name string,
+	options *GroupSearchOptions,
+) ([]GroupMember, *Response, error) {
 	var apiEndpoint string
 	if options == nil {
-		apiEndpoint = fmt.Sprintf("/rest/api/2/group/member?groupname=%s", url.QueryEscape(name))
+		apiEndpoint = "/rest/api/2/group/member?groupname=" + url.QueryEscape(name)
 	} else {
 		// TODO use addOptions
 		apiEndpoint = fmt.Sprintf(
@@ -101,8 +105,11 @@ func (s *GroupService) Get(ctx context.Context, name string, options *GroupSearc
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *GroupService) Add(ctx context.Context, groupname string, username string) (*Group, *Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/group/user?groupname=%s", groupname)
+func (s *GroupService) Add(
+	ctx context.Context,
+	groupname, username string,
+) (*Group, *Response, error) {
+	apiEndpoint := "/rest/api/2/group/user?groupname=" + groupname
 	var user struct {
 		Name string `json:"name"`
 	}
@@ -129,8 +136,12 @@ func (s *GroupService) Add(ctx context.Context, groupname string, username strin
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *GroupService) Remove(ctx context.Context, groupname string, username string) (*Response, error) {
-	apiEndpoint := fmt.Sprintf("/rest/api/2/group/user?groupname=%s&username=%s", groupname, username)
+func (s *GroupService) Remove(ctx context.Context, groupname, username string) (*Response, error) {
+	apiEndpoint := fmt.Sprintf(
+		"/rest/api/2/group/user?groupname=%s&username=%s",
+		groupname,
+		username,
+	)
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndpoint, nil)
 	if err != nil {
 		return nil, err

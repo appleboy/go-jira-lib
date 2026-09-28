@@ -14,16 +14,16 @@ type VersionService service
 
 // Version represents a single release version of a project
 type Version struct {
-	Self            string `json:"self,omitempty" structs:"self,omitempty"`
-	ID              string `json:"id,omitempty" structs:"id,omitempty"`
-	Name            string `json:"name,omitempty" structs:"name,omitempty"`
-	Description     string `json:"description,omitempty" structs:"description,omitempty"`
-	Archived        *bool  `json:"archived,omitempty" structs:"archived,omitempty"`
-	Released        *bool  `json:"released,omitempty" structs:"released,omitempty"`
-	ReleaseDate     string `json:"releaseDate,omitempty" structs:"releaseDate,omitempty"`
+	Self            string `json:"self,omitempty"            structs:"self,omitempty"`
+	ID              string `json:"id,omitempty"              structs:"id,omitempty"`
+	Name            string `json:"name,omitempty"            structs:"name,omitempty"`
+	Description     string `json:"description,omitempty"     structs:"description,omitempty"`
+	Archived        *bool  `json:"archived,omitempty"        structs:"archived,omitempty"`
+	Released        *bool  `json:"released,omitempty"        structs:"released,omitempty"`
+	ReleaseDate     string `json:"releaseDate,omitempty"     structs:"releaseDate,omitempty"`
 	UserReleaseDate string `json:"userReleaseDate,omitempty" structs:"userReleaseDate,omitempty"`
-	ProjectID       int    `json:"projectId,omitempty" structs:"projectId,omitempty"` // Unlike other IDs, this is returned as a number
-	StartDate       string `json:"startDate,omitempty" structs:"startDate,omitempty"`
+	ProjectID       int    `json:"projectId,omitempty"       structs:"projectId,omitempty"` // Unlike other IDs, this is returned as a number
+	StartDate       string `json:"startDate,omitempty"       structs:"startDate,omitempty"`
 }
 
 // Get gets version info from Jira
@@ -53,7 +53,10 @@ func (s *VersionService) Get(ctx context.Context, versionID int) (*Version, *Res
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *VersionService) Create(ctx context.Context, version *Version) (*Version, *Response, error) {
+func (s *VersionService) Create(
+	ctx context.Context,
+	version *Version,
+) (*Version, *Response, error) {
 	apiEndpoint := "/rest/api/2/version"
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, version)
 	if err != nil {
@@ -82,7 +85,10 @@ func (s *VersionService) Create(ctx context.Context, version *Version) (*Version
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *VersionService) Update(ctx context.Context, version *Version) (*Version, *Response, error) {
+func (s *VersionService) Update(
+	ctx context.Context,
+	version *Version,
+) (*Version, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/version/%v", version.ID)
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndpoint, version)
 	if err != nil {

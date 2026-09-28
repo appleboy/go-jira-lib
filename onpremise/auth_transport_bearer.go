@@ -1,7 +1,6 @@
 package onpremise
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -20,7 +19,7 @@ type BearerAuthTransport struct {
 func (t *BearerAuthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req2 := cloneRequest(req) // per RoundTripper contract
 
-	req2.Header.Set("Authorization", fmt.Sprintf("Bearer %s", t.Token))
+	req2.Header.Set("Authorization", "Bearer "+t.Token)
 	return t.transport().RoundTrip(req2)
 }
 

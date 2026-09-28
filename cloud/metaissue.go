@@ -25,7 +25,7 @@ type EditMetaInfo struct {
 type MetaProject struct {
 	Expand string `json:"expand,omitempty"`
 	Self   string `json:"self,omitempty"`
-	Id     string `json:"id,omitempty"`
+	Id     string `json:"id,omitempty"` //nolint:staticcheck // Preserve the exported field name for backward compatibility. //nolint:staticcheck // Preserve the exported field name for backward compatibility.
 	Key    string `json:"key,omitempty"`
 	Name   string `json:"name,omitempty"`
 	// omitted avatarUrls
@@ -40,9 +40,9 @@ type MetaProject struct {
 // Further processing must be done depending on what is required.
 type MetaIssueType struct {
 	Self        string                `json:"self,omitempty"`
-	Id          string                `json:"id,omitempty"`
+	Id          string                `json:"id,omitempty"` //nolint:staticcheck // Preserve the exported field name for backward compatibility. //nolint:staticcheck // Preserve the exported field name for backward compatibility.
 	Description string                `json:"description,omitempty"`
-	IconUrl     string                `json:"iconurl,omitempty"`
+	IconUrl     string                `json:"iconurl,omitempty"` //nolint:staticcheck // Preserve the exported field name for backward compatibility.
 	Name        string                `json:"name,omitempty"`
 	Subtasks    bool                  `json:"subtask,omitempty"`
 	Expand      string                `json:"expand,omitempty"`
@@ -53,7 +53,10 @@ type MetaIssueType struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetCreateMeta(ctx context.Context, options *GetQueryOptions) (*CreateMetaInfo, *Response, error) {
+func (s *IssueService) GetCreateMeta(
+	ctx context.Context,
+	options *GetQueryOptions,
+) (*CreateMetaInfo, *Response, error) {
 	apiEndpoint := "rest/api/2/issue/createmeta"
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
@@ -70,7 +73,6 @@ func (s *IssueService) GetCreateMeta(ctx context.Context, options *GetQueryOptio
 
 	meta := new(CreateMetaInfo)
 	resp, err := s.client.Do(req, meta)
-
 	if err != nil {
 		return nil, resp, err
 	}
@@ -82,7 +84,10 @@ func (s *IssueService) GetCreateMeta(ctx context.Context, options *GetQueryOptio
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetEditMeta(ctx context.Context, issue *Issue) (*EditMetaInfo, *Response, error) {
+func (s *IssueService) GetEditMeta(
+	ctx context.Context,
+	issue *Issue,
+) (*EditMetaInfo, *Response, error) {
 	apiEndpoint := fmt.Sprintf("/rest/api/2/issue/%s/editmeta", issue.Key)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
@@ -92,7 +97,6 @@ func (s *IssueService) GetEditMeta(ctx context.Context, issue *Issue) (*EditMeta
 
 	meta := new(EditMetaInfo)
 	resp, err := s.client.Do(req, meta)
-
 	if err != nil {
 		return nil, resp, err
 	}
@@ -190,7 +194,6 @@ func (t *MetaIssueType) GetMandatoryFields() (map[string]string, error) {
 func (t *MetaIssueType) GetAllFields() (map[string]string, error) {
 	ret := make(map[string]string)
 	for key := range t.Fields {
-
 		name, err := t.Fields.String(key + "/name")
 		if err != nil {
 			return nil, err
@@ -222,7 +225,10 @@ func (t *MetaIssueType) CheckCompleteAndAvailable(config map[string]string) (boo
 			for name := range mandatory {
 				requiredFields = append(requiredFields, name)
 			}
-			return false, fmt.Errorf("required field not found in provided jira.fields. Required are: %#v", requiredFields)
+			return false, fmt.Errorf(
+				"required field not found in provided jira.fields. Required are: %#v",
+				requiredFields,
+			)
 		}
 	}
 
@@ -233,7 +239,10 @@ func (t *MetaIssueType) CheckCompleteAndAvailable(config map[string]string) (boo
 			for name := range all {
 				availableFields = append(availableFields, name)
 			}
-			return false, fmt.Errorf("fields in jira.fields are not available in jira. Available are: %#v", availableFields)
+			return false, fmt.Errorf(
+				"fields in jira.fields are not available in jira. Available are: %#v",
+				availableFields,
+			)
 		}
 	}
 

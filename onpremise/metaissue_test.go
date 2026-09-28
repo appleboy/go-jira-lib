@@ -57,15 +57,14 @@ func TestIssueService_GetEditMeta_Success(t *testing.T) {
 	requiredFields := 0
 	fields := editMeta.Fields
 	for _, value := range fields {
-		for key, value := range value.(map[string]interface{}) {
+		for key, value := range value.(map[string]any) {
 			if key == "required" && value == true {
-				requiredFields = requiredFields + 1
+				requiredFields++
 			}
 		}
-
 	}
-	summary := fields["summary"].(map[string]interface{})
-	attachment := fields["attachment"].(map[string]interface{})
+	summary := fields["summary"].(map[string]any)
+	attachment := fields["attachment"].(map[string]any)
 	if summary["required"] != true {
 		t.Error("Expected summary to be required")
 	}
@@ -426,7 +425,10 @@ func TestMetaIssueType_GetCreateMeta(t *testing.T) {
     }`)
 	})
 
-	issue, _, err := testClient.Issue.GetCreateMeta(context.Background(), &GetQueryOptions{Expand: "projects.issuetypes.fields"})
+	issue, _, err := testClient.Issue.GetCreateMeta(
+		context.Background(),
+		&GetQueryOptions{Expand: "projects.issuetypes.fields"},
+	)
 	if err != nil {
 		t.Errorf("Expected nil error but got %s", err)
 	}
@@ -442,34 +444,36 @@ func TestMetaIssueType_GetCreateMeta(t *testing.T) {
 			requiredFields := 0
 			fields := issueTypes.Fields
 			for _, value := range fields {
-				for key, value := range value.(map[string]interface{}) {
+				for key, value := range value.(map[string]any) {
 					if key == "required" && value == true {
-						requiredFields = requiredFields + 1
+						requiredFields++
 					}
 				}
-
 			}
 			if requiredFields != 5 {
-				t.Errorf("Expected 5 required fields from Create Meta information, got %d", requiredFields)
+				t.Errorf(
+					"Expected 5 required fields from Create Meta information, got %d",
+					requiredFields,
+				)
 			}
 		}
 	}
 }
 
 func TestMetaIssueType_GetMandatoryFields(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 		"name":     "Summary",
 	}
 
-	data["components"] = map[string]interface{}{
+	data["components"] = map[string]any{
 		"required": true,
 		"name":     "Components",
 	}
 
-	data["epicLink"] = map[string]interface{}{
+	data["epicLink"] = map[string]any{
 		"required": false,
 		"name":     "Epic Link",
 	}
@@ -488,9 +492,9 @@ func TestMetaIssueType_GetMandatoryFields(t *testing.T) {
 }
 
 func TestMetaIssueType_GetMandatoryFields_NonExistentRequiredKey_Fail(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"name": "Summary",
 	}
 
@@ -504,9 +508,9 @@ func TestMetaIssueType_GetMandatoryFields_NonExistentRequiredKey_Fail(t *testing
 }
 
 func TestMetaIssueType_GetMandatoryFields_NonExistentNameKey_Fail(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 	}
 
@@ -520,19 +524,19 @@ func TestMetaIssueType_GetMandatoryFields_NonExistentNameKey_Fail(t *testing.T) 
 }
 
 func TestMetaIssueType_GetAllFields(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 		"name":     "Summary",
 	}
 
-	data["components"] = map[string]interface{}{
+	data["components"] = map[string]any{
 		"required": true,
 		"name":     "Components",
 	}
 
-	data["epicLink"] = map[string]interface{}{
+	data["epicLink"] = map[string]any{
 		"required": false,
 		"name":     "Epic Link",
 	}
@@ -541,7 +545,6 @@ func TestMetaIssueType_GetAllFields(t *testing.T) {
 	m.Fields = data
 
 	mandatory, err := m.GetAllFields()
-
 	if err != nil {
 		t.Errorf("Expected nil err, received %s", err)
 	}
@@ -552,9 +555,9 @@ func TestMetaIssueType_GetAllFields(t *testing.T) {
 }
 
 func TestMetaIssueType_GetAllFields_NonExistingNameKey_Fail(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 	}
 
@@ -568,14 +571,14 @@ func TestMetaIssueType_GetAllFields_NonExistingNameKey_Fail(t *testing.T) {
 }
 
 func TestMetaIssueType_CheckCompleteAndAvailable_MandatoryMissing(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 		"name":     "Summary",
 	}
 
-	data["someKey"] = map[string]interface{}{
+	data["someKey"] = map[string]any{
 		"required": false,
 		"name":     "SomeKey",
 	}
@@ -595,13 +598,12 @@ func TestMetaIssueType_CheckCompleteAndAvailable_MandatoryMissing(t *testing.T) 
 	if ok != false {
 		t.Error("Expected false, got true")
 	}
-
 }
 
 func TestMetaIssueType_CheckCompleteAndAvailable_NotAvailable(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 		"name":     "Summary",
 	}
@@ -622,18 +624,17 @@ func TestMetaIssueType_CheckCompleteAndAvailable_NotAvailable(t *testing.T) {
 	if ok != false {
 		t.Error("Expected false, got true")
 	}
-
 }
 
 func TestMetaIssueType_CheckCompleteAndAvailable_Success(t *testing.T) {
-	data := make(map[string]interface{})
+	data := make(map[string]any)
 
-	data["summary"] = map[string]interface{}{
+	data["summary"] = map[string]any{
 		"required": true,
 		"name":     "Summary",
 	}
 
-	data["someKey"] = map[string]interface{}{
+	data["someKey"] = map[string]any{
 		"required": false,
 		"name":     "SomeKey",
 	}
@@ -654,7 +655,6 @@ func TestMetaIssueType_CheckCompleteAndAvailable_Success(t *testing.T) {
 	if ok != true {
 		t.Error("Expected true, got false")
 	}
-
 }
 
 func TestCreateMetaInfo_GetProjectWithName_Success(t *testing.T) {

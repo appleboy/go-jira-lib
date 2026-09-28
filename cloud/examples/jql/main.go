@@ -7,6 +7,7 @@ import (
 	jira "github.com/andygrunwald/go-jira/v2/cloud"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	jiraClient, _ := jira.NewClient("https://issues.apache.org/jira/", nil)
 
@@ -33,11 +34,18 @@ func main() {
 	outputResponse(issues, resp)
 }
 
+//nolint:forbidigo // This example displays the query response on stdout.
 func outputResponse(issues []jira.Issue, resp *jira.Response) {
 	fmt.Printf("Call to %s\n", resp.Request.URL)
 	fmt.Printf("Response Code: %d\n", resp.StatusCode)
 	fmt.Println("==================================")
 	for _, i := range issues {
-		fmt.Printf("%s (%s/%s): %+v\n", i.Key, i.Fields.Type.Name, i.Fields.Priority.Name, i.Fields.Summary)
+		fmt.Printf(
+			"%s (%s/%s): %+v\n",
+			i.Key,
+			i.Fields.Type.Name,
+			i.Fields.Priority.Name,
+			i.Fields.Summary,
+		)
 	}
 }

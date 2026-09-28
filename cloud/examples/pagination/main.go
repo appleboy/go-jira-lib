@@ -35,9 +35,9 @@ func GetAllIssues(client *jira.Client, searchString string) ([]jira.Issue, error
 			return issues, nil
 		}
 	}
-
 }
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	jiraClient, err := jira.NewClient("https://issues.apache.org/jira/", nil)
 	if err != nil {
@@ -52,5 +52,4 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(issues)
-
 }

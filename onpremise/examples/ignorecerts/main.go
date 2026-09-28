@@ -9,6 +9,7 @@ import (
 	jira "github.com/andygrunwald/go-jira/v2/onpremise"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -21,5 +22,4 @@ func main() {
 	fmt.Printf("%s: %+v\n", issue.Key, issue.Fields.Summary)
 	fmt.Printf("Type: %s\n", issue.Fields.Type.Name)
 	fmt.Printf("Priority: %s\n", issue.Fields.Priority.Name)
-
 }

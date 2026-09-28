@@ -38,33 +38,33 @@ type UpdateQueryOptions struct {
 
 // Issue represents a Jira issue.
 type Issue struct {
-	Expand         string               `json:"expand,omitempty" structs:"expand,omitempty"`
-	ID             string               `json:"id,omitempty" structs:"id,omitempty"`
-	Self           string               `json:"self,omitempty" structs:"self,omitempty"`
-	Key            string               `json:"key,omitempty" structs:"key,omitempty"`
-	Fields         *IssueFields         `json:"fields,omitempty" structs:"fields,omitempty"`
+	Expand         string               `json:"expand,omitempty"         structs:"expand,omitempty"`
+	ID             string               `json:"id,omitempty"             structs:"id,omitempty"`
+	Self           string               `json:"self,omitempty"           structs:"self,omitempty"`
+	Key            string               `json:"key,omitempty"            structs:"key,omitempty"`
+	Fields         *IssueFields         `json:"fields,omitempty"         structs:"fields,omitempty"`
 	RenderedFields *IssueRenderedFields `json:"renderedFields,omitempty" structs:"renderedFields,omitempty"`
-	Changelog      *Changelog           `json:"changelog,omitempty" structs:"changelog,omitempty"`
-	Transitions    []Transition         `json:"transitions,omitempty" structs:"transitions,omitempty"`
-	Names          map[string]string    `json:"names,omitempty" structs:"names,omitempty"`
+	Changelog      *Changelog           `json:"changelog,omitempty"      structs:"changelog,omitempty"`
+	Transitions    []Transition         `json:"transitions,omitempty"    structs:"transitions,omitempty"`
+	Names          map[string]string    `json:"names,omitempty"          structs:"names,omitempty"`
 }
 
 // ChangelogItems reflects one single changelog item of a history item
 type ChangelogItems struct {
-	Field      string      `json:"field" structs:"field"`
-	FieldType  string      `json:"fieldtype" structs:"fieldtype"`
-	From       interface{} `json:"from" structs:"from"`
-	FromString string      `json:"fromString" structs:"fromString"`
-	To         interface{} `json:"to" structs:"to"`
-	ToString   string      `json:"toString" structs:"toString"`
+	Field      string `json:"field"      structs:"field"`
+	FieldType  string `json:"fieldtype"  structs:"fieldtype"`
+	From       any    `json:"from"       structs:"from"`
+	FromString string `json:"fromString" structs:"fromString"`
+	To         any    `json:"to"         structs:"to"`
+	ToString   string `json:"toString"   structs:"toString"`
 }
 
 // ChangelogHistory reflects one single changelog history entry
 type ChangelogHistory struct {
-	Id      string           `json:"id" structs:"id"`
-	Author  User             `json:"author" structs:"author"`
+	Id      string           `json:"id"      structs:"id"` //nolint:staticcheck // Preserve the exported field name for backward compatibility.
+	Author  User             `json:"author"  structs:"author"`
 	Created string           `json:"created" structs:"created"`
-	Items   []ChangelogItems `json:"items" structs:"items"`
+	Items   []ChangelogItems `json:"items"   structs:"items"`
 }
 
 // Changelog reflects the change log of an issue
@@ -74,26 +74,26 @@ type Changelog struct {
 
 // Attachment represents a Jira attachment
 type Attachment struct {
-	Self      string `json:"self,omitempty" structs:"self,omitempty"`
-	ID        string `json:"id,omitempty" structs:"id,omitempty"`
-	Filename  string `json:"filename,omitempty" structs:"filename,omitempty"`
-	Author    *User  `json:"author,omitempty" structs:"author,omitempty"`
-	Created   string `json:"created,omitempty" structs:"created,omitempty"`
-	Size      int    `json:"size,omitempty" structs:"size,omitempty"`
-	MimeType  string `json:"mimeType,omitempty" structs:"mimeType,omitempty"`
-	Content   string `json:"content,omitempty" structs:"content,omitempty"`
+	Self      string `json:"self,omitempty"      structs:"self,omitempty"`
+	ID        string `json:"id,omitempty"        structs:"id,omitempty"`
+	Filename  string `json:"filename,omitempty"  structs:"filename,omitempty"`
+	Author    *User  `json:"author,omitempty"    structs:"author,omitempty"`
+	Created   string `json:"created,omitempty"   structs:"created,omitempty"`
+	Size      int    `json:"size,omitempty"      structs:"size,omitempty"`
+	MimeType  string `json:"mimeType,omitempty"  structs:"mimeType,omitempty"`
+	Content   string `json:"content,omitempty"   structs:"content,omitempty"`
 	Thumbnail string `json:"thumbnail,omitempty" structs:"thumbnail,omitempty"`
 }
 
 // Epic represents the epic to which an issue is associated
 // Not that this struct does not process the returned "color" value
 type Epic struct {
-	ID      int    `json:"id" structs:"id"`
-	Key     string `json:"key" structs:"key"`
-	Self    string `json:"self" structs:"self"`
-	Name    string `json:"name" structs:"name"`
+	ID      int    `json:"id"      structs:"id"`
+	Key     string `json:"key"     structs:"key"`
+	Self    string `json:"self"    structs:"self"`
+	Name    string `json:"name"    structs:"name"`
 	Summary string `json:"summary" structs:"summary"`
-	Done    bool   `json:"done" structs:"done"`
+	Done    bool   `json:"done"    structs:"done"`
 }
 
 // IssueFields represents single fields of a Jira issue.
@@ -103,45 +103,45 @@ type IssueFields struct {
 	//      * "workratio": -1,
 	//      * "lastViewed": null,
 	//      * "environment": null,
-	Expand                        string            `json:"expand,omitempty" structs:"expand,omitempty"`
-	Type                          IssueType         `json:"issuetype,omitempty" structs:"issuetype,omitempty"`
-	Project                       Project           `json:"project,omitempty" structs:"project,omitempty"`
-	Environment                   string            `json:"environment,omitempty" structs:"environment,omitempty"`
-	Resolution                    *Resolution       `json:"resolution,omitempty" structs:"resolution,omitempty"`
-	Priority                      *Priority         `json:"priority,omitempty" structs:"priority,omitempty"`
-	Resolutiondate                Time              `json:"resolutiondate,omitempty" structs:"resolutiondate,omitempty"`
-	Created                       Time              `json:"created,omitempty" structs:"created,omitempty"`
-	Duedate                       Date              `json:"duedate,omitempty" structs:"duedate,omitempty"`
-	Watches                       *Watches          `json:"watches,omitempty" structs:"watches,omitempty"`
-	Assignee                      *User             `json:"assignee,omitempty" structs:"assignee,omitempty"`
-	Updated                       Time              `json:"updated,omitempty" structs:"updated,omitempty"`
-	Description                   string            `json:"description,omitempty" structs:"description,omitempty"`
-	Summary                       string            `json:"summary,omitempty" structs:"summary,omitempty"`
-	Creator                       *User             `json:"Creator,omitempty" structs:"Creator,omitempty"`
-	Reporter                      *User             `json:"reporter,omitempty" structs:"reporter,omitempty"`
-	Components                    []*Component      `json:"components,omitempty" structs:"components,omitempty"`
-	Status                        *Status           `json:"status,omitempty" structs:"status,omitempty"`
-	StatusCategoryChangeDate      Time              `json:"statuscategorychangedate,omitempty" structs:"statuscategorychangedate,omitempty"`
-	Progress                      *Progress         `json:"progress,omitempty" structs:"progress,omitempty"`
-	AggregateProgress             *Progress         `json:"aggregateprogress,omitempty" structs:"aggregateprogress,omitempty"`
-	TimeTracking                  *TimeTracking     `json:"timetracking,omitempty" structs:"timetracking,omitempty"`
-	TimeSpent                     int               `json:"timespent,omitempty" structs:"timespent,omitempty"`
-	TimeEstimate                  int               `json:"timeestimate,omitempty" structs:"timeestimate,omitempty"`
-	TimeOriginalEstimate          int               `json:"timeoriginalestimate,omitempty" structs:"timeoriginalestimate,omitempty"`
-	Worklog                       *Worklog          `json:"worklog,omitempty" structs:"worklog,omitempty"`
-	IssueLinks                    []*IssueLink      `json:"issuelinks,omitempty" structs:"issuelinks,omitempty"`
-	Comments                      *Comments         `json:"comment,omitempty" structs:"comment,omitempty"`
-	FixVersions                   []*FixVersion     `json:"fixVersions,omitempty" structs:"fixVersions,omitempty"`
-	AffectsVersions               []*AffectsVersion `json:"versions,omitempty" structs:"versions,omitempty"`
-	Labels                        []string          `json:"labels,omitempty" structs:"labels,omitempty"`
-	Subtasks                      []*Subtasks       `json:"subtasks,omitempty" structs:"subtasks,omitempty"`
-	Attachments                   []*Attachment     `json:"attachment,omitempty" structs:"attachment,omitempty"`
-	Epic                          *Epic             `json:"epic,omitempty" structs:"epic,omitempty"`
-	Sprint                        *Sprint           `json:"sprint,omitempty" structs:"sprint,omitempty"`
-	Parent                        *Parent           `json:"parent,omitempty" structs:"parent,omitempty"`
+	Expand                        string            `json:"expand,omitempty"                        structs:"expand,omitempty"`
+	Type                          IssueType         `json:"issuetype,omitempty"                     structs:"issuetype,omitempty"`
+	Project                       Project           `json:"project,omitempty"                       structs:"project,omitempty"`
+	Environment                   string            `json:"environment,omitempty"                   structs:"environment,omitempty"`
+	Resolution                    *Resolution       `json:"resolution,omitempty"                    structs:"resolution,omitempty"`
+	Priority                      *Priority         `json:"priority,omitempty"                      structs:"priority,omitempty"`
+	Resolutiondate                Time              `json:"resolutiondate,omitempty"                structs:"resolutiondate,omitempty"`
+	Created                       Time              `json:"created,omitempty"                       structs:"created,omitempty"`
+	Duedate                       Date              `json:"duedate,omitempty"                       structs:"duedate,omitempty"`
+	Watches                       *Watches          `json:"watches,omitempty"                       structs:"watches,omitempty"`
+	Assignee                      *User             `json:"assignee,omitempty"                      structs:"assignee,omitempty"`
+	Updated                       Time              `json:"updated,omitempty"                       structs:"updated,omitempty"`
+	Description                   string            `json:"description,omitempty"                   structs:"description,omitempty"`
+	Summary                       string            `json:"summary,omitempty"                       structs:"summary,omitempty"`
+	Creator                       *User             `json:"Creator,omitempty"                       structs:"Creator,omitempty"`
+	Reporter                      *User             `json:"reporter,omitempty"                      structs:"reporter,omitempty"`
+	Components                    []*Component      `json:"components,omitempty"                    structs:"components,omitempty"`
+	Status                        *Status           `json:"status,omitempty"                        structs:"status,omitempty"`
+	StatusCategoryChangeDate      Time              `json:"statuscategorychangedate,omitempty"      structs:"statuscategorychangedate,omitempty"`
+	Progress                      *Progress         `json:"progress,omitempty"                      structs:"progress,omitempty"`
+	AggregateProgress             *Progress         `json:"aggregateprogress,omitempty"             structs:"aggregateprogress,omitempty"`
+	TimeTracking                  *TimeTracking     `json:"timetracking,omitempty"                  structs:"timetracking,omitempty"`
+	TimeSpent                     int               `json:"timespent,omitempty"                     structs:"timespent,omitempty"`
+	TimeEstimate                  int               `json:"timeestimate,omitempty"                  structs:"timeestimate,omitempty"`
+	TimeOriginalEstimate          int               `json:"timeoriginalestimate,omitempty"          structs:"timeoriginalestimate,omitempty"`
+	Worklog                       *Worklog          `json:"worklog,omitempty"                       structs:"worklog,omitempty"`
+	IssueLinks                    []*IssueLink      `json:"issuelinks,omitempty"                    structs:"issuelinks,omitempty"`
+	Comments                      *Comments         `json:"comment,omitempty"                       structs:"comment,omitempty"`
+	FixVersions                   []*FixVersion     `json:"fixVersions,omitempty"                   structs:"fixVersions,omitempty"`
+	AffectsVersions               []*AffectsVersion `json:"versions,omitempty"                      structs:"versions,omitempty"`
+	Labels                        []string          `json:"labels,omitempty"                        structs:"labels,omitempty"`
+	Subtasks                      []*Subtasks       `json:"subtasks,omitempty"                      structs:"subtasks,omitempty"`
+	Attachments                   []*Attachment     `json:"attachment,omitempty"                    structs:"attachment,omitempty"`
+	Epic                          *Epic             `json:"epic,omitempty"                          structs:"epic,omitempty"`
+	Sprint                        *Sprint           `json:"sprint,omitempty"                        structs:"sprint,omitempty"`
+	Parent                        *Parent           `json:"parent,omitempty"                        structs:"parent,omitempty"`
 	AggregateTimeOriginalEstimate int               `json:"aggregatetimeoriginalestimate,omitempty" structs:"aggregatetimeoriginalestimate,omitempty"`
-	AggregateTimeSpent            int               `json:"aggregatetimespent,omitempty" structs:"aggregatetimespent,omitempty"`
-	AggregateTimeEstimate         int               `json:"aggregatetimeestimate,omitempty" structs:"aggregatetimeestimate,omitempty"`
+	AggregateTimeSpent            int               `json:"aggregatetimespent,omitempty"            structs:"aggregatetimespent,omitempty"`
+	AggregateTimeEstimate         int               `json:"aggregatetimeestimate,omitempty"         structs:"aggregatetimeestimate,omitempty"`
 	Unknowns                      tcontainer.MarshalMap
 }
 
@@ -163,7 +163,6 @@ func (i *IssueFields) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON is a custom JSON marshal function for the IssueFields structs.
 // It handles Jira custom fields and maps those from / to "Unknowns" key.
 func (i *IssueFields) UnmarshalJSON(data []byte) error {
-
 	// Do the normal unmarshalling first
 	// Details for this way: http://choly.ca/post/go-json-marshalling/
 	type Alias IssueFields
@@ -200,13 +199,11 @@ func (i *IssueFields) UnmarshalJSON(data []byte) error {
 		if _, okay := totalMap.Value(key); okay {
 			delete(totalMap, key)
 		}
-
 	}
 	i = (*IssueFields)(aux.Alias)
 	// all the tags found in the struct were removed. Whatever is left are unknowns to struct
 	i.Unknowns = totalMap
 	return nil
-
 }
 
 // IssueRenderedFields represents rendered fields of a Jira issue.
@@ -220,40 +217,40 @@ type IssueRenderedFields struct {
 	//      * "aggregatetimeestimate": null,
 	//      * "environment": null,
 	Resolutiondate string    `json:"resolutiondate,omitempty" structs:"resolutiondate,omitempty"`
-	Created        string    `json:"created,omitempty" structs:"created,omitempty"`
-	Duedate        string    `json:"duedate,omitempty" structs:"duedate,omitempty"`
-	Updated        string    `json:"updated,omitempty" structs:"updated,omitempty"`
-	Comments       *Comments `json:"comment,omitempty" structs:"comment,omitempty"`
-	Description    string    `json:"description,omitempty" structs:"description,omitempty"`
+	Created        string    `json:"created,omitempty"        structs:"created,omitempty"`
+	Duedate        string    `json:"duedate,omitempty"        structs:"duedate,omitempty"`
+	Updated        string    `json:"updated,omitempty"        structs:"updated,omitempty"`
+	Comments       *Comments `json:"comment,omitempty"        structs:"comment,omitempty"`
+	Description    string    `json:"description,omitempty"    structs:"description,omitempty"`
 }
 
 // IssueType represents a type of a Jira issue.
 // Typical types are "Request", "Bug", "Story", ...
 type IssueType struct {
-	Self        string `json:"self,omitempty" structs:"self,omitempty"`
-	ID          string `json:"id,omitempty" structs:"id,omitempty"`
+	Self        string `json:"self,omitempty"        structs:"self,omitempty"`
+	ID          string `json:"id,omitempty"          structs:"id,omitempty"`
 	Description string `json:"description,omitempty" structs:"description,omitempty"`
-	IconURL     string `json:"iconUrl,omitempty" structs:"iconUrl,omitempty"`
-	Name        string `json:"name,omitempty" structs:"name,omitempty"`
-	Subtask     bool   `json:"subtask,omitempty" structs:"subtask,omitempty"`
-	AvatarID    int    `json:"avatarId,omitempty" structs:"avatarId,omitempty"`
+	IconURL     string `json:"iconUrl,omitempty"     structs:"iconUrl,omitempty"`
+	Name        string `json:"name,omitempty"        structs:"name,omitempty"`
+	Subtask     bool   `json:"subtask,omitempty"     structs:"subtask,omitempty"`
+	AvatarID    int    `json:"avatarId,omitempty"    structs:"avatarId,omitempty"`
 }
 
 // Watches represents a type of how many and which user are "observing" a Jira issue to track the status / updates.
 type Watches struct {
-	Self       string     `json:"self,omitempty" structs:"self,omitempty"`
+	Self       string     `json:"self,omitempty"       structs:"self,omitempty"`
 	WatchCount int        `json:"watchCount,omitempty" structs:"watchCount,omitempty"`
 	IsWatching bool       `json:"isWatching,omitempty" structs:"isWatching,omitempty"`
-	Watchers   []*Watcher `json:"watchers,omitempty" structs:"watchers,omitempty"`
+	Watchers   []*Watcher `json:"watchers,omitempty"   structs:"watchers,omitempty"`
 }
 
 // Watcher represents a simplified user that "observes" the issue
 type Watcher struct {
-	Self        string `json:"self,omitempty" structs:"self,omitempty"`
-	Name        string `json:"name,omitempty" structs:"name,omitempty"`
-	AccountID   string `json:"accountId,omitempty" structs:"accountId,omitempty"`
+	Self        string `json:"self,omitempty"        structs:"self,omitempty"`
+	Name        string `json:"name,omitempty"        structs:"name,omitempty"`
+	AccountID   string `json:"accountId,omitempty"   structs:"accountId,omitempty"`
 	DisplayName string `json:"displayName,omitempty" structs:"displayName,omitempty"`
-	Active      bool   `json:"active,omitempty" structs:"active,omitempty"`
+	Active      bool   `json:"active,omitempty"      structs:"active,omitempty"`
 }
 
 // AvatarUrls represents different dimensions of avatars / images
@@ -267,22 +264,22 @@ type AvatarUrls struct {
 // Component represents a "component" of a Jira issue.
 // Components can be user defined in every Jira instance.
 type Component struct {
-	Self        string `json:"self,omitempty" structs:"self,omitempty"`
-	ID          string `json:"id,omitempty" structs:"id,omitempty"`
-	Name        string `json:"name,omitempty" structs:"name,omitempty"`
+	Self        string `json:"self,omitempty"        structs:"self,omitempty"`
+	ID          string `json:"id,omitempty"          structs:"id,omitempty"`
+	Name        string `json:"name,omitempty"        structs:"name,omitempty"`
 	Description string `json:"description,omitempty" structs:"description,omitempty"`
 }
 
 // Progress represents the progress of a Jira issue.
 type Progress struct {
 	Progress int `json:"progress" structs:"progress"`
-	Total    int `json:"total" structs:"total"`
-	Percent  int `json:"percent" structs:"percent"`
+	Total    int `json:"total"    structs:"total"`
+	Percent  int `json:"percent"  structs:"percent"`
 }
 
 // Parent represents the parent of a Jira issue, to be used with subtask issue types.
 type Parent struct {
-	ID  string `json:"id,omitempty" structs:"id,omitempty"`
+	ID  string `json:"id,omitempty"  structs:"id,omitempty"`
 	Key string `json:"key,omitempty" structs:"key,omitempty"`
 }
 
@@ -303,9 +300,9 @@ type transitionResult struct {
 
 // Transition represents an issue transition in Jira
 type Transition struct {
-	ID     string                     `json:"id" structs:"id"`
-	Name   string                     `json:"name" structs:"name"`
-	To     Status                     `json:"to" structs:"status"`
+	ID     string                     `json:"id"     structs:"id"`
+	Name   string                     `json:"name"   structs:"name"`
+	To     Status                     `json:"to"     structs:"status"`
 	Fields map[string]TransitionField `json:"fields" structs:"fields"`
 }
 
@@ -317,8 +314,8 @@ type TransitionField struct {
 // CreateTransitionPayload is used for creating new issue transitions
 type CreateTransitionPayload struct {
 	Update     TransitionPayloadUpdate `json:"update,omitempty" structs:"update,omitempty"`
-	Transition TransitionPayload       `json:"transition" structs:"transition"`
-	Fields     TransitionPayloadFields `json:"fields" structs:"fields"`
+	Transition TransitionPayload       `json:"transition"       structs:"transition"`
+	Fields     TransitionPayloadFields `json:"fields"           structs:"fields"`
 }
 
 // TransitionPayloadUpdate represents the updates of Transition calls like DoTransition
@@ -400,69 +397,69 @@ func (t Date) MarshalJSON() ([]byte, error) {
 // One Worklog contains zero or n WorklogRecords
 // Jira Wiki: https://confluence.atlassian.com/jira/logging-work-on-an-issue-185729605.html
 type Worklog struct {
-	StartAt    int             `json:"startAt" structs:"startAt"`
+	StartAt    int             `json:"startAt"    structs:"startAt"`
 	MaxResults int             `json:"maxResults" structs:"maxResults"`
-	Total      int             `json:"total" structs:"total"`
-	Worklogs   []WorklogRecord `json:"worklogs" structs:"worklogs"`
+	Total      int             `json:"total"      structs:"total"`
+	Worklogs   []WorklogRecord `json:"worklogs"   structs:"worklogs"`
 }
 
 // WorklogRecord represents one entry of a Worklog
 type WorklogRecord struct {
-	Self             string           `json:"self,omitempty" structs:"self,omitempty"`
-	Author           *User            `json:"author,omitempty" structs:"author,omitempty"`
-	UpdateAuthor     *User            `json:"updateAuthor,omitempty" structs:"updateAuthor,omitempty"`
-	Comment          string           `json:"comment,omitempty" structs:"comment,omitempty"`
-	Created          *Time            `json:"created,omitempty" structs:"created,omitempty"`
-	Updated          *Time            `json:"updated,omitempty" structs:"updated,omitempty"`
-	Started          *Time            `json:"started,omitempty" structs:"started,omitempty"`
-	TimeSpent        string           `json:"timeSpent,omitempty" structs:"timeSpent,omitempty"`
+	Self             string           `json:"self,omitempty"             structs:"self,omitempty"`
+	Author           *User            `json:"author,omitempty"           structs:"author,omitempty"`
+	UpdateAuthor     *User            `json:"updateAuthor,omitempty"     structs:"updateAuthor,omitempty"`
+	Comment          string           `json:"comment,omitempty"          structs:"comment,omitempty"`
+	Created          *Time            `json:"created,omitempty"          structs:"created,omitempty"`
+	Updated          *Time            `json:"updated,omitempty"          structs:"updated,omitempty"`
+	Started          *Time            `json:"started,omitempty"          structs:"started,omitempty"`
+	TimeSpent        string           `json:"timeSpent,omitempty"        structs:"timeSpent,omitempty"`
 	TimeSpentSeconds int              `json:"timeSpentSeconds,omitempty" structs:"timeSpentSeconds,omitempty"`
-	ID               string           `json:"id,omitempty" structs:"id,omitempty"`
-	IssueID          string           `json:"issueId,omitempty" structs:"issueId,omitempty"`
+	ID               string           `json:"id,omitempty"               structs:"id,omitempty"`
+	IssueID          string           `json:"issueId,omitempty"          structs:"issueId,omitempty"`
 	Properties       []EntityProperty `json:"properties,omitempty"`
 }
 
 type EntityProperty struct {
-	Key   string      `json:"key"`
-	Value interface{} `json:"value"`
+	Key   string `json:"key"`
+	Value any    `json:"value"`
 }
 
 // TimeTracking represents the timetracking fields of a Jira issue.
 type TimeTracking struct {
-	OriginalEstimate         string `json:"originalEstimate,omitempty" structs:"originalEstimate,omitempty"`
-	RemainingEstimate        string `json:"remainingEstimate,omitempty" structs:"remainingEstimate,omitempty"`
-	TimeSpent                string `json:"timeSpent,omitempty" structs:"timeSpent,omitempty"`
-	OriginalEstimateSeconds  int    `json:"originalEstimateSeconds,omitempty" structs:"originalEstimateSeconds,omitempty"`
+	OriginalEstimate         string `json:"originalEstimate,omitempty"         structs:"originalEstimate,omitempty"`
+	RemainingEstimate        string `json:"remainingEstimate,omitempty"        structs:"remainingEstimate,omitempty"`
+	TimeSpent                string `json:"timeSpent,omitempty"                structs:"timeSpent,omitempty"`
+	OriginalEstimateSeconds  int    `json:"originalEstimateSeconds,omitempty"  structs:"originalEstimateSeconds,omitempty"`
 	RemainingEstimateSeconds int    `json:"remainingEstimateSeconds,omitempty" structs:"remainingEstimateSeconds,omitempty"`
-	TimeSpentSeconds         int    `json:"timeSpentSeconds,omitempty" structs:"timeSpentSeconds,omitempty"`
+	TimeSpentSeconds         int    `json:"timeSpentSeconds,omitempty"         structs:"timeSpentSeconds,omitempty"`
 }
 
 // Subtasks represents all issues of a parent issue.
 type Subtasks struct {
-	ID     string      `json:"id" structs:"id"`
-	Key    string      `json:"key" structs:"key"`
-	Self   string      `json:"self" structs:"self"`
+	ID     string      `json:"id"     structs:"id"`
+	Key    string      `json:"key"    structs:"key"`
+	Self   string      `json:"self"   structs:"self"`
 	Fields IssueFields `json:"fields" structs:"fields"`
 }
 
 // IssueLink represents a link between two issues in Jira.
 type IssueLink struct {
-	ID           string        `json:"id,omitempty" structs:"id,omitempty"`
-	Self         string        `json:"self,omitempty" structs:"self,omitempty"`
-	Type         IssueLinkType `json:"type" structs:"type"`
-	OutwardIssue *Issue        `json:"outwardIssue" structs:"outwardIssue"`
-	InwardIssue  *Issue        `json:"inwardIssue" structs:"inwardIssue"`
+	ID           string        `json:"id,omitempty"      structs:"id,omitempty"`
+	Self         string        `json:"self,omitempty"    structs:"self,omitempty"`
+	Type         IssueLinkType `json:"type"              structs:"type"`
+	OutwardIssue *Issue        `json:"outwardIssue"      structs:"outwardIssue"`
+	InwardIssue  *Issue        `json:"inwardIssue"       structs:"inwardIssue"`
 	Comment      *Comment      `json:"comment,omitempty" structs:"comment,omitempty"`
 }
 
 // IssueLinkType represents a type of a link between to issues in Jira.
 // Typical issue link types are "Related to", "Duplicate", "Is blocked by", etc.
 type IssueLinkType struct {
-	ID      string `json:"id,omitempty" structs:"id,omitempty"`
+	ID      string `json:"id,omitempty"   structs:"id,omitempty"`
 	Self    string `json:"self,omitempty" structs:"self,omitempty"`
-	Name    string `json:"name" structs:"name"`
-	Inward  string `json:"inward" structs:"inward"`
-	Outward string `json:"outward" structs:"outward"`
+	Name    string `json:"name"           structs:"name"`
+	Inward  string `json:"inward"         structs:"inward"`
+	Outward string `json:"outward"        structs:"outward"`
 }
 
 // Comments represents a list of Comment.
@@ -472,15 +469,15 @@ type Comments struct {
 
 // Comment represents a comment by a person to an issue in Jira.
 type Comment struct {
-	ID           string            `json:"id,omitempty" structs:"id,omitempty"`
-	Self         string            `json:"self,omitempty" structs:"self,omitempty"`
-	Name         string            `json:"name,omitempty" structs:"name,omitempty"`
-	Author       User              `json:"author,omitempty" structs:"author,omitempty"`
-	Body         string            `json:"body,omitempty" structs:"body,omitempty"`
+	ID           string            `json:"id,omitempty"           structs:"id,omitempty"`
+	Self         string            `json:"self,omitempty"         structs:"self,omitempty"`
+	Name         string            `json:"name,omitempty"         structs:"name,omitempty"`
+	Author       User              `json:"author,omitempty"       structs:"author,omitempty"`
+	Body         string            `json:"body,omitempty"         structs:"body,omitempty"`
 	UpdateAuthor User              `json:"updateAuthor,omitempty" structs:"updateAuthor,omitempty"`
-	Updated      string            `json:"updated,omitempty" structs:"updated,omitempty"`
-	Created      string            `json:"created,omitempty" structs:"created,omitempty"`
-	Visibility   CommentVisibility `json:"visibility,omitempty" structs:"visibility,omitempty"`
+	Updated      string            `json:"updated,omitempty"      structs:"updated,omitempty"`
+	Created      string            `json:"created,omitempty"      structs:"created,omitempty"`
+	Visibility   CommentVisibility `json:"visibility,omitempty"   structs:"visibility,omitempty"`
 
 	// A list of comment properties. Optional on create and update.
 	Properties []EntityProperty `json:"properties,omitempty" structs:"properties,omitempty"`
@@ -488,16 +485,16 @@ type Comment struct {
 
 // FixVersion represents a software release in which an issue is fixed.
 type FixVersion struct {
-	Self            string `json:"self,omitempty" structs:"self,omitempty"`
-	ID              string `json:"id,omitempty" structs:"id,omitempty"`
-	Name            string `json:"name,omitempty" structs:"name,omitempty"`
-	Description     string `json:"description,omitempty" structs:"description,omitempty"`
-	Archived        *bool  `json:"archived,omitempty" structs:"archived,omitempty"`
-	Released        *bool  `json:"released,omitempty" structs:"released,omitempty"`
-	ReleaseDate     string `json:"releaseDate,omitempty" structs:"releaseDate,omitempty"`
+	Self            string `json:"self,omitempty"            structs:"self,omitempty"`
+	ID              string `json:"id,omitempty"              structs:"id,omitempty"`
+	Name            string `json:"name,omitempty"            structs:"name,omitempty"`
+	Description     string `json:"description,omitempty"     structs:"description,omitempty"`
+	Archived        *bool  `json:"archived,omitempty"        structs:"archived,omitempty"`
+	Released        *bool  `json:"released,omitempty"        structs:"released,omitempty"`
+	ReleaseDate     string `json:"releaseDate,omitempty"     structs:"releaseDate,omitempty"`
 	UserReleaseDate string `json:"userReleaseDate,omitempty" structs:"userReleaseDate,omitempty"`
-	ProjectID       int    `json:"projectId,omitempty" structs:"projectId,omitempty"` // Unlike other IDs, this is returned as a number
-	StartDate       string `json:"startDate,omitempty" structs:"startDate,omitempty"`
+	ProjectID       int    `json:"projectId,omitempty"       structs:"projectId,omitempty"` // Unlike other IDs, this is returned as a number
+	StartDate       string `json:"startDate,omitempty"       structs:"startDate,omitempty"`
 }
 
 // AffectsVersion represents a software release which is affected by an issue.
@@ -506,7 +503,7 @@ type AffectsVersion Version
 // CommentVisibility represents he visibility of a comment.
 // E.g. Type could be "role" and Value "Administrators"
 type CommentVisibility struct {
-	Type  string `json:"type,omitempty" structs:"type,omitempty"`
+	Type  string `json:"type,omitempty"  structs:"type,omitempty"`
 	Value string `json:"value,omitempty" structs:"value,omitempty"`
 }
 
@@ -531,10 +528,10 @@ type SearchOptions struct {
 // searchResult is only a small wrapper around the Search (with JQL) method
 // to be able to parse the results
 type searchResult struct {
-	Issues     []Issue `json:"issues" structs:"issues"`
-	StartAt    int     `json:"startAt" structs:"startAt"`
+	Issues     []Issue `json:"issues"     structs:"issues"`
+	StartAt    int     `json:"startAt"    structs:"startAt"`
 	MaxResults int     `json:"maxResults" structs:"maxResults"`
-	Total      int     `json:"total" structs:"total"`
+	Total      int     `json:"total"      structs:"total"`
 }
 
 // GetQueryOptions specifies the optional parameters for the Get Issue methods
@@ -573,12 +570,12 @@ type CustomFields map[string]string
 
 // RemoteLink represents remote links which linked to issues
 type RemoteLink struct {
-	ID           int                    `json:"id,omitempty" structs:"id,omitempty"`
-	Self         string                 `json:"self,omitempty" structs:"self,omitempty"`
-	GlobalID     string                 `json:"globalId,omitempty" structs:"globalId,omitempty"`
-	Application  *RemoteLinkApplication `json:"application,omitempty" structs:"application,omitempty"`
+	ID           int                    `json:"id,omitempty"           structs:"id,omitempty"`
+	Self         string                 `json:"self,omitempty"         structs:"self,omitempty"`
+	GlobalID     string                 `json:"globalId,omitempty"     structs:"globalId,omitempty"`
+	Application  *RemoteLinkApplication `json:"application,omitempty"  structs:"application,omitempty"`
 	Relationship string                 `json:"relationship,omitempty" structs:"relationship,omitempty"`
-	Object       *RemoteLinkObject      `json:"object,omitempty" structs:"object,omitempty"`
+	Object       *RemoteLinkObject      `json:"object,omitempty"       structs:"object,omitempty"`
 }
 
 // RemoteLinkApplication represents remote links application
@@ -589,24 +586,24 @@ type RemoteLinkApplication struct {
 
 // RemoteLinkObject represents remote link object itself
 type RemoteLinkObject struct {
-	URL     string            `json:"url,omitempty" structs:"url,omitempty"`
-	Title   string            `json:"title,omitempty" structs:"title,omitempty"`
+	URL     string            `json:"url,omitempty"     structs:"url,omitempty"`
+	Title   string            `json:"title,omitempty"   structs:"title,omitempty"`
 	Summary string            `json:"summary,omitempty" structs:"summary,omitempty"`
-	Icon    *RemoteLinkIcon   `json:"icon,omitempty" structs:"icon,omitempty"`
-	Status  *RemoteLinkStatus `json:"status,omitempty" structs:"status,omitempty"`
+	Icon    *RemoteLinkIcon   `json:"icon,omitempty"    structs:"icon,omitempty"`
+	Status  *RemoteLinkStatus `json:"status,omitempty"  structs:"status,omitempty"`
 }
 
 // RemoteLinkIcon represents icon displayed next to link
 type RemoteLinkIcon struct {
-	Url16x16 string `json:"url16x16,omitempty" structs:"url16x16,omitempty"`
-	Title    string `json:"title,omitempty" structs:"title,omitempty"`
-	Link     string `json:"link,omitempty" structs:"link,omitempty"`
+	Url16x16 string `json:"url16x16,omitempty" structs:"url16x16,omitempty"` //nolint:staticcheck // Preserve the exported field name for backward compatibility.
+	Title    string `json:"title,omitempty"    structs:"title,omitempty"`
+	Link     string `json:"link,omitempty"     structs:"link,omitempty"`
 }
 
 // RemoteLinkStatus if the link is a resolvable object (issue, epic) - the structure represent its status
 type RemoteLinkStatus struct {
 	Resolved bool            `json:"resolved,omitempty" structs:"resolved,omitempty"`
-	Icon     *RemoteLinkIcon `json:"icon,omitempty" structs:"icon,omitempty"`
+	Icon     *RemoteLinkIcon `json:"icon,omitempty"     structs:"icon,omitempty"`
 }
 
 // Get returns a full representation of the issue for the given issue key.
@@ -620,8 +617,12 @@ type RemoteLinkStatus struct {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) Get(ctx context.Context, issueID string, options *GetQueryOptions) (*Issue, *Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s", issueID)
+func (s *IssueService) Get(
+	ctx context.Context,
+	issueID string,
+	options *GetQueryOptions,
+) (*Issue, *Response, error) {
+	apiEndpoint := "rest/api/2/issue/" + issueID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
@@ -652,7 +653,10 @@ func (s *IssueService) Get(ctx context.Context, issueID string, options *GetQuer
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) DownloadAttachment(ctx context.Context, attachmentID string) (*Response, error) {
+func (s *IssueService) DownloadAttachment(
+	ctx context.Context,
+	attachmentID string,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/attachment/content/%s/", attachmentID)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -672,7 +676,12 @@ func (s *IssueService) DownloadAttachment(ctx context.Context, attachmentID stri
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) PostAttachment(ctx context.Context, issueID string, r io.Reader, attachmentName string) (*[]Attachment, *Response, error) {
+func (s *IssueService) PostAttachment(
+	ctx context.Context,
+	issueID string,
+	r io.Reader,
+	attachmentName string,
+) (*[]Attachment, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/attachments", issueID)
 
 	b := new(bytes.Buffer)
@@ -714,8 +723,11 @@ func (s *IssueService) PostAttachment(ctx context.Context, issueID string, r io.
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) DeleteAttachment(ctx context.Context, attachmentID string) (*Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/attachment/%s", attachmentID)
+func (s *IssueService) DeleteAttachment(
+	ctx context.Context,
+	attachmentID string,
+) (*Response, error) {
+	apiEndpoint := "rest/api/2/attachment/" + attachmentID
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndpoint, nil)
 	if err != nil {
@@ -737,7 +749,7 @@ func (s *IssueService) DeleteAttachment(ctx context.Context, attachmentID string
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
 func (s *IssueService) DeleteLink(ctx context.Context, linkID string) (*Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/issueLink/%s", linkID)
+	apiEndpoint := "rest/api/2/issueLink/" + linkID
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndpoint, nil)
 	if err != nil {
@@ -760,7 +772,11 @@ func (s *IssueService) DeleteLink(ctx context.Context, linkID string) (*Response
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetWorklogs(ctx context.Context, issueID string, options ...func(*http.Request) error) (*Worklog, *Response, error) {
+func (s *IssueService) GetWorklogs(
+	ctx context.Context,
+	issueID string,
+	options ...func(*http.Request) error,
+) (*Worklog, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/worklog", issueID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
@@ -785,7 +801,7 @@ func (s *IssueService) GetWorklogs(ctx context.Context, issueID string, options 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func WithQueryOptions(options interface{}) func(*http.Request) error {
+func WithQueryOptions(options any) func(*http.Request) error {
 	q, err := query.Values(options)
 	if err != nil {
 		return func(*http.Request) error {
@@ -838,7 +854,11 @@ func (s *IssueService) Create(ctx context.Context, issue *Issue) (*Issue, *Respo
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) Update(ctx context.Context, issue *Issue, opts *UpdateQueryOptions) (*Issue, *Response, error) {
+func (s *IssueService) Update(
+	ctx context.Context,
+	issue *Issue,
+	opts *UpdateQueryOptions,
+) (*Issue, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%v", issue.Key)
 	url, err := addOptions(apiEndpoint, opts)
 	if err != nil {
@@ -867,7 +887,11 @@ func (s *IssueService) Update(ctx context.Context, issue *Issue, opts *UpdateQue
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) UpdateIssue(ctx context.Context, jiraID string, data map[string]interface{}) (*Response, error) {
+func (s *IssueService) UpdateIssue(
+	ctx context.Context,
+	jiraID string,
+	data map[string]any,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%v", jiraID)
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndpoint, data)
 	if err != nil {
@@ -889,7 +913,11 @@ func (s *IssueService) UpdateIssue(ctx context.Context, jiraID string, data map[
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) AddComment(ctx context.Context, issueID string, comment *Comment) (*Comment, *Response, error) {
+func (s *IssueService) AddComment(
+	ctx context.Context,
+	issueID string,
+	comment *Comment,
+) (*Comment, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/comment", issueID)
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, comment)
 	if err != nil {
@@ -912,7 +940,11 @@ func (s *IssueService) AddComment(ctx context.Context, issueID string, comment *
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) UpdateComment(ctx context.Context, issueID string, comment *Comment) (*Comment, *Response, error) {
+func (s *IssueService) UpdateComment(
+	ctx context.Context,
+	issueID string,
+	comment *Comment,
+) (*Comment, *Response, error) {
 	reqBody := struct {
 		Body string `json:"body"`
 	}{
@@ -962,7 +994,12 @@ func (s *IssueService) DeleteComment(ctx context.Context, issueID, commentID str
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) AddWorklogRecord(ctx context.Context, issueID string, record *WorklogRecord, options ...func(*http.Request) error) (*WorklogRecord, *Response, error) {
+func (s *IssueService) AddWorklogRecord(
+	ctx context.Context,
+	issueID string,
+	record *WorklogRecord,
+	options ...func(*http.Request) error,
+) (*WorklogRecord, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/worklog", issueID)
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, record)
 	if err != nil {
@@ -992,7 +1029,12 @@ func (s *IssueService) AddWorklogRecord(ctx context.Context, issueID string, rec
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) UpdateWorklogRecord(ctx context.Context, issueID, worklogID string, record *WorklogRecord, options ...func(*http.Request) error) (*WorklogRecord, *Response, error) {
+func (s *IssueService) UpdateWorklogRecord(
+	ctx context.Context,
+	issueID, worklogID string,
+	record *WorklogRecord,
+	options ...func(*http.Request) error,
+) (*WorklogRecord, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/worklog/%s", issueID, worklogID)
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndpoint, record)
 	if err != nil {
@@ -1044,7 +1086,11 @@ func (s *IssueService) AddLink(ctx context.Context, issueLink *IssueLink) (*Resp
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) Search(ctx context.Context, jql string, options *SearchOptions) ([]Issue, *Response, error) {
+func (s *IssueService) Search(
+	ctx context.Context,
+	jql string,
+	options *SearchOptions,
+) ([]Issue, *Response, error) {
 	u := url.URL{
 		Path: "rest/api/2/search",
 	}
@@ -1092,7 +1138,12 @@ func (s *IssueService) Search(ctx context.Context, jql string, options *SearchOp
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) SearchPages(ctx context.Context, jql string, options *SearchOptions, f func(Issue) error) error {
+func (s *IssueService) SearchPages(
+	ctx context.Context,
+	jql string,
+	options *SearchOptions,
+	f func(Issue) error,
+) error {
 	if options == nil {
 		options = &SearchOptions{
 			StartAt:    0,
@@ -1137,14 +1188,17 @@ func (s *IssueService) SearchPages(ctx context.Context, jql string, options *Sea
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetCustomFields(ctx context.Context, issueID string) (CustomFields, *Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s", issueID)
+func (s *IssueService) GetCustomFields(
+	ctx context.Context,
+	issueID string,
+) (CustomFields, *Response, error) {
+	apiEndpoint := "rest/api/2/issue/" + issueID
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	issue := new(map[string]interface{})
+	issue := new(map[string]any)
 	resp, err := s.client.Do(req, issue)
 	if err != nil {
 		jerr := NewJiraError(resp, err)
@@ -1158,10 +1212,10 @@ func (s *IssueService) GetCustomFields(ctx context.Context, issueID string) (Cus
 		return cf, resp, nil
 	}
 
-	if rec, ok := f.(map[string]interface{}); ok {
+	if rec, ok := f.(map[string]any); ok {
 		for key, val := range rec {
 			if strings.Contains(key, "customfield") {
-				if valMap, ok := val.(map[string]interface{}); ok {
+				if valMap, ok := val.(map[string]any); ok {
 					if v, ok := valMap["value"]; ok {
 						val = v
 					}
@@ -1180,7 +1234,10 @@ func (s *IssueService) GetCustomFields(ctx context.Context, issueID string) (Cus
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetTransitions(ctx context.Context, id string) ([]Transition, *Response, error) {
+func (s *IssueService) GetTransitions(
+	ctx context.Context,
+	id string,
+) ([]Transition, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/transitions?expand=transitions.fields", id)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -1203,7 +1260,10 @@ func (s *IssueService) GetTransitions(ctx context.Context, id string) ([]Transit
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) DoTransition(ctx context.Context, ticketID, transitionID string) (*Response, error) {
+func (s *IssueService) DoTransition(
+	ctx context.Context,
+	ticketID, transitionID string,
+) (*Response, error) {
 	payload := CreateTransitionPayload{
 		Transition: TransitionPayload{
 			ID: transitionID,
@@ -1220,7 +1280,10 @@ func (s *IssueService) DoTransition(ctx context.Context, ticketID, transitionID 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) DoTransitionWithPayload(ctx context.Context, ticketID, payload interface{}) (*Response, error) {
+func (s *IssueService) DoTransitionWithPayload(
+	ctx context.Context,
+	ticketID, payload any,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/transitions", ticketID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, payload)
@@ -1251,7 +1314,11 @@ func (s *IssueService) DoTransitionWithPayload(ctx context.Context, ticketID, pa
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func InitIssueWithMetaAndFields(metaProject *MetaProject, metaIssuetype *MetaIssueType, fieldsConfig map[string]string) (*Issue, error) {
+func InitIssueWithMetaAndFields(
+	metaProject *MetaProject,
+	metaIssuetype *MetaIssueType,
+	fieldsConfig map[string]string,
+) (*Issue, error) {
 	issue := new(Issue)
 	issueFields := new(IssueFields)
 	issueFields.Unknowns = tcontainer.NewMarshalMap()
@@ -1326,10 +1393,10 @@ func InitIssueWithMetaAndFields(metaProject *MetaProject, metaIssuetype *MetaIss
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
 func (s *IssueService) Delete(ctx context.Context, issueID string) (*Response, error) {
-	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s", issueID)
+	apiEndpoint := "rest/api/2/issue/" + issueID
 
 	// to enable deletion of subtasks; without this, the request will fail if the issue has subtasks
-	deletePayload := make(map[string]interface{})
+	deletePayload := make(map[string]any)
 	deletePayload["deleteSubtasks"] = "true"
 	content, _ := json.Marshal(deletePayload)
 
@@ -1348,7 +1415,10 @@ func (s *IssueService) Delete(ctx context.Context, issueID string) (*Response, e
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetWatchers(ctx context.Context, issueID string) (*[]User, *Response, error) {
+func (s *IssueService) GetWatchers(
+	ctx context.Context,
+	issueID string,
+) (*[]User, *Response, error) {
 	watchesAPIEndpoint := fmt.Sprintf("rest/api/2/issue/%s/watchers", issueID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodGet, watchesAPIEndpoint, nil)
@@ -1384,7 +1454,10 @@ func (s *IssueService) GetWatchers(ctx context.Context, issueID string) (*[]User
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) AddWatcher(ctx context.Context, issueID string, userName string) (*Response, error) {
+func (s *IssueService) AddWatcher(
+	ctx context.Context,
+	issueID, userName string,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/api/2/issue/%s/watchers", issueID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndPoint, userName)
@@ -1407,7 +1480,10 @@ func (s *IssueService) AddWatcher(ctx context.Context, issueID string, userName 
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) RemoveWatcher(ctx context.Context, issueID string, userName string) (*Response, error) {
+func (s *IssueService) RemoveWatcher(
+	ctx context.Context,
+	issueID, userName string,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/api/2/issue/%s/watchers", issueID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodDelete, apiEndPoint, userName)
@@ -1430,7 +1506,11 @@ func (s *IssueService) RemoveWatcher(ctx context.Context, issueID string, userNa
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) UpdateAssignee(ctx context.Context, issueID string, assignee *User) (*Response, error) {
+func (s *IssueService) UpdateAssignee(
+	ctx context.Context,
+	issueID string,
+	assignee *User,
+) (*Response, error) {
 	apiEndPoint := fmt.Sprintf("rest/api/2/issue/%s/assignee", issueID)
 
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndPoint, assignee)
@@ -1451,7 +1531,7 @@ func (s *IssueService) UpdateAssignee(ctx context.Context, issueID string, assig
 func (c ChangelogHistory) CreatedTime() (time.Time, error) {
 	var t time.Time
 	// Ignore null
-	if string(c.Created) == "null" {
+	if c.Created == "null" {
 		return t, nil
 	}
 	t, err := time.Parse("2006-01-02T15:04:05.999-0700", c.Created)
@@ -1464,7 +1544,10 @@ func (c ChangelogHistory) CreatedTime() (time.Time, error) {
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) GetRemoteLinks(ctx context.Context, id string) (*[]RemoteLink, *Response, error) {
+func (s *IssueService) GetRemoteLinks(
+	ctx context.Context,
+	id string,
+) (*[]RemoteLink, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/remotelink", id)
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
 	if err != nil {
@@ -1485,7 +1568,11 @@ func (s *IssueService) GetRemoteLinks(ctx context.Context, id string) (*[]Remote
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) AddRemoteLink(ctx context.Context, issueID string, remotelink *RemoteLink) (*RemoteLink, *Response, error) {
+func (s *IssueService) AddRemoteLink(
+	ctx context.Context,
+	issueID string,
+	remotelink *RemoteLink,
+) (*RemoteLink, *Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/remotelink", issueID)
 	req, err := s.client.NewRequest(ctx, http.MethodPost, apiEndpoint, remotelink)
 	if err != nil {
@@ -1509,7 +1596,12 @@ func (s *IssueService) AddRemoteLink(ctx context.Context, issueID string, remote
 //
 // TODO Double check this method if this works as expected, is using the latest API and the response is complete
 // This double check effort is done for v2 - Remove this two lines if this is completed.
-func (s *IssueService) UpdateRemoteLink(ctx context.Context, issueID string, linkID int, remotelink *RemoteLink) (*Response, error) {
+func (s *IssueService) UpdateRemoteLink(
+	ctx context.Context,
+	issueID string,
+	linkID int,
+	remotelink *RemoteLink,
+) (*Response, error) {
 	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/remotelink/%d", issueID, linkID)
 	req, err := s.client.NewRequest(ctx, http.MethodPut, apiEndpoint, remotelink)
 	if err != nil {

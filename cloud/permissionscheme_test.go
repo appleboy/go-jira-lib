@@ -32,7 +32,11 @@ func TestPermissionSchemeService_GetList(t *testing.T) {
 		return
 	}
 	if len(permissionScheme.PermissionSchemes) != 2 {
-		t.Errorf("Expected %d permissionSchemes but got %d", 2, len(permissionScheme.PermissionSchemes))
+		t.Errorf(
+			"Expected %d permissionSchemes but got %d",
+			2,
+			len(permissionScheme.PermissionSchemes),
+		)
 	}
 }
 
@@ -53,7 +57,10 @@ func TestPermissionSchemeService_GetList_NoList(t *testing.T) {
 
 	permissionScheme, _, err := testClient.PermissionScheme.GetList(context.Background())
 	if permissionScheme != nil {
-		t.Errorf("Expected permissionScheme list has %d entries but should be nil", len(permissionScheme.PermissionSchemes))
+		t.Errorf(
+			"Expected permissionScheme list has %d entries but should be nil",
+			len(permissionScheme.PermissionSchemes),
+		)
 	}
 	if err == nil {
 		t.Errorf("No error given")

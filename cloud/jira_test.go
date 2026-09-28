@@ -68,9 +68,7 @@ func testRequestParams(t *testing.T, r *http.Request, want map[string]string) {
 		if got := params.Get(key); val != got {
 			t.Errorf("Request params: %s, want %s", got, val)
 		}
-
 	}
-
 }
 
 func TestNewClient_WrongUrl(t *testing.T) {
@@ -103,7 +101,6 @@ func TestNewClient_WithHttpClient(t *testing.T) {
 
 func TestNewClient_WithServices(t *testing.T) {
 	c, err := NewClient(testJiraInstanceURL, nil)
-
 	if err != nil {
 		t.Errorf("Got an error: %s", err)
 	}
@@ -186,7 +183,12 @@ func TestClient_NewRawRequest(t *testing.T) {
 
 	outBody := `{"key":"MESOS"}` + "\n"
 	inBody := outBody
-	req, _ := c.NewRawRequest(context.Background(), http.MethodGet, inURL, strings.NewReader(outBody))
+	req, _ := c.NewRawRequest(
+		context.Background(),
+		http.MethodGet,
+		inURL,
+		strings.NewReader(outBody),
+	)
 
 	// Test that relative URL was expanded
 	if got, want := req.URL.String(), outURL; got != want {
@@ -245,13 +247,15 @@ func TestClient_NewMultiPartRequest(t *testing.T) {
 	inURL := "rest/api/2/issue/"
 	inBuf := bytes.NewBufferString("teststring")
 	req, err := c.NewMultiPartRequest(context.Background(), http.MethodGet, inURL, inBuf)
-
 	if err != nil {
 		t.Errorf("An error occurred. Expected nil. Got %+v.", err)
 	}
 
 	if req.Header.Get("X-Atlassian-Token") != "nocheck" {
-		t.Errorf("An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.", req.Header.Get("X-Atlassian-Token"))
+		t.Errorf(
+			"An error occurred. Unexpected X-Atlassian-Token header value. Expected nocheck, actual %s.",
+			req.Header.Get("X-Atlassian-Token"),
+		)
 	}
 }
 
@@ -297,7 +301,7 @@ func TestClient_Do_HTTPResponse(t *testing.T) {
 
 	if err != nil {
 		t.Errorf("Error on parsing HTTP Response = %v", err.Error())
-	} else if res.StatusCode != 200 {
+	} else if res.StatusCode != http.StatusOK {
 		t.Errorf("Response code = %v, want %v", res.StatusCode, 200)
 	}
 }
@@ -307,7 +311,7 @@ func TestClient_Do_HTTPError(t *testing.T) {
 	defer teardown()
 
 	testMux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "Bad Request", 400)
+		http.Error(w, "Bad Request", http.StatusBadRequest)
 	})
 
 	req, _ := testClient.NewRequest(context.Background(), http.MethodGet, "/", nil)

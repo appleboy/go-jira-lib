@@ -61,7 +61,10 @@ func TestAuthenticationService_AcquireSessionCookie_Success(t *testing.T) {
 			t.Error("No password found")
 		}
 
-		fmt.Fprint(w, `{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`)
+		fmt.Fprint(
+			w,
+			`{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`,
+		)
 	})
 
 	res, err := testClient.Authentication.AcquireSessionCookie(context.Background(), "foo", "bar")
@@ -77,7 +80,11 @@ func TestAuthenticationService_AcquireSessionCookie_Success(t *testing.T) {
 	}
 
 	if testClient.Authentication.authType != authTypeSession {
-		t.Errorf("Expected authType %d. Got %d", authTypeSession, testClient.Authentication.authType)
+		t.Errorf(
+			"Expected authType %d. Got %d",
+			authTypeSession,
+			testClient.Authentication.authType,
+		)
 	}
 }
 
@@ -152,7 +159,10 @@ func TestAuthenticationService_GetUserInfo_AccessForbidden_Fail(t *testing.T) {
 				t.Error("No password found")
 			}
 
-			fmt.Fprint(w, `{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`)
+			fmt.Fprint(
+				w,
+				`{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`,
+			)
 		}
 
 		if r.Method == http.MethodGet {
@@ -190,13 +200,16 @@ func TestAuthenticationService_GetUserInfo_NonOkStatusCode_Fail(t *testing.T) {
 				t.Error("No password found")
 			}
 
-			fmt.Fprint(w, `{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`)
+			fmt.Fprint(
+				w,
+				`{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`,
+			)
 		}
 
 		if r.Method == http.MethodGet {
 			testMethod(t, r, http.MethodGet)
 			testRequestURL(t, r, "/rest/auth/1/session")
-			//any status but 200
+			// any status but 200
 			w.WriteHeader(240)
 		}
 	})
@@ -246,13 +259,19 @@ func TestAuthenticationService_GetUserInfo_Success(t *testing.T) {
 				t.Error("No password found")
 			}
 
-			fmt.Fprint(w, `{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`)
+			fmt.Fprint(
+				w,
+				`{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`,
+			)
 		}
 
 		if r.Method == http.MethodGet {
 			testMethod(t, r, http.MethodGet)
 			testRequestURL(t, r, "/rest/auth/1/session")
-			fmt.Fprint(w, `{"self":"https://my.jira.com/rest/api/latest/user?username=foo","name":"foo","loginInfo":{"failedLoginCount":12,"loginCount":357,"lastFailedLoginTime":"2016-09-06T16:41:23.949+0200","previousLoginTime":"2016-09-07T11:36:23.476+0200"}}`)
+			fmt.Fprint(
+				w,
+				`{"self":"https://my.jira.com/rest/api/latest/user?username=foo","name":"foo","loginInfo":{"failedLoginCount":12,"loginCount":357,"lastFailedLoginTime":"2016-09-06T16:41:23.949+0200","previousLoginTime":"2016-09-07T11:36:23.476+0200"}}`,
+			)
 		}
 	})
 
@@ -288,7 +307,10 @@ func TestAuthenticationService_Logout_Success(t *testing.T) {
 				t.Error("No password found")
 			}
 
-			fmt.Fprint(w, `{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`)
+			fmt.Fprint(
+				w,
+				`{"session":{"name":"JSESSIONID","value":"12345678901234567890"},"loginInfo":{"failedLoginCount":10,"loginCount":127,"lastFailedLoginTime":"2016-03-16T04:22:35.386+0000","previousLoginTime":"2016-03-16T04:22:35.386+0000"}}`,
+			)
 		}
 
 		if r.Method == http.MethodDelete {

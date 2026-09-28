@@ -16,12 +16,14 @@ func TestCustomerService_Create(t *testing.T) {
 		wantEmailAddress = "fred@example.com"
 	)
 
-	testMux.HandleFunc("/rest/servicedeskapi/customer", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, http.MethodPost)
-		testRequestURL(t, r, "/rest/servicedeskapi/customer")
+	testMux.HandleFunc(
+		"/rest/servicedeskapi/customer",
+		func(w http.ResponseWriter, r *http.Request) {
+			testMethod(t, r, http.MethodPost)
+			testRequestURL(t, r, "/rest/servicedeskapi/customer")
 
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, `{
 		  "accountId": "qm:a713c8ea-1075-4e30-9d96-891a7d181739:5ad6d3581db05e2a66fa80b",
 		  "name": "qm:a713c8ea-1075-4e30-9d96-891a7d181739:5ad6d3581db05e2a66fa80b",
 		  "key": "qm:a713c8ea-1075-4e30-9d96-891a7d181739:5ad6d3581db05e2a66fa80b",
@@ -40,9 +42,14 @@ func TestCustomerService_Create(t *testing.T) {
 			"self": "https://your-domain.atlassian.net/rest/api/2/user?username=qm:a713c8ea-1075-4e30-9d96-891a7d181739:5ad6d3581db05e2a66fa80b"
 		  }
 		}`, wantEmailAddress, wantDisplayName)
-	})
+		},
+	)
 
-	gotCustomer, _, err := testClient.Customer.Create(context.Background(), wantEmailAddress, wantDisplayName)
+	gotCustomer, _, err := testClient.Customer.Create(
+		context.Background(),
+		wantEmailAddress,
+		wantDisplayName,
+	)
 	if err != nil {
 		t.Fatal(err)
 	}

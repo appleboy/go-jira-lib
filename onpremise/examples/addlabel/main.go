@@ -10,9 +10,11 @@ import (
 	"syscall"
 
 	jira "github.com/andygrunwald/go-jira/v2/onpremise"
+
 	"golang.org/x/term"
 )
 
+//nolint:forbidigo // This executable example intentionally prompts users and prints results.
 func main() {
 	r := bufio.NewReader(os.Stdin)
 
@@ -23,12 +25,13 @@ func main() {
 	username, _ := r.ReadString('\n')
 
 	fmt.Print("Jira Password: ")
+	//nolint:unconvert // Stdin is a syscall.Handle on Windows.
 	bytePassword, _ := term.ReadPassword(int(syscall.Stdin))
 	password := string(bytePassword)
 
 	fmt.Print("Jira Issue ID: ")
-	issueId, _ := r.ReadString('\n')
-	issueId = strings.TrimSpace(issueId)
+	issueID, _ := r.ReadString('\n')
+	issueID = strings.TrimSpace(issueID)
 
 	fmt.Print("Label: ")
 	label, _ := r.ReadString('\n')
@@ -53,7 +56,7 @@ func main() {
 		Labels []Labels `json:"labels" structs:"labels"`
 	}
 
-	c := map[string]interface{}{
+	c := map[string]any{
 		"update": Update{
 			Labels: []Labels{
 				{
@@ -63,15 +66,14 @@ func main() {
 		},
 	}
 
-	resp, err := client.Issue.UpdateIssue(context.Background(), issueId, c)
-
+	resp, err := client.Issue.UpdateIssue(context.Background(), issueID, c)
 	if err != nil {
 		fmt.Println(err)
 	}
 	body, _ := io.ReadAll(resp.Body)
 	fmt.Println(string(body))
 
-	issue, _, _ := client.Issue.Get(context.Background(), issueId, nil)
+	issue, _, _ := client.Issue.Get(context.Background(), issueID, nil)
 
 	fmt.Printf("Issue: %s:%s\n", issue.Key, issue.Fields.Summary)
 	fmt.Printf("\tLabels: %+v\n", issue.Fields.Labels)

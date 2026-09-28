@@ -52,7 +52,6 @@ func TestFilterService_Get(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error given: %s", err)
 	}
-
 }
 
 func TestFilterService_GetFavouriteList(t *testing.T) {

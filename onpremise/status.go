@@ -14,11 +14,11 @@ type StatusService service
 // Typical status are "Open", "In Progress", "Closed", ...
 // Status can be user defined in every Jira instance.
 type Status struct {
-	Self           string         `json:"self" structs:"self"`
-	Description    string         `json:"description" structs:"description"`
-	IconURL        string         `json:"iconUrl" structs:"iconUrl"`
-	Name           string         `json:"name" structs:"name"`
-	ID             string         `json:"id" structs:"id"`
+	Self           string         `json:"self"           structs:"self"`
+	Description    string         `json:"description"    structs:"description"`
+	IconURL        string         `json:"iconUrl"        structs:"iconUrl"`
+	Name           string         `json:"name"           structs:"name"`
+	ID             string         `json:"id"             structs:"id"`
 	StatusCategory StatusCategory `json:"statusCategory" structs:"statusCategory"`
 }
 
@@ -31,7 +31,6 @@ type Status struct {
 func (s *StatusService) GetAllStatuses(ctx context.Context) ([]Status, *Response, error) {
 	apiEndpoint := "rest/api/2/status"
 	req, err := s.client.NewRequest(ctx, http.MethodGet, apiEndpoint, nil)
-
 	if err != nil {
 		return nil, nil, err
 	}
