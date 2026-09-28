@@ -36,3 +36,20 @@ func TestIssueIDWireFormat(t *testing.T) {
 		})
 	}
 }
+
+// Empty nested structs were always encoded by encoding/json despite omitempty.
+func TestEmptyCommentStructFieldsRemainEncoded(t *testing.T) {
+	data, err := json.Marshal(Comment{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &fields); err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"author", "updateAuthor", "visibility"} {
+		if _, exists := fields[key]; !exists {
+			t.Errorf("missing existing wire field %q in %s", key, data)
+		}
+	}
+}

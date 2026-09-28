@@ -19,7 +19,7 @@ type Field struct {
 	Navigable   bool        `json:"navigable,omitempty"   structs:"navigable,omitempty"`
 	Searchable  bool        `json:"searchable,omitempty"  structs:"searchable,omitempty"`
 	ClauseNames []string    `json:"clauseNames,omitempty" structs:"clauseNames,omitempty"`
-	Schema      FieldSchema `json:"schema,omitempty"      structs:"schema,omitempty"`
+	Schema      FieldSchema `json:"schema"                structs:"schema,omitempty"`
 }
 
 // FieldSchema represents a schema of a Jira field.

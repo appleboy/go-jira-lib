@@ -38,7 +38,7 @@ type Session struct {
 	Session struct {
 		Name  string `json:"name"`
 		Value string `json:"value"`
-	} `json:"session,omitempty"`
+	} `json:"session"`
 	LoginInfo struct {
 		FailedLoginCount    int    `json:"failedLoginCount"`
 		LoginCount          int    `json:"loginCount"`

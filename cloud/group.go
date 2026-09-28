@@ -25,7 +25,7 @@ type groupMembersResult struct {
 type Group struct {
 	Name   string       `json:"name,omitempty"   structs:"name,omitempty"`
 	Self   string       `json:"self,omitempty"   structs:"self,omitempty"`
-	Users  GroupMembers `json:"users,omitempty"  structs:"users,omitempty"`
+	Users  GroupMembers `json:"users"            structs:"users,omitempty"`
 	Expand string       `json:"expand,omitempty" structs:"expand,omitempty"`
 }
 

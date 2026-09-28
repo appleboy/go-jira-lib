@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"maps"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -104,24 +105,24 @@ type IssueFields struct {
 	//      * "lastViewed": null,
 	//      * "environment": null,
 	Expand                        string            `json:"expand,omitempty"                        structs:"expand,omitempty"`
-	Type                          IssueType         `json:"issuetype,omitempty"                     structs:"issuetype,omitempty"`
-	Project                       Project           `json:"project,omitempty"                       structs:"project,omitempty"`
+	Type                          IssueType         `json:"issuetype"                               structs:"issuetype,omitempty"`
+	Project                       Project           `json:"project"                                 structs:"project,omitempty"`
 	Environment                   string            `json:"environment,omitempty"                   structs:"environment,omitempty"`
 	Resolution                    *Resolution       `json:"resolution,omitempty"                    structs:"resolution,omitempty"`
 	Priority                      *Priority         `json:"priority,omitempty"                      structs:"priority,omitempty"`
-	Resolutiondate                Time              `json:"resolutiondate,omitempty"                structs:"resolutiondate,omitempty"`
-	Created                       Time              `json:"created,omitempty"                       structs:"created,omitempty"`
-	Duedate                       Date              `json:"duedate,omitempty"                       structs:"duedate,omitempty"`
+	Resolutiondate                Time              `json:"resolutiondate"                          structs:"resolutiondate,omitempty"`
+	Created                       Time              `json:"created"                                 structs:"created,omitempty"`
+	Duedate                       Date              `json:"duedate"                                 structs:"duedate,omitempty"`
 	Watches                       *Watches          `json:"watches,omitempty"                       structs:"watches,omitempty"`
 	Assignee                      *User             `json:"assignee,omitempty"                      structs:"assignee,omitempty"`
-	Updated                       Time              `json:"updated,omitempty"                       structs:"updated,omitempty"`
+	Updated                       Time              `json:"updated"                                 structs:"updated,omitempty"`
 	Description                   string            `json:"description,omitempty"                   structs:"description,omitempty"`
 	Summary                       string            `json:"summary,omitempty"                       structs:"summary,omitempty"`
 	Creator                       *User             `json:"Creator,omitempty"                       structs:"Creator,omitempty"`
 	Reporter                      *User             `json:"reporter,omitempty"                      structs:"reporter,omitempty"`
 	Components                    []*Component      `json:"components,omitempty"                    structs:"components,omitempty"`
 	Status                        *Status           `json:"status,omitempty"                        structs:"status,omitempty"`
-	StatusCategoryChangeDate      Time              `json:"statuscategorychangedate,omitempty"      structs:"statuscategorychangedate,omitempty"`
+	StatusCategoryChangeDate      Time              `json:"statuscategorychangedate"                structs:"statuscategorychangedate,omitempty"`
 	Progress                      *Progress         `json:"progress,omitempty"                      structs:"progress,omitempty"`
 	AggregateProgress             *Progress         `json:"aggregateprogress,omitempty"             structs:"aggregateprogress,omitempty"`
 	TimeTracking                  *TimeTracking     `json:"timetracking,omitempty"                  structs:"timetracking,omitempty"`
@@ -152,9 +153,7 @@ func (i *IssueFields) MarshalJSON() ([]byte, error) {
 	unknowns, okay := m["Unknowns"]
 	if okay {
 		// if unknowns present, shift all key value from unknown to a level up
-		for key, value := range unknowns.(tcontainer.MarshalMap) {
-			m[key] = value
-		}
+		maps.Copy(m, unknowns.(tcontainer.MarshalMap))
 		delete(m, "Unknowns")
 	}
 	return json.Marshal(m)
@@ -182,8 +181,7 @@ func (i *IssueFields) UnmarshalJSON(data []byte) error {
 	}
 
 	t := reflect.TypeOf(*i)
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
+	for field := range t.Fields() {
 		tagDetail := field.Tag.Get("json")
 		if tagDetail == "" {
 			// ignore if there are no tags
@@ -313,9 +311,9 @@ type TransitionField struct {
 
 // CreateTransitionPayload is used for creating new issue transitions
 type CreateTransitionPayload struct {
-	Update     TransitionPayloadUpdate `json:"update,omitempty" structs:"update,omitempty"`
-	Transition TransitionPayload       `json:"transition"       structs:"transition"`
-	Fields     TransitionPayloadFields `json:"fields"           structs:"fields"`
+	Update     TransitionPayloadUpdate `json:"update"     structs:"update,omitempty"`
+	Transition TransitionPayload       `json:"transition" structs:"transition"`
+	Fields     TransitionPayloadFields `json:"fields"     structs:"fields"`
 }
 
 // TransitionPayloadUpdate represents the updates of Transition calls like DoTransition
@@ -325,7 +323,7 @@ type TransitionPayloadUpdate struct {
 
 // TransitionPayloadComment represents comment in Transition payload
 type TransitionPayloadComment struct {
-	Add TransitionPayloadCommentBody `json:"add,omitempty" structs:"add,omitempty"`
+	Add TransitionPayloadCommentBody `json:"add" structs:"add,omitempty"`
 }
 
 // TransitionPayloadCommentBody represents body of comment in payload
@@ -469,15 +467,15 @@ type Comments struct {
 
 // Comment represents a comment by a person to an issue in Jira.
 type Comment struct {
-	ID           string            `json:"id,omitempty"           structs:"id,omitempty"`
-	Self         string            `json:"self,omitempty"         structs:"self,omitempty"`
-	Name         string            `json:"name,omitempty"         structs:"name,omitempty"`
-	Author       User              `json:"author,omitempty"       structs:"author,omitempty"`
-	Body         string            `json:"body,omitempty"         structs:"body,omitempty"`
-	UpdateAuthor User              `json:"updateAuthor,omitempty" structs:"updateAuthor,omitempty"`
-	Updated      string            `json:"updated,omitempty"      structs:"updated,omitempty"`
-	Created      string            `json:"created,omitempty"      structs:"created,omitempty"`
-	Visibility   CommentVisibility `json:"visibility,omitempty"   structs:"visibility,omitempty"`
+	ID           string            `json:"id,omitempty"      structs:"id,omitempty"`
+	Self         string            `json:"self,omitempty"    structs:"self,omitempty"`
+	Name         string            `json:"name,omitempty"    structs:"name,omitempty"`
+	Author       User              `json:"author"            structs:"author,omitempty"`
+	Body         string            `json:"body,omitempty"    structs:"body,omitempty"`
+	UpdateAuthor User              `json:"updateAuthor"      structs:"updateAuthor,omitempty"`
+	Updated      string            `json:"updated,omitempty" structs:"updated,omitempty"`
+	Created      string            `json:"created,omitempty" structs:"created,omitempty"`
+	Visibility   CommentVisibility `json:"visibility"        structs:"visibility,omitempty"`
 
 	// A list of comment properties. Optional on create and update.
 	Properties []EntityProperty `json:"properties,omitempty" structs:"properties,omitempty"`

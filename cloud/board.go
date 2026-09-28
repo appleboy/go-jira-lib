@@ -27,7 +27,7 @@ type Board struct {
 	Self     string        `json:"self,omitempty"     structs:"self,omitempty"`
 	Name     string        `json:"name,omitempty"     structs:"name,omitemtpy"`
 	Type     string        `json:"type,omitempty"     structs:"type,omitempty"`
-	Location BoardLocation `json:"location,omitempty" structs:"location,omitempty"`
+	Location BoardLocation `json:"location"           structs:"location,omitempty"`
 	FilterID int           `json:"filterId,omitempty" structs:"filterId,omitempty"`
 }
 
