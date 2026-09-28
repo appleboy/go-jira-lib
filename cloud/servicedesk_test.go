@@ -227,7 +227,6 @@ func TestServiceDeskService_AddCustomers(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		test := test
 		t.Run(test.name, func(t *testing.T) {
 			setup()
 			defer teardown()
@@ -306,7 +305,6 @@ func TestServiceDeskService_RemoveCustomers(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		test := test
 		t.Run(test.name, func(t *testing.T) {
 			setup()
 			defer teardown()
@@ -385,7 +383,6 @@ func TestServiceDeskService_ListCustomers(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		test := test
 		t.Run(test.name, func(t *testing.T) {
 			setup()
 			defer teardown()

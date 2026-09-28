@@ -1589,9 +1589,6 @@ func getTime(original time.Time) *Time {
 }
 
 func TestIssueService_GetWorklogs(t *testing.T) {
-	setup()
-	defer teardown()
-
 	tt := []struct {
 		name     string
 		response string
@@ -1692,12 +1689,17 @@ func TestIssueService_GetWorklogs(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
+			setup()
+			defer teardown()
 			uri := fmt.Sprintf(tc.uri, tc.issueID)
-			testMux.HandleFunc(uri, func(w http.ResponseWriter, r *http.Request) {
-				testMethod(t, r, http.MethodGet)
-				testRequestURL(t, r, uri)
-				_, _ = fmt.Fprint(w, tc.response)
-			})
+			testMux.HandleFunc(
+				fmt.Sprintf("/rest/api/2/issue/%s/worklog", tc.issueID),
+				func(w http.ResponseWriter, r *http.Request) {
+					testMethod(t, r, http.MethodGet)
+					testRequestURL(t, r, uri)
+					_, _ = fmt.Fprint(w, tc.response)
+				},
+			)
 
 			var worklog *Worklog
 			var err error
