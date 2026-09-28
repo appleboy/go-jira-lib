@@ -1,9 +1,9 @@
 jira-onpremise:
   - changed-files:
-      - any-glob-to-any-file: "onpremise/**/*"
+      - any-glob-to-any-file: ["onpremise/**/*"]
 jira-cloud:
   - changed-files:
-      - any-glob-to-any-file: "cloud/**/*"
+      - any-glob-to-any-file: ["cloud/**/*"]
 documentation:
   - changed-files:
-      - any-glob-to-any-file: "docs/**/*"
+      - any-glob-to-any-file: ["docs/**/*"]
